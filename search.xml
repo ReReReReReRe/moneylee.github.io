@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>测试</title>
+    <title>开篇</title>
     <url>/2019/11/09/%E6%B5%8B%E8%AF%95/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><h2 id="上菜啊"><a href="#上菜啊" class="headerlink" title="上菜啊"></a>上菜啊</h2>]]></content>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><h2 id="原本想使用-spring-boot-vue-开发一款博客系统-但是平时也没有多少时间-做出来的样式也不是很喜欢。今天无意间发现Hexo这个开源的博客框架-决定拿来试一试-效果还不错-今后会继续完善下去-我也会将-简书、掘金的一些之前写作的文章导入进来-希望通过它能让我养成技术文档整理归纳的好习惯-我也会在此更新一些生活上的故事和心得体悟。"><a href="#原本想使用-spring-boot-vue-开发一款博客系统-但是平时也没有多少时间-做出来的样式也不是很喜欢。今天无意间发现Hexo这个开源的博客框架-决定拿来试一试-效果还不错-今后会继续完善下去-我也会将-简书、掘金的一些之前写作的文章导入进来-希望通过它能让我养成技术文档整理归纳的好习惯-我也会在此更新一些生活上的故事和心得体悟。" class="headerlink" title="原本想使用 spring-boot + vue 开发一款博客系统, 但是平时也没有多少时间, 做出来的样式也不是很喜欢。今天无意间发现Hexo这个开源的博客框架, 决定拿来试一试, 效果还不错, 今后会继续完善下去, 我也会将 简书、掘金的一些之前写作的文章导入进来, 希望通过它能让我养成技术文档整理归纳的好习惯, 我也会在此更新一些生活上的故事和心得体悟。"></a>原本想使用 spring-boot + vue 开发一款博客系统, 但是平时也没有多少时间, 做出来的样式也不是很喜欢。今天无意间发现Hexo这个开源的博客框架, 决定拿来试一试, 效果还不错, 今后会继续完善下去, 我也会将 简书、掘金的一些之前写作的文章导入进来, 希望通过它能让我养成技术文档整理归纳的好习惯, 我也会在此更新一些生活上的故事和心得体悟。</h2>]]></content>
       <categories>
-        <category>iOS</category>
+        <category>随笔</category>
       </categories>
-      <tags>
-        <tag>123</tag>
-      </tags>
   </entry>
   <entry>
     <title>Hello World</title>
