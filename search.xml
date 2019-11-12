@@ -1,64 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<search> 
-  
-  
-    
-    <entry>
-      <title>开篇</title>
-      <link href="/2019/11/09/%E5%BC%80%E7%AF%87/"/>
-      <url>/2019/11/09/%E5%BC%80%E7%AF%87/</url>
-      
-        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><h2 id="原本想使用-spring-boot-vue-开发一款博客系统-但是平时也没有多少时间-做出来的样式也不是很喜欢。今天无意间发现Hexo这个开源的博客框架-决定拿来试一试-效果还不错-今后会继续完善下去-我也会将-简书、掘金的一些之前写作的文章导入进来-希望通过它能让我养成技术文档整理归纳的好习惯-我也会在此更新一些生活上的故事和心得体悟。"><a href="#原本想使用-spring-boot-vue-开发一款博客系统-但是平时也没有多少时间-做出来的样式也不是很喜欢。今天无意间发现Hexo这个开源的博客框架-决定拿来试一试-效果还不错-今后会继续完善下去-我也会将-简书、掘金的一些之前写作的文章导入进来-希望通过它能让我养成技术文档整理归纳的好习惯-我也会在此更新一些生活上的故事和心得体悟。" class="headerlink" title="原本想使用 spring-boot + vue 开发一款博客系统, 但是平时也没有多少时间, 做出来的样式也不是很喜欢。今天无意间发现Hexo这个开源的博客框架, 决定拿来试一试, 效果还不错, 今后会继续完善下去, 我也会将 简书、掘金的一些之前写作的文章导入进来, 希望通过它能让我养成技术文档整理归纳的好习惯, 我也会在此更新一些生活上的故事和心得体悟。"></a>原本想使用 spring-boot + vue 开发一款博客系统, 但是平时也没有多少时间, 做出来的样式也不是很喜欢。今天无意间发现Hexo这个开源的博客框架, 决定拿来试一试, 效果还不错, 今后会继续完善下去, 我也会将 简书、掘金的一些之前写作的文章导入进来, 希望通过它能让我养成技术文档整理归纳的好习惯, 我也会在此更新一些生活上的故事和心得体悟。</h2>]]></content>
-      
-      
+<search>
+  <entry>
+    <title>开篇</title>
+    <url>/2019/11/09/%E5%BC%80%E7%AF%87/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><h2 id="原本想使用-spring-boot-vue-开发一款博客系统-但是平时也没有多少时间-做出来的样式也不是很喜欢。今天无意间发现Hexo这个开源的博客框架-决定拿来试一试-效果还不错-今后会继续完善下去-我也会将-简书、掘金的一些之前写作的文章导入进来-希望通过它能让我养成技术文档整理归纳的好习惯-我也会在此更新一些生活上的故事和心得体悟。"><a href="#原本想使用-spring-boot-vue-开发一款博客系统-但是平时也没有多少时间-做出来的样式也不是很喜欢。今天无意间发现Hexo这个开源的博客框架-决定拿来试一试-效果还不错-今后会继续完善下去-我也会将-简书、掘金的一些之前写作的文章导入进来-希望通过它能让我养成技术文档整理归纳的好习惯-我也会在此更新一些生活上的故事和心得体悟。" class="headerlink" title="原本想使用 spring-boot + vue 开发一款博客系统, 但是平时也没有多少时间, 做出来的样式也不是很喜欢。今天无意间发现Hexo这个开源的博客框架, 决定拿来试一试, 效果还不错, 今后会继续完善下去, 我也会将 简书、掘金的一些之前写作的文章导入进来, 希望通过它能让我养成技术文档整理归纳的好习惯, 我也会在此更新一些生活上的故事和心得体悟。"></a>原本想使用 spring-boot + vue 开发一款博客系统, 但是平时也没有多少时间, 做出来的样式也不是很喜欢。今天无意间发现Hexo这个开源的博客框架, 决定拿来试一试, 效果还不错, 今后会继续完善下去, 我也会将 简书、掘金的一些之前写作的文章导入进来, 希望通过它能让我养成技术文档整理归纳的好习惯, 我也会在此更新一些生活上的故事和心得体悟。</h2>]]></content>
       <categories>
-          
-          <category> 随笔 </category>
-          
+        <category>随笔</category>
       </categories>
-      
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>《如何使用CocoaPods：2016.11.15版》</title>
-      <link href="/2016/11/15/%E3%80%8A%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8CocoaPods%EF%BC%9A2016.11.15%E7%89%88%E3%80%8B/"/>
-      <url>/2016/11/15/%E3%80%8A%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8CocoaPods%EF%BC%9A2016.11.15%E7%89%88%E3%80%8B/</url>
-      
-        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>一、CocoaPods的简介：</p><p>CocoaPods是一个负责管理iOS项目中第三方开源库的工具。CocoaPods的项目源码在Github上管理。该项目开始于2011年8月12日，在这两年多的时间里，它持续保持活跃更新。开发iOS项目不可避免地要使用第三方开源库，CocoaPods的出现使得我们可以节省设置和更新第三方开源库的时间</p><p>在我们有了CocoaPods这个工具之后，只需要将用到的第三方开源库放到一个名为Podfile的文件中，然后在命令行执行$ pod install命令。CocoaPods就会自动将这些第三方开源库的源码下载下来，并且为我的工程设置好相应的系统依赖和编译参数，下面咱们开始步入正题。</p><p>二、安装CocoaPods：</p><p>安装的方式非常简单，Mac下已经自带了ruby，如果你不确定是否存在可以在终端输入  ruby -v（记住ruby后有个空格），之后你会看到下图，上面显示了你的ruby版本号。</p><p>ps: 现在安装cocoapods ruby环境需要 2.2.2 以上 之前的 2.0.0 不可以了  所以我们要升级一下ruby环境</p><p>查看目前的所有ruby版本：</p><p>$rvm list known  如果提示command not found 请先安装rvm</p><p>$curl -L get.rvm.io | bash -s stable</p><p>安装好后 退掉终端 然后再打开 rvm list known  出现所有版本</p><p>安装2.2.2  $rvm install 2.2.2</p><p>按照提示操作 安装完成</p><p>但是到这里还不行，我们要更换一下镜像站点，因为天朝你懂得，我们将原有的替换成淘宝的镜像站点。首先移除原有的镜像站点 （在这里我要说一下如何快速的打开终端，本人习惯 control+空格 然后输入ter 不知道的小伙伴可以试一下）</p><p>gem sources –remove <a href="https://rubygems.org/" target="_blank" rel="noopener">https://rubygems.org/</a>           //移除原有站点</p><p>gem sources -a <a href="https://ruby.taobao.org/" target="_blank" rel="noopener">https://ruby.taobao.org/</a>                   //使用新站点</p><p>gem sources -l                                                            //查看是否修改成功</p><p>最终应该是这样事的！就证明替换成功了！</p><p>准备工作完成了  开始安装CocoaPods：继续终端操作</p><p>sudo gem install cocoapods        //Cocoapods</p><p>提示输入密码 回车   等待安装。。。</p><p>三、Cocoapods的使用</p><p>创建好工程，然后打开终端 输入 cd空格  然后将你的工程从桌面拖拽到终端里</p><p>ls 确认路径是否正确</p><p>然后终端     vim Podfile 回车  这里注意Podfile P要大写！！！</p><p>输入 i   最下方的 ”Podfile“ 【New File】自动改为 –INSERT–  （我就不截图了）然后继续</p><p>下面讲一下上图中输入的都代表什么意思吧   platform空格:ios,空格’8.0’    //表示所有库所支持的最低版本</p><p>target “cocoapods”do     //这个是改动的地方  之前这句话不用写 但是现在要添加上 否则会报错，系统会找不到你要添加的库的位置，反正我的会报错😢 “”号内为你的工程名。</p><p>pod空格‘FMDB’  和  pod空格 ‘AFNetworking’都是你要添加的库 如果你要设定你所导入的库的版本号 可以pod ‘FMDB’,’~&gt;2.6’设定其为2.6版本的。</p><p>版本号的规则：</p><p>‘&gt;1.0’ 可以安装任何高于1.0的版本</p><p>‘&gt;=1.0’ 可以安装任何高于或等于1.0的版本</p><p>‘&lt;1.0’ 任何低于1.0的版本</p><p>‘&lt;=1.0’ 任何低于或等于1.0的版本</p><p>不写版本号的话 默认安装最高版本的。</p><p> 对了 这里有一个小技巧，如果这个时候你忘记了你要添加的库的全名了，你可以模糊查找， 在选中终端窗口的前提下  command+N，会再打开一个终端窗口  输入  pod空格search空格+你要查找的库的关键字比如下图 我要查找SDWebImage 只需要输入SDWeb</p><p>详细显示了该库的版本等信息</p><p>好了  添加完所需要的库了，我们开始导入吧。按ESC 在下方输入  :wq 后回车</p><p>然后界面切入到这里  在这里输入  pod空格install  如下图</p><p>最终结果：</p><p>安装三方库完成，下面打开你的工程，你会发现多了一个白色的文件，以后再运行工程就要打开它了。</p><p>ps: 如果导入成功后出现导入头文件没有提示  进行如下操作</p><p>选着TARGETS -&gt;Build Settings -&gt;搜索sea 找到Search Paths</p><p>找到 User Header Search Paths  双击后面空白处 点击+号 输入 $(PODS_ROOT) 最有改选 recursive</p><p>大功告成！</p>]]></content>
-      
-      
+  </entry>
+  <entry>
+    <title>《如何使用CocoaPods：2016.11.15版》</title>
+    <url>/2016/11/15/%E3%80%8A%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8CocoaPods%EF%BC%9A2016.11.15%E7%89%88%E3%80%8B/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>一、CocoaPods的简介：</p>
+<p>CocoaPods是一个负责管理iOS项目中第三方开源库的工具。CocoaPods的项目源码在Github上管理。该项目开始于2011年8月12日，在这两年多的时间里，它持续保持活跃更新。开发iOS项目不可避免地要使用第三方开源库，CocoaPods的出现使得我们可以节省设置和更新第三方开源库的时间</p>
+<p>在我们有了CocoaPods这个工具之后，只需要将用到的第三方开源库放到一个名为Podfile的文件中，然后在命令行执行$ pod install命令。CocoaPods就会自动将这些第三方开源库的源码下载下来，并且为我的工程设置好相应的系统依赖和编译参数，下面咱们开始步入正题。</p>
+<p>二、安装CocoaPods：</p>
+<p>安装的方式非常简单，Mac下已经自带了ruby，如果你不确定是否存在可以在终端输入  ruby -v（记住ruby后有个空格），之后你会看到下图，上面显示了你的ruby版本号。</p>
+<p><img alt data-src="https://tva1.sinaimg.cn/large/006y8mN6ly1g8va82yqrmj30qe06sgow.jpg" class="lazyload"></p>
+<p>ps: 现在安装cocoapods ruby环境需要 2.2.2 以上 之前的 2.0.0 不可以了  所以我们要升级一下ruby环境</p>
+<p>查看目前的所有ruby版本：</p>
+<p>$rvm list known  如果提示command not found 请先安装rvm</p>
+<p>$curl -L get.rvm.io | bash -s stable</p>
+<p>安装好后 退掉终端 然后再打开 rvm list known  出现所有版本</p>
+<p><img alt data-src="https://tva1.sinaimg.cn/large/006y8mN6ly1g8vaardrunj310c0ne4gi.jpg" class="lazyload"></p>
+<p>安装2.2.2  $rvm install 2.2.2</p>
+<p>按照提示操作 安装完成</p>
+<p>但是到这里还不行，我们要更换一下镜像站点，因为天朝你懂得，我们将原有的替换成淘宝的镜像站点。首先移除原有的镜像站点 （在这里我要说一下如何快速的打开终端，本人习惯 control+空格 然后输入ter 不知道的小伙伴可以试一下）</p>
+<p>gem sources –remove <a href="https://rubygems.org/" target="_blank" rel="noopener">https://rubygems.org/</a>           //移除原有站点</p>
+<p>gem sources -a <a href="https://ruby.taobao.org/" target="_blank" rel="noopener">https://ruby.taobao.org/</a>                   //使用新站点</p>
+<p>gem sources -l                                                            //查看是否修改成功</p>
+<p>最终应该是这样事的！就证明替换成功了！</p>
+<p><img alt data-src="https://tva1.sinaimg.cn/large/006y8mN6ly1g8vacb04dqj30og0cc45g.jpg" class="lazyload"></p>
+<p>准备工作完成了  开始安装CocoaPods：继续终端操作</p>
+<p>sudo gem install cocoapods        //Cocoapods</p>
+<p>提示输入密码 回车   等待安装。。。</p>
+<p>三、Cocoapods的使用</p>
+<p>创建好工程，然后打开终端 输入 cd空格  然后将你的工程从桌面拖拽到终端里</p>
+<p>ls 确认路径是否正确</p>
+<p><img alt data-src="https://tva1.sinaimg.cn/large/006y8mN6ly1g8vafqunf9j30jq06ugpa.jpg" class="lazyload"></p>
+<p>然后终端     vim Podfile 回车  这里注意Podfile P要大写！！！</p>
+<p><img alt data-src="https://tva1.sinaimg.cn/large/006y8mN6ly1g8vagcq1bpj30mi0kotbj.jpg" class="lazyload"></p>
+<p>输入 i   最下方的 ”Podfile“ 【New File】自动改为 –INSERT–  （我就不截图了）然后继续</p>
+<p><img alt data-src="https://tva1.sinaimg.cn/large/006y8mN6ly1g8vamadt03j30n80k8aaf.jpg" class="lazyload"></p>
+<p>下面讲一下上图中输入的都代表什么意思吧   platform空格:ios,空格’8.0’    //表示所有库所支持的最低版本</p>
+<p>target “cocoapods”do     //这个是改动的地方  之前这句话不用写 但是现在要添加上 否则会报错，系统会找不到你要添加的库的位置，反正我的会报错😢 “”号内为你的工程名。</p>
+<p>pod空格‘FMDB’  和  pod空格 ‘AFNetworking’都是你要添加的库 如果你要设定你所导入的库的版本号 可以pod ‘FMDB’,’~&gt;2.6’设定其为2.6版本的。</p>
+<p>版本号的规则：</p>
+<p>‘&gt;1.0’ 可以安装任何高于1.0的版本</p>
+<p>‘&gt;=1.0’ 可以安装任何高于或等于1.0的版本</p>
+<p>‘&lt;1.0’ 任何低于1.0的版本</p>
+<p>‘&lt;=1.0’ 任何低于或等于1.0的版本</p>
+<p>不写版本号的话 默认安装最高版本的。</p>
+<p> 对了 这里有一个小技巧，如果这个时候你忘记了你要添加的库的全名了，你可以模糊查找， 在选中终端窗口的前提下  command+N，会再打开一个终端窗口  输入  pod空格search空格+你要查找的库的关键字比如下图 我要查找SDWebImage 只需要输入SDWeb</p>
+<p><img alt="截屏2019-11-12下午3.20.07" data-src="https://tva1.sinaimg.cn/large/006y8mN6ly1g8vamy4m9fj30iu0640st.jpg" class="lazyload"></p>
+<p>详细显示了该库的版本等信息</p>
+<p><img alt="截屏2019-11-12下午3.20.13" data-src="https://tva1.sinaimg.cn/large/006y8mN6ly1g8vancnatij30re0jydrh.jpg" class="lazyload"></p>
+<p>好了  添加完所需要的库了，我们开始导入吧。按ESC 在下方输入  :wq 后回车</p>
+<p><img alt="截屏2019-11-12下午3.20.19" data-src="https://tva1.sinaimg.cn/large/006y8mN6ly1g8vanp1vsij30cq0kcq52.jpg" class="lazyload"></p>
+<p>然后界面切入到这里  在这里输入  pod空格install  如下图</p>
+<p><img alt="截屏2019-11-12下午3.20.24" data-src="https://tva1.sinaimg.cn/large/006y8mN6ly1g8vao3yju7j30hg07ujue.jpg" class="lazyload"></p>
+<p>最终结果：</p>
+<p><img alt="截屏2019-11-12下午3.20.30" data-src="https://tva1.sinaimg.cn/large/006y8mN6ly1g8vaohqfhrj30rc0huwp1.jpg" class="lazyload"></p>
+<p>安装三方库完成，下面打开你的工程，你会发现多了一个白色的文件，以后再运行工程就要打开它了。</p>
+<p><img alt="截屏2019-11-12下午3.20.36" data-src="https://tva1.sinaimg.cn/large/006y8mN6ly1g8vaowag4nj30ti0dcwki.jpg" class="lazyload"></p>
+<p>ps: 如果导入成功后出现导入头文件没有提示  进行如下操作</p>
+<p>选着TARGETS -&gt;Build Settings -&gt;搜索sea 找到Search Paths</p>
+<p><img alt="截屏2019-11-12下午3.20.43" data-src="https://tva1.sinaimg.cn/large/006y8mN6ly1g8vap8toc1j311w09eafw.jpg" class="lazyload"></p>
+<p>找到 User Header Search Paths  双击后面空白处 点击+号 输入 $(PODS_ROOT) 最有改选 recursive</p>
+<p><img alt="截屏2019-11-12下午3.20.50" data-src="https://tva1.sinaimg.cn/large/006y8mN6ly1g8vapkh4awj311a0g0jwh.jpg" class="lazyload"></p>
+<p>大功告成！</p>
+]]></content>
       <categories>
-          
-          <category> iOS </category>
-          
+        <category>iOS</category>
       </categories>
-      
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>数据常见问题汇总</title>
-      <link href="/2016/11/15/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
-      <url>/2016/11/15/%E6%95%B0%E6%8D%AE%E5%BA%93/</url>
-      
-        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><h5 id="1153-Got-a-packet-bigger-than-‘max-allowed-packet’-bytes"><a href="#1153-Got-a-packet-bigger-than-‘max-allowed-packet’-bytes" class="headerlink" title="1153 - Got a packet bigger than ‘max_allowed_packet’ bytes"></a>1153 - Got a packet bigger than ‘max_allowed_packet’ bytes</h5><p>数据库数据同步导入时,文件过大导致出现此错误, 注意: 此种方式不用重启sql服务,只是临时修改.</p><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; show VARIABLES like '%max_allowed_packet%';</span><br><span class="line">+<span class="comment">--------------------------+-------+</span></span><br><span class="line">| Variable_name            | Value |</span><br><span class="line">+<span class="comment">--------------------------+-------+</span></span><br><span class="line">| max_allowed_packet       | 2048  |</span><br><span class="line">| slave_max_allowed_packet | 2048  |</span><br><span class="line">+<span class="comment">--------------------------+-------+</span></span><br><span class="line">2 rows in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; <span class="keyword">set</span> <span class="keyword">global</span> net_buffer_length=<span class="number">1000000</span>;</span><br><span class="line">Query OK, 0 rows affected, 1 warning (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; set global max_allowed_packet=1000000000;</span><br><span class="line">Query OK, 0 rows affected, 1 warning (0.00 sec)</span><br></pre></td></tr></table></figure>]]></content>
-      
-      
+  </entry>
+  <entry>
+    <title>数据常见问题汇总</title>
+    <url>/2016/11/15/%E6%95%B0%E6%8D%AE%E5%BA%93/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><h3 id="1153-Got-a-packet-bigger-than-‘max-allowed-packet’-bytes"><a href="#1153-Got-a-packet-bigger-than-‘max-allowed-packet’-bytes" class="headerlink" title="1153 - Got a packet bigger than ‘max_allowed_packet’ bytes"></a>1153 - Got a packet bigger than ‘max_allowed_packet’ bytes</h3><p>数据库数据同步导入时,文件过大导致出现此错误, 注意: 此种方式不用重启sql服务,只是临时修改.</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">mysql&gt; show VARIABLES like '%max_allowed_packet%';</span><br><span class="line">+<span class="comment">--------------------------+-------+</span></span><br><span class="line">| Variable_name            | Value |</span><br><span class="line">+<span class="comment">--------------------------+-------+</span></span><br><span class="line">| max_allowed_packet       | 2048  |</span><br><span class="line">| slave_max_allowed_packet | 2048  |</span><br><span class="line">+<span class="comment">--------------------------+-------+</span></span><br><span class="line">2 rows in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; <span class="keyword">set</span> <span class="keyword">global</span> net_buffer_length=<span class="number">1000000</span>;</span><br><span class="line">Query OK, 0 rows affected, 1 warning (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; set global max_allowed_packet=1000000000;</span><br><span class="line">Query OK, 0 rows affected, 1 warning (0.00 sec)</span><br></pre></td></tr></table></figure>
+
+]]></content>
       <categories>
-          
-          <category> 数据库 </category>
-          
+        <category>数据库</category>
       </categories>
-      
-      
-    </entry>
-    
-    
-  
-  
+  </entry>
 </search>
