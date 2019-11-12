@@ -85,4 +85,16 @@
         <category>数据库</category>
       </categories>
   </entry>
+  <entry>
+    <title>Linux常用命令</title>
+    <url>/2016/08/06/Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><h4 id="守护进程启动spring-boot项目"><a href="#守护进程启动spring-boot项目" class="headerlink" title="守护进程启动spring-boot项目:"></a>守护进程启动spring-boot项目:</h4><p><code>nohup java -jar repair-api.jar &gt; log.file 2&gt;&amp;1 &amp;</code></p>
+<h4 id="实时查看日志信息-接上"><a href="#实时查看日志信息-接上" class="headerlink" title="实时查看日志信息(接上):"></a>实时查看日志信息(接上):</h4><p><code>tail -f log.file</code></p>
+<h4 id="查看某个端口的进程id"><a href="#查看某个端口的进程id" class="headerlink" title="查看某个端口的进程id:"></a>查看某个端口的进程id:</h4><p><code>losof -i:8080</code></p>
+<h4 id="通过进程id-关闭某个端口"><a href="#通过进程id-关闭某个端口" class="headerlink" title="通过进程id 关闭某个端口:"></a>通过进程id 关闭某个端口:</h4><p><code>kill -9 [从上面获取的进程id]</code></p>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+  </entry>
 </search>
