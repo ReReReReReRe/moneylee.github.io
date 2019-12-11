@@ -1,6 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>数据库常见问题汇总</title>
+    <url>/2019/12/10/%E6%95%B0%E6%8D%AE%E5%BA%93/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><h3 id="1153-Got-a-packet-bigger-than-‘max-allowed-packet’-bytes"><a href="#1153-Got-a-packet-bigger-than-‘max-allowed-packet’-bytes" class="headerlink" title="1153 - Got a packet bigger than ‘max_allowed_packet’ bytes"></a>1153 - Got a packet bigger than ‘max_allowed_packet’ bytes</h3><p>数据库数据同步导入时,文件过大导致出现此错误, 注意: 此种方式不用重启sql服务,只是临时修改.</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">mysql&gt; show VARIABLES like '%max_allowed_packet%';</span><br><span class="line">+<span class="comment">--------------------------+-------+</span></span><br><span class="line">| Variable_name            | Value |</span><br><span class="line">+<span class="comment">--------------------------+-------+</span></span><br><span class="line">| max_allowed_packet       | 2048  |</span><br><span class="line">| slave_max_allowed_packet | 2048  |</span><br><span class="line">+<span class="comment">--------------------------+-------+</span></span><br><span class="line">2 rows in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; <span class="keyword">set</span> <span class="keyword">global</span> net_buffer_length=<span class="number">1000000</span>;</span><br><span class="line">Query OK, 0 rows affected, 1 warning (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; set global max_allowed_packet=1000000000;</span><br><span class="line">Query OK, 0 rows affected, 1 warning (0.00 sec)</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="Mac启动MySql服务-ERROR-1045-28000-Access-denied-for-user-‘root’-’localhost’-using-password-NO"><a href="#Mac启动MySql服务-ERROR-1045-28000-Access-denied-for-user-‘root’-’localhost’-using-password-NO" class="headerlink" title="Mac启动MySql服务 ERROR 1045 (28000): Access denied for user ‘root’@’localhost’ (using password: NO)"></a>Mac启动MySql服务 ERROR 1045 (28000): Access denied for user ‘root’@’localhost’ (using password: NO)</h3><p>解决方法：<br>第一步：如果mysql服务正在进行，将之停止。<br>第二步：在终端中以管理员权限启动mysqld_safe，命令如下：</p>
+<p><code>sudo /usr/local/mysql/bin/mysqld_safe --skip-grant-tables</code></p>
+<p>执行结果如下：</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="number">2016</span><span class="number">-06</span><span class="number">-12</span>T08:<span class="number">29</span>:<span class="number">17.6</span>NZ mysqld_safe Logging to <span class="string">'/usr/local/mysql/data/lyqdeMacBook-Pro.local.err'</span>.</span><br><span class="line"><span class="number">2016</span><span class="number">-06</span><span class="number">-12</span>T08:<span class="number">29</span>:<span class="number">17.6</span>NZ mysqld_safe Starting mysqld daemon <span class="keyword">with</span> databases <span class="keyword">from</span> /usr/local/mysql/data</span><br></pre></td></tr></table></figure>
+
+<p>第三步：不要关闭当前的终端窗口，新建一个终端窗口，输入如下命令，回车登录mysql</p>
+<p><code>/usr/local/mysql/bin/mysql</code></p>
+<p>登录后，看到欢迎信息：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Welcome to the MySQL monitor.  Commands end with ; or \g.</span><br><span class="line">Your MySQL connection id is 37</span><br><span class="line">Server version: 5.7.13 MySQL Community Server (GPL)</span><br><span class="line"></span><br><span class="line">Copyright (c) 2000, 2016, Oracle and/or its affiliates. All rights reserved.</span><br><span class="line"></span><br><span class="line">Oracle is a registered trademark of Oracle Corporation and/or its</span><br><span class="line">affiliates. Other names may be trademarks of their respective</span><br><span class="line">owners.</span><br><span class="line"></span><br><span class="line">Type &apos;help;&apos; or &apos;\h&apos; for help. Type &apos;\c&apos; to clear the current input statement.</span><br><span class="line"></span><br><span class="line">mysql&gt;</span><br></pre></td></tr></table></figure>
+
+<p>打开”mysql”这个数据库，SQL如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Reading table information for completion of table and column names</span><br><span class="line">You can turn off this feature to get a quicker startup with -A</span><br><span class="line"></span><br><span class="line">Database changed</span><br><span class="line">mysql&gt;</span><br></pre></td></tr></table></figure>
+
+<p>然后，更新root的密码，SQL如下：</p>
+<p><code>mysql&gt; update user set authentication_string=password(&#39;root&#39;) where Host=&#39;localhost&#39; and User=&#39;root&#39;;</code></p>
+<p>注意：<br>①有的版本的mysql中，密码可能存储在password字段中，可以使用”describe user;”命令来查看下表结构再操作</p>
+<p>②authentication_string的值一定通过password函数来计算(password(‘root’))</p>
+<p>执行结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Query OK, 1 row affected, 1 warning (0.01 sec)</span><br><span class="line">Rows matched: 1  Changed: 1  Warnings: 1</span><br></pre></td></tr></table></figure>
+
+<p>退出mysql（执行sql语句：exit)</p>
+<p>最后一步：将mysqld_safe进程杀死，重启mysqld。</p>
+<p>可能会遇到的问题</p>
+<p>登录mysql</p>
+<p><code>/usr/local/mysql/bin/mysql -uroot -proot</code></p>
+<p>这个时候，如果执行查询之类的操作，比如执行”show databases;”，可能会有如下提示:</p>
+<p><code>ERROR 1820 (HY000): You must reset your password using ALTER USER statement before executing this statement.</code></p>
+<p>根据提示进行操作，输入如下SQL语句，这个语句的作用是修改root用户的口令为root：</p>
+<p><code>mysql&gt; alter user &#39;root&#39;@&#39;localhost&#39; identified by &#39;root&#39;;</code></p>
+<p>结果：</p>
+<p><code>Query OK, 0 rows affected</code></p>
+<h3 id="MySql-数据库-插入表情字符报错-java-sql-SQLException-Incorrect-string-value-‘-xF0-x9F-x98-x87"><a href="#MySql-数据库-插入表情字符报错-java-sql-SQLException-Incorrect-string-value-‘-xF0-x9F-x98-x87" class="headerlink" title="MySql 数据库 插入表情字符报错 [java.sql.SQLException: Incorrect string value: ‘\xF0\x9F\x98\x87]"></a>MySql 数据库 插入表情字符报错 [java.sql.SQLException: Incorrect string value: ‘\xF0\x9F\x98\x87]</h3><p>解决办法: mysql安装目录下找到 my.ini 文件并做修改</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[mysqld]</span><br><span class="line">character-set-server=utf8mb4</span><br><span class="line">[mysql]</span><br><span class="line">default-character-set=utf8mb4</span><br></pre></td></tr></table></figure>
+
+<p>修改后重启mysql</p>
+<p>将已经建好的表转成utf8mb4</p>
+<p>更改数据库编码:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ALTER DATABASE 数据库名 CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;</span><br></pre></td></tr></table></figure>
+
+<p>更改表的编码:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">alter table 表名 convert to character set utf8mb4 collate utf8mb4_bin;</span><br></pre></td></tr></table></figure>
+
+<p>修改mysql配置文件my.cnf (windows为my.ini)</p>
+<p>my.cnf一般在etc/mysql/my.cnf位置。找到后请在以下三部分里添加如下内容：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[client] </span><br><span class="line">default-character-set = utf8mb4 </span><br><span class="line">[mysql] </span><br><span class="line">default-character-set = utf8mb4 </span><br><span class="line">[mysqld] </span><br><span class="line">character-set-client-handshake = FALSE </span><br><span class="line">character-set-server = utf8mb4 </span><br><span class="line">collation-server = utf8mb4_unicode_ci </span><br><span class="line">init_connect=&apos;SET NAMES utf8mb4&apos;</span><br></pre></td></tr></table></figure>
+
+
+
+]]></content>
+      <categories>
+        <category>数据库</category>
+      </categories>
+  </entry>
+  <entry>
     <title>常用工具</title>
     <url>/2019/12/04/%E5%B8%B8%E7%94%A8%E5%B7%A5%E5%85%B7/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><h2 id="常用工具汇总"><a href="#常用工具汇总" class="headerlink" title="常用工具汇总"></a>常用工具汇总</h2><h3 id="Pulse-Secure-for-Mac-VPN工具"><a href="#Pulse-Secure-for-Mac-VPN工具" class="headerlink" title="Pulse Secure for Mac (VPN工具)"></a>Pulse Secure for Mac (VPN工具)</h3><p>官网地址: <a href="https://www.pulsesecure.net/" target="_blank" rel="noopener">https://www.pulsesecure.net/</a></p>
@@ -71,6 +132,93 @@
 <pre><code>### 最后的效果图我就不放了, 在上面有!!!</code></pre>]]></content>
       <categories>
         <category>微信小程序</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>SpringBoot 定时任务内 使用@Autowired注入Service 获取不到的问题</title>
+    <url>/2019/10/06/SpringBoot%20%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1%E5%86%85%20%E4%BD%BF%E7%94%A8@Autowired%E6%B3%A8%E5%85%A5Service%20%E8%8E%B7%E5%8F%96%E4%B8%8D%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>近段时间使用微信Web版的API,实现一个微信机器人, 想每天早上像微信群发送天气预报, 在创建定时任务的时候,发现抛出异常,断点发现是在定时任务里获取不到ChatroomDescriptionService 这个service, 在网上查了查,发现需要手动去配置一个类，主动获取实例来解决这个问题。</p>
+<p>首先创建一个工具类:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.cherry.jeeves.utils;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.BeansException;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.ApplicationContext;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.ApplicationContextAware;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@className</span>: ApplicationContextUtil</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Description</span>: 解决定时任务获取不到service的问题</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Author</span> moneylee</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Date</span> 2019-05-11 14:28</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Version</span> 1.0</span></span><br><span class="line"><span class="comment"> **/</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ApplicationContextUtil</span> <span class="keyword">implements</span> <span class="title">ApplicationContextAware</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> ApplicationContext applicationContext;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ApplicationContext <span class="title">getApplicationContext</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> applicationContext;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setApplicationContext</span><span class="params">(ApplicationContext applicationContext)</span> <span class="keyword">throws</span> BeansException </span>&#123;</span><br><span class="line">        ApplicationContextUtil.applicationContext = applicationContext;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Object <span class="title">getBean</span><span class="params">(String beanName)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> applicationContext.getBean(beanName);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在serivice上添加注解 @Service(“chatroomDescriptionService”)</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.cherry.jeeves.service.Impl;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Service;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"><span class="keyword">import</span> com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;</span><br><span class="line"><span class="keyword">import</span> com.baomidou.mybatisplus.core.metadata.IPage;</span><br><span class="line"><span class="keyword">import</span> com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.cherry.jeeves.dao.ChatroomDescriptionDao;</span><br><span class="line"><span class="keyword">import</span> com.cherry.jeeves.entity.ChatroomDescriptionEntity;</span><br><span class="line"><span class="keyword">import</span> com.cherry.jeeves.service.ChatroomDescriptionService;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@Service</span>(<span class="string">"chatroomDescriptionService"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ChatroomDescriptionServiceImpl</span> <span class="keyword">extends</span> <span class="title">ServiceImpl</span>&lt;<span class="title">ChatroomDescriptionDao</span>, <span class="title">ChatroomDescriptionEntity</span>&gt; <span class="keyword">implements</span> <span class="title">ChatroomDescriptionService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在定时任务类中获取该service</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">ChatroomDescriptionService chatroomDescriptionService = (ChatroomDescriptionService) ApplicationContextUtil.getBean(<span class="string">"chatroomDescriptionService"</span>);</span><br></pre></td></tr></table></figure>
+
+<p>参考文章: <a href="https://www.cnblogs.com/doudou2018/p/10416043.html" target="_blank" rel="noopener">https://www.cnblogs.com/doudou2018/p/10416043.html</a></p>
+]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>Docker 部署Nginx 并且挂载默认请求路径和配置文件</title>
+    <url>/2019/08/16/Docker%20%E9%83%A8%E7%BD%B2Nginx%20%E5%B9%B6%E4%B8%94%E6%8C%82%E8%BD%BD%E9%BB%98%E8%AE%A4%E8%AF%B7%E6%B1%82%E8%B7%AF%E5%BE%84%E5%92%8C%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>首先进入宿主机终端命令行 启动docker</p>
+<p><code>service docker start</code></p>
+<p>查看已安装docker镜像列表</p>
+<p><code>docker images</code></p>
+<p><img alt data-src="https://tva1.sinaimg.cn/large/006tNbRwly1g9sjoiuq3hj30hf01u74j.jpg" class="lazyload"></p>
+<p>如果没有安装就安装下</p>
+<p><code>docker pull nginx</code></p>
+<p>然后得启动这个镜像 正常启动是下面的命令,但是先别着急敲</p>
+<p><code>docker run -d -p 80:80 nginx</code></p>
+<p>简单解释下这里面的值都代表啥意思 <code>-d</code>是让这个nginx容器服务后台运行 <code>-p</code>是指定端口 后面跟的80:80 前面的80是宿主机的端口 后面的是容器里nginx的端口, 比如改成 8080:80 那么我们在外部访问这个nginx服务 地址应该是 <a href="http://xx.xx.xx.xx:8080/" target="_blank" rel="noopener">xx.xx.xx.xx:8080</a> 就可以看到nginx的欢迎页了</p>
+<p><code>nginx</code>当然是启动的镜像名字啦</p>
+<p>但是啊,这么写不好,如果你像改这个nginx的配置文件,或者改个静态页咋改啊,我们得到这个容器的内部去改啊, 简单说下如何进入这个容器的内部</p>
+<p>先获取到这个nginx容器的id , 查询所有容器 无论是运行的还是exit的,其实在不在执行你都能看出来了,因为上面有exit标识着呢</p>
+<p><code>docker ps -a</code></p>
+<p><img alt="16aa0b5e75088978" data-src="https://tva1.sinaimg.cn/large/006tNbRwly1g9sjs03539j30hv02rq3h.jpg" class="lazyload"></p>
+<p>你看,映射的端口号都给你了,我这里面没有其他被关闭的容器服务,我有强迫症,都清理了,你也有的话执行这个命令 xxxxx是这个容器的id 图里有</p>
+<p><code>docker rm xxxxx</code></p>
+<p>扯这么多没用的,现在开始说重点的,如果去改这个nginx容器里的配置文件,日志文件的具体路径和内容呢,这就要使用到挂载,我理解的挂载的意思就是在使用这个nginx容器的时候,不去使用容器内的配置和文件路径,使用宿主机上的资源文件,对了 我还没说怎么去容器内,执行这个命令,对了 你要是不是root用户前面加 sudo</p>
+<p><code>docker exec -it xxxx bash</code></p>
+<p>xxxx是容器id</p>
+<p><img alt="16aa0bd1e50158e8" data-src="https://tva1.sinaimg.cn/large/006tNbRwly1g9sju4ig21j30ef02gjrr.jpg" class="lazyload"></p>
+<p>是不是有点眼熟 其实这个镜像自己的世界,不受外界打扰,但是功能指定没有宿主机全啊,比如你想在里面使用vim命令….</p>
+<p>我们接着回来谈挂载,既然你想挂载,你得知道你镜像里面nginx的配置文件啥的都在哪吧,然后挂载到你宿主机的指定位置啊,所以我们先看看他们都在哪呢<br> 镜像中nginx.conf配置文件路径</p>
+<p><code>/etc/nginx/nginx.conf</code></p>
+<p>default.conf配置文件的路径</p>
+<p><code>/etc/nginx/conf.d/default.conf</code></p>
+<p>默认首页文件夹html路径</p>
+<p><code>/usr/share/nginx/html</code></p>
+<p>日志文件路径</p>
+<p><code>/var/log/nginx</code></p>
+<p><img alt="16aa0c396fe621b7" data-src="https://tva1.sinaimg.cn/large/006tNbRwly1g9sjx7ip6rj30ec074mz9.jpg" class="lazyload"></p>
+<p>来个图验证一下, 然后输入 <code>exit</code> 退出nginx容器回到宿主机</p>
+<p>下面在宿主机上建挂载使用的文件夹</p>
+<p><code>mkdir -p /nginx/{conf,conf.d,html,logs}</code></p>
+<p>建这4个文件夹都知道是干啥用的了吧, 没权限记住前面加 <code>sudo</code></p>
+<p><img alt="16aa0ccb2a0d8482" data-src="https://tva1.sinaimg.cn/large/006tNbRwly1g9sjy43q42j30fg031dg9.jpg" class="lazyload"></p>
+<p>下面就开始往对应的路径扔配置文件或者资源文件了,logs里不用,挂载好自动往里输出 error.log 和 access.log<br> html里你放首页需要展示的.html文件,然后你在访问,你加进来的html就把默认的nginx欢迎界面替换掉了…现在整没有用啊,你还没挂载呢,等会的。</p>
+<p>conf里放 nginx.conf 配置文件, 这个文件的内容要从镜像里的复制出来哦,我们尽量保持和镜像里面的一致<br> 下面我们再来说说怎么将刚刚在容器里看到的配置文件copy到宿主机里面</p>
+<p>前面是容器的路径 后面是宿主机的路径:</p>
+<p><code>docker cp 容器id:/etc/nginx/nginx.conf /nginx/conf/nginx.conf</code></p>
+<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="attribute">user</span>  nginx;</span><br><span class="line"><span class="attribute">worker_processes</span>  <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="attribute">error_log</span>  /var/log/nginx/error.log <span class="literal">warn</span>;</span><br><span class="line"><span class="attribute">pid</span>        /var/run/nginx.pid;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="section">events</span> &#123;</span><br><span class="line">    <span class="attribute">worker_connections</span>  <span class="number">1024</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="section">http</span> &#123;</span><br><span class="line">    <span class="attribute">include</span>       /etc/nginx/mime.types;</span><br><span class="line">    <span class="attribute">default_type</span>  application/octet-stream;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">log_format</span>  main  <span class="string">'<span class="variable">$remote_addr</span> - <span class="variable">$remote_user</span> [<span class="variable">$time_local</span>] "<span class="variable">$request</span>" '</span></span><br><span class="line">                      <span class="string">'<span class="variable">$status</span> <span class="variable">$body_bytes_sent</span> "<span class="variable">$http_referer</span>" '</span></span><br><span class="line">                      <span class="string">'"<span class="variable">$http_user_agent</span>" "<span class="variable">$http_x_forwarded_for</span>"'</span>;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">access_log</span>  /var/log/nginx/access.log  main;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">sendfile</span>        <span class="literal">on</span>;</span><br><span class="line">    <span class="comment">#tcp_nopush     on;</span></span><br><span class="line"></span><br><span class="line">    <span class="attribute">keepalive_timeout</span>  <span class="number">65</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">#gzip  on;</span></span><br><span class="line"></span><br><span class="line">    <span class="attribute">include</span> /etc/nginx/conf.d/<span class="regexp">*.conf</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>同样在把conf.d 下的default.conf 复制过来</p>
+<p><code>docker cp 容器id:/etc/nginx/conf.d/default.conf /nginx/conf.d/default.conf</code></p>
+<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span>       <span class="number">80</span>;</span><br><span class="line">    <span class="attribute">server_name</span>  localhost;</span><br><span class="line"></span><br><span class="line">    <span class="comment">#charset koi8-r;</span></span><br><span class="line">    <span class="comment">#access_log  /var/log/nginx/host.access.log  main;</span></span><br><span class="line"></span><br><span class="line">    <span class="attribute">location</span> / &#123;</span><br><span class="line">        <span class="attribute">root</span>   /usr/share/nginx/html;</span><br><span class="line">        <span class="attribute">index</span>  index.html index.htm;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">#error_page  404              /404.html;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># redirect server error pages to the static page /50x.html</span></span><br><span class="line">    <span class="comment">#</span></span><br><span class="line">    <span class="attribute">error_page</span>   <span class="number">500</span> <span class="number">502</span> <span class="number">503</span> <span class="number">504</span>  /50x.html;</span><br><span class="line">    <span class="attribute">location</span> = /50x.html &#123;</span><br><span class="line">        <span class="attribute">root</span>   /usr/share/nginx/html;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># proxy the PHP scripts to Apache listening on 127.0.0.1:80</span></span><br><span class="line">    <span class="comment">#</span></span><br><span class="line">    <span class="comment">#location ~ \.php$ &#123;</span></span><br><span class="line">    <span class="comment">#    proxy_pass   http://127.0.0.1;</span></span><br><span class="line">    <span class="comment">#&#125;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000</span></span><br><span class="line">    <span class="comment">#</span></span><br><span class="line">    <span class="comment">#location ~ \.php$ &#123;</span></span><br><span class="line">    <span class="comment">#    root           html;</span></span><br><span class="line">    <span class="comment">#    fastcgi_pass   127.0.0.1:9000;</span></span><br><span class="line">    <span class="comment">#    fastcgi_index  index.php;</span></span><br><span class="line">    <span class="comment">#    fastcgi_param  SCRIPT_FILENAME  /scripts$fastcgi_script_name;</span></span><br><span class="line">    <span class="comment">#    include        fastcgi_params;</span></span><br><span class="line">    <span class="comment">#&#125;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># deny access to .htaccess files, if Apache's document root</span></span><br><span class="line">    <span class="comment"># concurs with nginx's one</span></span><br><span class="line">    <span class="comment">#</span></span><br><span class="line">    <span class="comment">#location ~ /\.ht &#123;</span></span><br><span class="line">    <span class="comment">#    deny  all;</span></span><br><span class="line">    <span class="comment">#&#125;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后,我们自己写一个简单的html页面,给他随意命个名,我就不改了,叫index.html</p>
+<p><img alt="16aa10120b7d7dcb" data-src="https://tva1.sinaimg.cn/large/006tNbRwly1g9sk0tyra8j309t07bgm3.jpg" class="lazyload"></p>
+<p>然后把这个文件丢到 宿主机的 <code>/nginx/html/</code> 路径下</p>
+<p>我是用FileZilla工具传输文件到宿主机的</p>
+<p><img alt="16aa10469e7d8a51" data-src="https://tva1.sinaimg.cn/large/006tNbRwly1g9sk1d4rvej30fo09djry.jpg" class="lazyload"></p>
+<p>最后到了最关键的环节了</p>
+<p>开始挂载了 我们先把之前起的nginx容器服务关闭了 我直接一点, <code>docker rm 容器id</code></p>
+<p>OMG 我们得先关闭再删除,<code>docker stop 容器id</code></p>
+<p>都弄好了之后再次启动 这次和上次不同之处就是需要用到 <code>-v</code> 进行挂载了</p>
+<figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line">docker <span class="keyword">run</span><span class="bash"> --name mynginx -d -p 80:80 -v /nginx/html:/usr/share/nginx/html -v /nginx/conf/nginx.conf:/etc/nginx/nginx.conf -v /nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf -v /nginx/logs:/var/<span class="built_in">log</span>/nginx nginx</span></span><br></pre></td></tr></table></figure>
+
+<p>前面是宿主机路径 后面的nginx容器路径</p>
+<p><img alt="16aa4cac7a47445b" data-src="https://tva1.sinaimg.cn/large/006tNbRwly1g9sk2m2eapj309b04faa6.jpg" class="lazyload"></p>
+<p>我也是初学Java和Docker 哪有有不足请多指教,主要是给自己留个记录</p>
+]]></content>
+      <categories>
+        <category>Docker</category>
       </categories>
   </entry>
   <entry>
@@ -159,50 +307,6 @@
 ]]></content>
       <categories>
         <category>iOS</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>数据库常见问题汇总</title>
-    <url>/2016/11/15/%E6%95%B0%E6%8D%AE%E5%BA%93/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><h3 id="1153-Got-a-packet-bigger-than-‘max-allowed-packet’-bytes"><a href="#1153-Got-a-packet-bigger-than-‘max-allowed-packet’-bytes" class="headerlink" title="1153 - Got a packet bigger than ‘max_allowed_packet’ bytes"></a>1153 - Got a packet bigger than ‘max_allowed_packet’ bytes</h3><p>数据库数据同步导入时,文件过大导致出现此错误, 注意: 此种方式不用重启sql服务,只是临时修改.</p>
-<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">mysql&gt; show VARIABLES like '%max_allowed_packet%';</span><br><span class="line">+<span class="comment">--------------------------+-------+</span></span><br><span class="line">| Variable_name            | Value |</span><br><span class="line">+<span class="comment">--------------------------+-------+</span></span><br><span class="line">| max_allowed_packet       | 2048  |</span><br><span class="line">| slave_max_allowed_packet | 2048  |</span><br><span class="line">+<span class="comment">--------------------------+-------+</span></span><br><span class="line">2 rows in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; <span class="keyword">set</span> <span class="keyword">global</span> net_buffer_length=<span class="number">1000000</span>;</span><br><span class="line">Query OK, 0 rows affected, 1 warning (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; set global max_allowed_packet=1000000000;</span><br><span class="line">Query OK, 0 rows affected, 1 warning (0.00 sec)</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="Mac启动MySql服务-ERROR-1045-28000-Access-denied-for-user-‘root’-’localhost’-using-password-NO"><a href="#Mac启动MySql服务-ERROR-1045-28000-Access-denied-for-user-‘root’-’localhost’-using-password-NO" class="headerlink" title="Mac启动MySql服务 ERROR 1045 (28000): Access denied for user ‘root’@’localhost’ (using password: NO)"></a>Mac启动MySql服务 ERROR 1045 (28000): Access denied for user ‘root’@’localhost’ (using password: NO)</h3><p>解决方法：<br>第一步：如果mysql服务正在进行，将之停止。<br>第二步：在终端中以管理员权限启动mysqld_safe，命令如下：</p>
-<p><code>sudo /usr/local/mysql/bin/mysqld_safe --skip-grant-tables</code></p>
-<p>执行结果如下：</p>
-<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="number">2016</span><span class="number">-06</span><span class="number">-12</span>T08:<span class="number">29</span>:<span class="number">17.6</span>NZ mysqld_safe Logging to <span class="string">'/usr/local/mysql/data/lyqdeMacBook-Pro.local.err'</span>.</span><br><span class="line"><span class="number">2016</span><span class="number">-06</span><span class="number">-12</span>T08:<span class="number">29</span>:<span class="number">17.6</span>NZ mysqld_safe Starting mysqld daemon <span class="keyword">with</span> databases <span class="keyword">from</span> /usr/local/mysql/data</span><br></pre></td></tr></table></figure>
-
-<p>第三步：不要关闭当前的终端窗口，新建一个终端窗口，输入如下命令，回车登录mysql</p>
-<p><code>/usr/local/mysql/bin/mysql</code></p>
-<p>登录后，看到欢迎信息：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Welcome to the MySQL monitor.  Commands end with ; or \g.</span><br><span class="line">Your MySQL connection id is 37</span><br><span class="line">Server version: 5.7.13 MySQL Community Server (GPL)</span><br><span class="line"></span><br><span class="line">Copyright (c) 2000, 2016, Oracle and/or its affiliates. All rights reserved.</span><br><span class="line"></span><br><span class="line">Oracle is a registered trademark of Oracle Corporation and/or its</span><br><span class="line">affiliates. Other names may be trademarks of their respective</span><br><span class="line">owners.</span><br><span class="line"></span><br><span class="line">Type &apos;help;&apos; or &apos;\h&apos; for help. Type &apos;\c&apos; to clear the current input statement.</span><br><span class="line"></span><br><span class="line">mysql&gt;</span><br></pre></td></tr></table></figure>
-
-<p>打开”mysql”这个数据库，SQL如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Reading table information for completion of table and column names</span><br><span class="line">You can turn off this feature to get a quicker startup with -A</span><br><span class="line"></span><br><span class="line">Database changed</span><br><span class="line">mysql&gt;</span><br></pre></td></tr></table></figure>
-
-<p>然后，更新root的密码，SQL如下：</p>
-<p><code>mysql&gt; update user set authentication_string=password(&#39;root&#39;) where Host=&#39;localhost&#39; and User=&#39;root&#39;;</code></p>
-<p>注意：<br>①有的版本的mysql中，密码可能存储在password字段中，可以使用”describe user;”命令来查看下表结构再操作</p>
-<p>②authentication_string的值一定通过password函数来计算(password(‘root’))</p>
-<p>执行结果如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Query OK, 1 row affected, 1 warning (0.01 sec)</span><br><span class="line">Rows matched: 1  Changed: 1  Warnings: 1</span><br></pre></td></tr></table></figure>
-
-<p>退出mysql（执行sql语句：exit)</p>
-<p>最后一步：将mysqld_safe进程杀死，重启mysqld。</p>
-<p>可能会遇到的问题</p>
-<p>登录mysql</p>
-<p><code>/usr/local/mysql/bin/mysql -uroot -proot</code></p>
-<p>这个时候，如果执行查询之类的操作，比如执行”show databases;”，可能会有如下提示:</p>
-<p><code>ERROR 1820 (HY000): You must reset your password using ALTER USER statement before executing this statement.</code></p>
-<p>根据提示进行操作，输入如下SQL语句，这个语句的作用是修改root用户的口令为root：</p>
-<p><code>mysql&gt; alter user &#39;root&#39;@&#39;localhost&#39; identified by &#39;root&#39;;</code></p>
-<p>结果：</p>
-<p><code>Query OK, 0 rows affected</code></p>
-]]></content>
-      <categories>
-        <category>数据库</category>
       </categories>
   </entry>
   <entry>
