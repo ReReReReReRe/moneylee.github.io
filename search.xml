@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>解决iOS真机调试时反复断开连接的问题</title>
+    <url>/2019/12/26/%E8%A7%A3%E5%86%B3iOS%E7%9C%9F%E6%9C%BA%E8%B0%83%E8%AF%95%E6%97%B6%E5%8F%8D%E5%A4%8D%E6%96%AD%E5%BC%80%E8%BF%9E%E6%8E%A5%E7%9A%84%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>title: 《解决iOS真机调试时反复断开连接的问题》<br>date: 2018-9-15 15:12:02<br>categories: “iOS”<br>top_img: “<a href="https://tva1.sinaimg.cn/large/006y8mN6ly1g8vl0019wlj31ej0u0x6q.jpg&quot;" target="_blank" rel="noopener">https://tva1.sinaimg.cn/large/006y8mN6ly1g8vl0019wlj31ej0u0x6q.jpg&quot;</a><br>cover: “<a href="https://tva1.sinaimg.cn/large/006y8mN6ly1g8vl0019wlj31ej0u0x6q.jpg&quot;" target="_blank" rel="noopener">https://tva1.sinaimg.cn/large/006y8mN6ly1g8vl0019wlj31ej0u0x6q.jpg&quot;</a></p>
+<p>开发时经常由于数据线或者其他莫名其妙的问题导致手机连接Mac反反复复断开连接, 很是苦恼, 一般情况下换个数据线就好了, 或者重启电脑, 虽然现在iOS开发者可以使用wifi内网连接的形式调试真机, 但是受限于公司网速的影响, 严重影响真机调试的效率, 闲话少说, 解决办法:</p>
+<p><code>$ sudo killall -STOP -c usbd</code></p>
+<p>终端输入如上的命令, 可以解决这个问题, 但是保证数据连接畅通,但是充电会非常缓慢, 调试结束后记得重启电脑</p>
+]]></content>
+  </entry>
+  <entry>
     <title>数据库常见问题汇总</title>
     <url>/2019/12/10/%E6%95%B0%E6%8D%AE%E5%BA%93/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><h3 id="1153-Got-a-packet-bigger-than-‘max-allowed-packet’-bytes"><a href="#1153-Got-a-packet-bigger-than-‘max-allowed-packet’-bytes" class="headerlink" title="1153 - Got a packet bigger than ‘max_allowed_packet’ bytes"></a>1153 - Got a packet bigger than ‘max_allowed_packet’ bytes</h3><p>数据库数据同步导入时,文件过大导致出现此错误, 注意: 此种方式不用重启sql服务,只是临时修改.</p>
@@ -68,6 +77,8 @@
 <p>需要填写相关资料 邮件的方式获取下载地址, 我的mac电脑升级10.15之后 之前的版本不能用了, 在网上也没有找到安装包, 只好重新在官网申请, 另外官网给你发的下载地址需要翻墙, 所以不能翻墙就用我下面提供的吧, 应该是最新的版本: ps-pulse-mac-9.0r4.0-b1731-installer</p>
 <p><a href="https://pan.baidu.com/s/1-6xBeghJy5h8g_MGrS_LYw" target="_blank" rel="noopener">百度云下载地址</a> 密码: h7z6</p>
 <h3 id="蓝灯-lantern-翻墙工具"><a href="#蓝灯-lantern-翻墙工具" class="headerlink" title="蓝灯 lantern (翻墙工具)"></a>蓝灯 lantern (翻墙工具)</h3><p>下载地址: <a href="https://github.com/getlantern/download" target="_blank" rel="noopener">https://github.com/getlantern/download</a></p>
+<h3 id="TeamViewer检测到商业用途的解决办法-包含-Mac-Windows-安卓"><a href="#TeamViewer检测到商业用途的解决办法-包含-Mac-Windows-安卓" class="headerlink" title="TeamViewer检测到商业用途的解决办法(包含 Mac Windows 安卓)"></a>TeamViewer检测到商业用途的解决办法(包含 Mac Windows 安卓)</h3><p>能这么办 用破解版呗! 仅供个人学习娱乐使用, 严禁商业用途。记得在高级设置里将版本自动更新关闭, 否者会出现双方版本不一致无法使用的情况!!!</p>
+<p>百度云下载地址: <a href="https://pan.baidu.com/s/1eVPo-Ubz54GEaPmwEM32dg" target="_blank" rel="noopener">https://pan.baidu.com/s/1eVPo-Ubz54GEaPmwEM32dg</a></p>
 ]]></content>
       <categories>
         <category>工具</category>
@@ -222,28 +233,6 @@
       </categories>
   </entry>
   <entry>
-    <title>Swift开发的一些小知识点(更新状态)</title>
-    <url>/2016/11/15/Swift%E5%BC%80%E5%8F%91%E4%B8%80%E4%BA%9B%E5%B0%8F%E7%9F%A5%E8%AF%86%E7%82%B9/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><h3 id="Swift项目程序入口main函数在哪"><a href="#Swift项目程序入口main函数在哪" class="headerlink" title="Swift项目程序入口main函数在哪?"></a>Swift项目程序入口main函数在哪?</h3><p>Xcode新建的Swift项目中 发现没有main函数入口, 哪里去了呢, 在Appdelegate.swfit 上发现一个注解</p>
-<p><code>@UIApplicationMain</code></p>
-<p>这个注解会自动生成一个程序的入口, 但是如果在一些特殊情况下, 我们需要自定义 UIApplication该怎么办呢, 新建一个Swift文件, 命名为 main.swift    在其内实现main函数</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> UIKit</span><br><span class="line"><span class="comment">//自定义UIApplication</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyApplication</span>: <span class="title">UIApplication</span> </span>&#123;&#125;</span><br><span class="line"><span class="comment">//使用自定义的UIApplication</span></span><br><span class="line"><span class="type">UIApplicationMain</span>(<span class="type">CommandLine</span>.argc, <span class="type">CommandLine</span>.unsafeArgv, <span class="type">NSStringFromClass</span>(<span class="type">MyApplication</span>.<span class="keyword">self</span>), <span class="type">NSStringFromClass</span>(<span class="type">AppDelegate</span>.<span class="keyword">self</span>))</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="Swift调用OC"><a href="#Swift调用OC" class="headerlink" title="Swift调用OC"></a>Swift调用OC</h3><p>在swift项目新建OC类, 会弹出提示如下图</p>
-<p><img alt="截屏2019-11-12下午10.44.09" data-src="https://tva1.sinaimg.cn/large/006y8mN6ly1g8vn1f9shqj30va07gjx0.jpg" class="lazyload"></p>
-<p>会询问你是否创建桥接文件, 点击创建桥接文件, 在工程目录内会出现产生的桥接文件</p>
-<p><img alt="Snip20191112_1" data-src="https://tva1.sinaimg.cn/large/006y8mN6ly1g8vn39auvvj307903u3yn.jpg" class="lazyload"></p>
-<p>桥接文件的文件名固定格式 <strong>{targetName}-Bridging-Header.h</strong></p>
-<p>这个头文件,引入一些OC的类, 暴露给Swift使用.</p>
-<p><code>#import &quot;Change.h&quot;</code></p>
-]]></content>
-      <categories>
-        <category>iOS</category>
-      </categories>
-  </entry>
-  <entry>
     <title>《如何使用CocoaPods：2016.11.15版》</title>
     <url>/2016/11/15/%E3%80%8A%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8CocoaPods%EF%BC%9A2016.11.15%E7%89%88%E3%80%8B/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>一、CocoaPods的简介：</p>
@@ -304,6 +293,28 @@
 <p>找到 User Header Search Paths  双击后面空白处 点击+号 输入 $(PODS_ROOT) 最有改选 recursive</p>
 <p><img alt="截屏2019-11-12下午3.20.50" data-src="https://tva1.sinaimg.cn/large/006y8mN6ly1g8vapkh4awj311a0g0jwh.jpg" class="lazyload"></p>
 <p>大功告成！</p>
+]]></content>
+      <categories>
+        <category>iOS</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>Swift开发的一些小知识点(更新状态)</title>
+    <url>/2016/11/15/Swift%E5%BC%80%E5%8F%91%E4%B8%80%E4%BA%9B%E5%B0%8F%E7%9F%A5%E8%AF%86%E7%82%B9/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><h3 id="Swift项目程序入口main函数在哪"><a href="#Swift项目程序入口main函数在哪" class="headerlink" title="Swift项目程序入口main函数在哪?"></a>Swift项目程序入口main函数在哪?</h3><p>Xcode新建的Swift项目中 发现没有main函数入口, 哪里去了呢, 在Appdelegate.swfit 上发现一个注解</p>
+<p><code>@UIApplicationMain</code></p>
+<p>这个注解会自动生成一个程序的入口, 但是如果在一些特殊情况下, 我们需要自定义 UIApplication该怎么办呢, 新建一个Swift文件, 命名为 main.swift    在其内实现main函数</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> UIKit</span><br><span class="line"><span class="comment">//自定义UIApplication</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyApplication</span>: <span class="title">UIApplication</span> </span>&#123;&#125;</span><br><span class="line"><span class="comment">//使用自定义的UIApplication</span></span><br><span class="line"><span class="type">UIApplicationMain</span>(<span class="type">CommandLine</span>.argc, <span class="type">CommandLine</span>.unsafeArgv, <span class="type">NSStringFromClass</span>(<span class="type">MyApplication</span>.<span class="keyword">self</span>), <span class="type">NSStringFromClass</span>(<span class="type">AppDelegate</span>.<span class="keyword">self</span>))</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="Swift调用OC"><a href="#Swift调用OC" class="headerlink" title="Swift调用OC"></a>Swift调用OC</h3><p>在swift项目新建OC类, 会弹出提示如下图</p>
+<p><img alt="截屏2019-11-12下午10.44.09" data-src="https://tva1.sinaimg.cn/large/006y8mN6ly1g8vn1f9shqj30va07gjx0.jpg" class="lazyload"></p>
+<p>会询问你是否创建桥接文件, 点击创建桥接文件, 在工程目录内会出现产生的桥接文件</p>
+<p><img alt="Snip20191112_1" data-src="https://tva1.sinaimg.cn/large/006y8mN6ly1g8vn39auvvj307903u3yn.jpg" class="lazyload"></p>
+<p>桥接文件的文件名固定格式 <strong>{targetName}-Bridging-Header.h</strong></p>
+<p>这个头文件,引入一些OC的类, 暴露给Swift使用.</p>
+<p><code>#import &quot;Change.h&quot;</code></p>
 ]]></content>
       <categories>
         <category>iOS</category>
