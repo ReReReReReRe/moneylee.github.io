@@ -76,7 +76,7 @@ function activateLightMode(){
 <p>我们根据这个范围随机生成1万个坐标,然后先在地图上自定义视图标记出来,但是不要显示,这里先全部显示看一下 ps:此图手抖多打个0,是1万个坐标点…</p>
 <p><img alt="2576017-2361b9ddbe01c4e2" data-src="/Users/moneylee/Downloads/2576017-2361b9ddbe01c4e2.jpg" class="lazyload"></p>
 <p>然后在当前地图的中心点绘制一个半径为3km的圆形, 在地图移动的时候,这个圆心也随之变化,这个时候遍历这些数据,如果这个数据的坐标在圆的范围内那么就显示,反之就隐藏。</p>
-<p><img alt="2576017-2a2bf58fbff5fb0e" data-src="https://tva1.sinaimg.cn/large/006tNbRwly1gb49zb6s87j30u01szqv7.jpg" class="lazyload"></p>
+<p><img alt="2576017-2a2bf58fbff5fb0e" data-src="https://tva1.sinaimg.cn/large/006tNbRwly1gb4a9n3i0lj30u01sz1kx.jpg" class="lazyload"></p>
 <p>这样做的好处是只需要从服务器拿取一次数据,数据量小的时候也很流畅,减轻了服务器的运算,但是弊端就是数据量庞大的时候会非常占用手机的内存,这也是我最开始没有考虑到的一点,</p>
 <p><img alt="2576017-b30ed2445675e23e" data-src="https://tva1.sinaimg.cn/large/006tNbRwly1gb4a03t1lsj30m20hkwie.jpg" class="lazyload"></p>
 <p>为了稳定不建议这样处理,除非数据量小的时候,我用iphone6测试 数据量达到500就开始卡顿,用iphoneX 数据量1000还可以接受,为了向下兼容不建议这种做法,还是老实向服务器请求数据比较好些。写这个文章主要还是想多了解下高德的API,加深下理解,以后再使用高德SDK的时候更加熟练。如果哪位大神看到这篇文章有好的优化方案请赐教,十分感谢,如果感觉垃圾,求轻喷。下面就开始代码部分</p>
