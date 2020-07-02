@@ -22,6 +22,183 @@
       </categories>
   </entry>
   <entry>
+    <title>Java项目开发笔记_02</title>
+    <url>/2020/06/07/Java%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91%E7%AC%94%E8%AE%B0_02/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><hr>
+<h3 id="SpringBoot2-x-单元测试"><a href="#SpringBoot2-x-单元测试" class="headerlink" title="SpringBoot2.x 单元测试"></a>SpringBoot2.x 单元测试</h3><ul>
+<li>Pox.xml</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-test<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">scope</span>&gt;</span>test<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>测试代码</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//底层用junit SpringJuint4ClassRunner</span></span><br><span class="line"><span class="meta">@RunWith</span>(SpringRunner<span class="class">.<span class="keyword">class</span>)</span></span><br><span class="line"><span class="class">//启动<span class="title">Springboot</span>工程 这里也可以省略括号内的 直接写@<span class="title">SpringBootTest</span> 但是保证工程目录的位置避免出错指定下</span></span><br><span class="line"><span class="class">@<span class="title">SpringBootTest</span>(<span class="title">classes</span> </span>= &#123;XdstudyApplication<span class="class">.<span class="keyword">class</span>&#125;) </span></span><br><span class="line"><span class="class"><span class="title">public</span> <span class="title">class</span> <span class="title">HelloControllerTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> HelloController helloController;</span><br><span class="line">		<span class="comment">//注意@Test注解必须要加</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">getHello</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="keyword">final</span> String greeting = helloController.index();</span><br><span class="line">        <span class="comment">//断言测试语句</span></span><br><span class="line">        Assert.assertEquals(<span class="string">"Hello World!"</span>, greeting);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<hr>
+<h3 id="MockMvc调用Controller层API接口"><a href="#MockMvc调用Controller层API接口" class="headerlink" title="MockMvc调用Controller层API接口"></a>MockMvc调用Controller层API接口</h3><ul>
+<li>如何测试Controller对外提供的接口<ul>
+<li>增加类注解 @AutoConfigureMockMvc</li>
+<li>注入一个MockMvc类</li>
+<li>相关API：<ul>
+<li>perform执行一个RequestBuilder请求</li>
+<li>andExpect：添加ResultMatcher -&gt; MockMvcResultMatchers验证规则</li>
+<li>andReturn：最后返回相应的MvcResult -&gt; Response</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>用例代码</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@RunWith</span>(SpringRunner<span class="class">.<span class="keyword">class</span>)  //底层用<span class="title">junit</span> <span class="title">SpringJuint4ClassRunner</span></span></span><br><span class="line"><span class="class">@<span class="title">SpringBootTest</span>(<span class="title">classes</span> </span>= &#123;XdstudyApplication<span class="class">.<span class="keyword">class</span>&#125;) //启用整个<span class="title">Springboot</span>工程</span></span><br><span class="line"><span class="class">@<span class="title">AutoConfigureMockMvc</span></span></span><br><span class="line"><span class="class"><span class="title">public</span> <span class="title">class</span> <span class="title">VideoTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> MockMvc mockMvc;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testVideoListApi</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//判断http请求是否成功 固定写法</span></span><br><span class="line">        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders</span><br><span class="line">                .get(<span class="string">"/api/v1/pub/videos"</span>))</span><br><span class="line">                .andExpect(MockMvcResultMatchers.status().isOk()).andReturn();</span><br><span class="line">        <span class="comment">//拿到cookies</span></span><br><span class="line">        Cookie[] cookies = mvcResult.getResponse().getCookies();</span><br><span class="line">        System.out.println(cookies);</span><br><span class="line">        System.out.println(<span class="string">"--------------------------------"</span>);</span><br><span class="line">        <span class="comment">//拿到状态码</span></span><br><span class="line">        <span class="keyword">int</span> status = mvcResult.getResponse().getStatus();</span><br><span class="line">        System.out.println(status);</span><br><span class="line">        System.out.println(<span class="string">"--------------------------------"</span>);</span><br><span class="line">        <span class="comment">//拿到结果 并且指定 utf8编码 否则中文会乱码</span></span><br><span class="line">        String contentAsString = mvcResult.getResponse().getContentAsString(Charset.forName(<span class="string">"utf-8"</span>));</span><br><span class="line">        System.out.println(contentAsString);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<hr>
+<h3 id="SpringBoot2-x-全局异常处理"><a href="#SpringBoot2-x-全局异常处理" class="headerlink" title="SpringBoot2.x 全局异常处理"></a>SpringBoot2.x 全局异常处理</h3><ul>
+<li><p>统一错误页面或错误码</p>
+</li>
+<li><p>对用户更友好</p>
+</li>
+<li><p>配置全局异常步骤</p>
+<ul>
+<li>类添加注解<ul>
+<li>@ControllerAdvice，如果需要返回json数据，则方法需要添加@ResponeBody</li>
+<li>@RestController，默认返回json数据，方法不需要添加@ResponeBody</li>
+</ul>
+</li>
+<li>方法添加处理器<ul>
+<li>捕获全局异常，处理所有不可知的异常</li>
+<li>ExceptionHandler(value=Exception.class)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>自定义异常界面</p>
+<ul>
+<li>返回自定义异常界面，需要引入thymeleaf依赖（非必须，简答的html’界面不需要）</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-thymeleaf<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>resource目录下新建templates，并新建error.html页面</p>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@ControllerAdvice</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CustomExtHandler</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//返回页面</span></span><br><span class="line"><span class="meta">@ExceptionHandler</span>(value = Exception<span class="class">.<span class="keyword">class</span>)</span></span><br><span class="line"><span class="class"><span class="title">Object</span> <span class="title">handlerException</span>(<span class="title">Exception</span> <span class="title">e</span>, <span class="title">HttpServletRequest</span> <span class="title">request</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">       ModelAndView modelAndView = <span class="keyword">new</span> ModelAndView();</span><br><span class="line">       modelAndView.setViewName(<span class="string">"error.html"</span>);</span><br><span class="line">       modelAndView.addObject(<span class="string">"msg"</span>, e.getMessage());</span><br><span class="line">       <span class="keyword">return</span> modelAndView;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<hr>
+<h3 id="SpringBoot2-x-过滤器-拦截器"><a href="#SpringBoot2-x-过滤器-拦截器" class="headerlink" title="SpringBoot2.x 过滤器-拦截器"></a>SpringBoot2.x 过滤器-拦截器</h3><ul>
+<li>springboot2.x里面的过滤器</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ApplicationContextHeaderFilter</span><br><span class="line">OrderedCharacterEncodingFilter</span><br><span class="line">OrderedFormContentFilter</span><br><span class="line">OrderedRequestContextFilter</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>过滤器的优先级</p>
+<ul>
+<li>Ordered.HIGHEST_PRECEDENCE</li>
+<li>Ordered.LOWEST_PRECEDENCE</li>
+</ul>
+<p>低位值意味着更高的优先级</p>
+</li>
+<li><p>自定义Filter，避免和默认的Filter优先级一样，不然会冲突</p>
+</li>
+<li><p>注册Filter配置两种方式</p>
+<ul>
+<li>bean FilterRegistrationBean</li>
+<li>Servelt3.0 WebFilter</li>
+</ul>
+</li>
+</ul>
+<h4 id="使用Servlet3-0注解开发自定义Filter"><a href="#使用Servlet3-0注解开发自定义Filter" class="headerlink" title="使用Servlet3.0注解开发自定义Filter"></a>使用Servlet3.0注解开发自定义Filter</h4><ul>
+<li>使用Servlet3.0的注解进行配置<ul>
+<li>启动类里增加 @ServletComponentScan 开启扫描</li>
+<li>新建一个Filter类，implements Filter，并实现对应接口</li>
+<li>@WebFilter 标记一个类为filter，被spring进行扫描</li>
+<li>urlPatterns：拦截规则，支持正则</li>
+<li>控制chain.doFilter的方法的调用，来实现是否通过放行</li>
+<li>不放行，web应用resp.sendRedirect(“/index.html”)或者 返回json字符串</li>
+</ul>
+</li>
+<li>场景：权限控制、用户登录状态控制、也可以交给拦截器处理</li>
+<li>范例：用户登录过滤器</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">@WebFilter(urlPatterns = &quot;/api/v1/pri/*&quot;, filterName = &quot;loginFilter&quot;)</span><br><span class="line">public class LoginFilter implements Filter &#123;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 容器加载的时候</span><br><span class="line">     * @param filterConfig</span><br><span class="line">     * @throws ServletException</span><br><span class="line">     */</span><br><span class="line">    @Override</span><br><span class="line">    public void init(FilterConfig filterConfig) throws ServletException &#123;</span><br><span class="line">        System.out.println(&quot;=======initFilter&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException &#123;</span><br><span class="line"></span><br><span class="line">        HttpServletRequest req = (HttpServletRequest) servletRequest;</span><br><span class="line">        HttpServletResponse resp = (HttpServletResponse) servletResponse;</span><br><span class="line"></span><br><span class="line">        String token = req.getHeader(&quot;token&quot;);</span><br><span class="line">        if (StringUtils.isEmpty(token)) &#123;</span><br><span class="line">            token = req.getParameter(&quot;token&quot;);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        if (StringUtils.isEmpty(token)) &#123;</span><br><span class="line">            return;</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            //判断token是否合法</span><br><span class="line">            User user = UserServiceImpl.sessionMap.get(token);</span><br><span class="line">            if (user != null) &#123;</span><br><span class="line">                filterChain.doFilter(servletRequest, servletResponse);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 容器销毁</span><br><span class="line">     */</span><br><span class="line">    @Override</span><br><span class="line">    public void destroy() &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>使用Servelet3.0的注释自定义原生Servlet<ul>
+<li>javaweb的使用doPost和doGet方法使用Servelet3.0替代更轻量</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.moneylee.xdstudy.servlet;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.servlet.ServletException;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.annotation.WebServlet;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServlet;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletResponse;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.io.PrintWriter;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@className</span>: UserServlet</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Description</span>: 使用Servelet3.0开发原生的接口</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Author</span> moneylee</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Date</span> 2020-07-02 14:03</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Version</span> 1.0</span></span><br><span class="line"><span class="comment"> **/</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@WebServlet</span>(name = <span class="string">"userServlet"</span>, urlPatterns = <span class="string">"/api/v1/test/customs"</span>)</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserServlet</span> <span class="keyword">extends</span> <span class="title">HttpServlet</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">doGet</span><span class="params">(HttpServletRequest req, HttpServletResponse resp)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line"></span><br><span class="line">        PrintWriter writer = resp.getWriter();</span><br><span class="line">        writer.write(<span class="string">"this is my custom servlet"</span>);</span><br><span class="line">        writer.flush();</span><br><span class="line">        writer.close();</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">doPost</span><span class="params">(HttpServletRequest req, HttpServletResponse resp)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.doPost(req, resp);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>Servlet3.0 + SpringBoot2.x 注解 Listener常用监听器<ul>
+<li>监听器：应用启动监听器，会话监听器，请求监听器</li>
+<li>作用<ul>
+<li>ServletContextListener 应用启动监听</li>
+<li>HttpSessionLisener 会话监听</li>
+<li>ServletRequestLisener 请求监听</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@WebListener</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ApplicationListener</span> <span class="keyword">implements</span> <span class="title">ServletContextListener</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">contextInitialized</span><span class="params">(ServletContextEvent sce)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"contextInitialized===="</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">contextDestroyed</span><span class="params">(ServletContextEvent sce)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"contextDestroyed===="</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li><p>SpringBoot2.x拦截器在项目中的使用</p>
+<ul>
+<li>拦截器和过滤器用途基本一致</li>
+<li>使用步骤：<ul>
+<li>自定义拦截器 HandlerInterceptor<ul>
+<li>preHandle：调用Controller某个方法之前</li>
+<li>postHandle：Controller之后调用，视图渲染前，如果控制器Controller出现了异常，则不会执行此方法</li>
+<li>afterCompletion：不管有没有异常都会被调用，用于资源清理</li>
+</ul>
+</li>
+<li>按照注册顺序进行拦截，先注册的先被拦截</li>
+</ul>
+</li>
+<li>拦截器不生效常见问题：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">- 是否加 @Configuration</span><br><span class="line">- 拦截路径是否有问题 ** 和 * </span><br><span class="line">- 拦截器最后路径一定要 /** 如果是目录的话则是 /*/</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+  <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.moneylee.xdstudy.intercepter;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Bean;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Configuration;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.servlet.config.annotation.InterceptorRegistry;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.servlet.config.annotation.WebMvcConfigurer;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@className</span>: CustomWebMvcConfigation</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Description</span>: 拦截器注册配置类</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Author</span> moneylee</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Date</span> 2020-07-02 14:51</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Version</span> 1.0</span></span><br><span class="line"><span class="comment"> **/</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CustomWebMvcConfigation</span> <span class="keyword">implements</span> <span class="title">WebMvcConfigurer</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addInterceptors</span><span class="params">(InterceptorRegistry registry)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//注册拦截器</span></span><br><span class="line">        registry.addInterceptor(getLoginIntercepter()).addPathPatterns(<span class="string">"/api/v1/pri/**"</span>);</span><br><span class="line">        registry.addInterceptor(<span class="keyword">new</span> TwoIntercepter()).addPathPatterns(<span class="string">"/api/v1/pri/**"</span>);</span><br><span class="line"></span><br><span class="line">        WebMvcConfigurer.<span class="keyword">super</span>.addInterceptors(registry);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> LoginIntercepter <span class="title">getLoginIntercepter</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> LoginIntercepter();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+  <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.moneylee.xdstudy.intercepter;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.fasterxml.jackson.databind.ObjectMapper;</span><br><span class="line"><span class="keyword">import</span> com.moneylee.xdstudy.domain.User;</span><br><span class="line"><span class="keyword">import</span> com.moneylee.xdstudy.service.impl.UserServiceImpl;</span><br><span class="line"><span class="keyword">import</span> com.moneylee.xdstudy.utils.JsonData;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Configuration;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.servlet.HandlerInterceptor;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.servlet.ModelAndView;</span><br><span class="line"><span class="keyword">import</span> org.thymeleaf.util.StringUtils;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletResponse;</span><br><span class="line"><span class="keyword">import</span> java.io.PrintWriter;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@className</span>: LoginIntercepter</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Description</span>: 拦截器自定义</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Author</span> moneylee</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Date</span> 2020-07-02 14:54</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Version</span> 1.0</span></span><br><span class="line"><span class="comment"> **/</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LoginIntercepter</span> <span class="keyword">implements</span> <span class="title">HandlerInterceptor</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> ObjectMapper objectMapper;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">preHandle</span><span class="params">(HttpServletRequest request, HttpServletResponse response, Object handler)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">"LoginIntercepter preHandle ======="</span>);</span><br><span class="line">        <span class="comment">//此处写判断逻辑</span></span><br><span class="line">        String token = request.getHeader(<span class="string">"token"</span>);</span><br><span class="line">        <span class="keyword">if</span> (StringUtils.isEmpty(token)) &#123;</span><br><span class="line">            token = request.getParameter(<span class="string">"token"</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (!StringUtils.isEmpty(token)) &#123;</span><br><span class="line"></span><br><span class="line">            <span class="comment">//判断token是否合法</span></span><br><span class="line">            User user = UserServiceImpl.sessionMap.get(token);</span><br><span class="line">            <span class="keyword">if</span> (user != <span class="keyword">null</span>) &#123;</span><br><span class="line"></span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line"></span><br><span class="line">                String asString = objectMapper</span><br><span class="line">                        .writeValueAsString(JsonData.buildError(-<span class="number">2</span>, <span class="string">"token失效"</span>));</span><br><span class="line">                renderJson(response, asString);</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line"></span><br><span class="line">            String asString = objectMapper</span><br><span class="line">                    .writeValueAsString(JsonData.buildError(-<span class="number">3</span>, <span class="string">"未登录"</span>));</span><br><span class="line">            renderJson(response, asString);</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">renderJson</span><span class="params">(HttpServletResponse response, String json)</span> </span>&#123;</span><br><span class="line">        response.setContentType(<span class="string">"application/json"</span>);</span><br><span class="line">        response.setCharacterEncoding(<span class="string">"utf-8"</span>);</span><br><span class="line">        <span class="keyword">try</span>(PrintWriter writer = response.getWriter()) &#123;</span><br><span class="line">            writer.print(json);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">postHandle</span><span class="params">(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"LoginIntercepter postHandle ======="</span>);</span><br><span class="line">        HandlerInterceptor.<span class="keyword">super</span>.postHandle(request, response, handler, modelAndView);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">afterCompletion</span><span class="params">(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"LoginIntercepter afterCompletion ======="</span>);</span><br><span class="line">        HandlerInterceptor.<span class="keyword">super</span>.afterCompletion(request, response, handler, ex);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li><p>和Filter过滤器的区别</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Filter和Intercepter都是AOP编程思想的提现，功能基本都可以实现</span><br><span class="line"></span><br><span class="line">拦截器功能更强大一些，Filter能做的它都能做</span><br><span class="line"></span><br><span class="line">Filter只在Servlet前后起作用，而Intercepter能够深入到方法前后，异常抛出前后等等</span><br><span class="line"></span><br><span class="line">依赖于Servlet容器即Web应用，而Intercepter不依赖与Servlet 可以应用在多种环境</span><br><span class="line"></span><br><span class="line">在接口调用的生命周期里，Intercepter可以被多次使用，而Filter只能在容器初始化时调用一次</span><br><span class="line"></span><br><span class="line">Filter和Intercepter的执行顺序：</span><br><span class="line">过滤前 -&gt; 拦截前 -&gt; action执行 -&gt; 拦截后 -&gt; 过滤后</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+  </entry>
+  <entry>
     <title>Java项目开发笔记_01</title>
     <url>/2020/06/06/Java%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91%E7%AC%94%E8%AE%B0_01/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><hr>
@@ -826,71 +1003,6 @@
       </categories>
   </entry>
   <entry>
-    <title>数据库常见问题汇总</title>
-    <url>/2019/12/10/%E6%95%B0%E6%8D%AE%E5%BA%93/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><h3 id="1153-Got-a-packet-bigger-than-‘max-allowed-packet’-bytes"><a href="#1153-Got-a-packet-bigger-than-‘max-allowed-packet’-bytes" class="headerlink" title="1153 - Got a packet bigger than ‘max_allowed_packet’ bytes"></a>1153 - Got a packet bigger than ‘max_allowed_packet’ bytes</h3><p>数据库数据同步导入时,文件过大导致出现此错误, 注意: 此种方式不用重启sql服务,只是临时修改.</p>
-<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">mysql&gt; show VARIABLES like '%max_allowed_packet%';</span><br><span class="line">+<span class="comment">--------------------------+-------+</span></span><br><span class="line">| Variable_name            | Value |</span><br><span class="line">+<span class="comment">--------------------------+-------+</span></span><br><span class="line">| max_allowed_packet       | 2048  |</span><br><span class="line">| slave_max_allowed_packet | 2048  |</span><br><span class="line">+<span class="comment">--------------------------+-------+</span></span><br><span class="line">2 rows in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; <span class="keyword">set</span> <span class="keyword">global</span> net_buffer_length=<span class="number">1000000</span>;</span><br><span class="line">Query OK, 0 rows affected, 1 warning (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; set global max_allowed_packet=1000000000;</span><br><span class="line">Query OK, 0 rows affected, 1 warning (0.00 sec)</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="Mac启动MySql服务-ERROR-1045-28000-Access-denied-for-user-‘root’-’localhost’-using-password-NO"><a href="#Mac启动MySql服务-ERROR-1045-28000-Access-denied-for-user-‘root’-’localhost’-using-password-NO" class="headerlink" title="Mac启动MySql服务 ERROR 1045 (28000): Access denied for user ‘root’@’localhost’ (using password: NO)"></a>Mac启动MySql服务 ERROR 1045 (28000): Access denied for user ‘root’@’localhost’ (using password: NO)</h3><p>解决方法：<br>第一步：如果mysql服务正在进行，将之停止。<br>第二步：在终端中以管理员权限启动mysqld_safe，命令如下：</p>
-<p><code>sudo /usr/local/mysql/bin/mysqld_safe --skip-grant-tables</code></p>
-<p>执行结果如下：</p>
-<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="number">2016</span><span class="number">-06</span><span class="number">-12</span>T08:<span class="number">29</span>:<span class="number">17.6</span>NZ mysqld_safe Logging to <span class="string">'/usr/local/mysql/data/lyqdeMacBook-Pro.local.err'</span>.</span><br><span class="line"><span class="number">2016</span><span class="number">-06</span><span class="number">-12</span>T08:<span class="number">29</span>:<span class="number">17.6</span>NZ mysqld_safe Starting mysqld daemon <span class="keyword">with</span> databases <span class="keyword">from</span> /usr/local/mysql/data</span><br></pre></td></tr></table></figure>
-
-<p>第三步：不要关闭当前的终端窗口，新建一个终端窗口，输入如下命令，回车登录mysql</p>
-<p><code>/usr/local/mysql/bin/mysql</code></p>
-<p>登录后，看到欢迎信息：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Welcome to the MySQL monitor.  Commands end with ; or \g.</span><br><span class="line">Your MySQL connection id is 37</span><br><span class="line">Server version: 5.7.13 MySQL Community Server (GPL)</span><br><span class="line"></span><br><span class="line">Copyright (c) 2000, 2016, Oracle and/or its affiliates. All rights reserved.</span><br><span class="line"></span><br><span class="line">Oracle is a registered trademark of Oracle Corporation and/or its</span><br><span class="line">affiliates. Other names may be trademarks of their respective</span><br><span class="line">owners.</span><br><span class="line"></span><br><span class="line">Type &apos;help;&apos; or &apos;\h&apos; for help. Type &apos;\c&apos; to clear the current input statement.</span><br><span class="line"></span><br><span class="line">mysql&gt;</span><br></pre></td></tr></table></figure>
-
-<p>打开”mysql”这个数据库，SQL如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Reading table information for completion of table and column names</span><br><span class="line">You can turn off this feature to get a quicker startup with -A</span><br><span class="line"></span><br><span class="line">Database changed</span><br><span class="line">mysql&gt;</span><br></pre></td></tr></table></figure>
-
-<p>然后，更新root的密码，SQL如下：</p>
-<p><code>mysql&gt; update user set authentication_string=password(&#39;root&#39;) where Host=&#39;localhost&#39; and User=&#39;root&#39;;</code></p>
-<p>注意：<br>①有的版本的mysql中，密码可能存储在password字段中，可以使用”describe user;”命令来查看下表结构再操作</p>
-<p>②authentication_string的值一定通过password函数来计算(password(‘root’))</p>
-<p>执行结果如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Query OK, 1 row affected, 1 warning (0.01 sec)</span><br><span class="line">Rows matched: 1  Changed: 1  Warnings: 1</span><br></pre></td></tr></table></figure>
-
-<p>退出mysql（执行sql语句：exit)</p>
-<p>最后一步：将mysqld_safe进程杀死，重启mysqld。</p>
-<p>可能会遇到的问题</p>
-<p>登录mysql</p>
-<p><code>/usr/local/mysql/bin/mysql -uroot -proot</code></p>
-<p>这个时候，如果执行查询之类的操作，比如执行”show databases;”，可能会有如下提示:</p>
-<p><code>ERROR 1820 (HY000): You must reset your password using ALTER USER statement before executing this statement.</code></p>
-<p>根据提示进行操作，输入如下SQL语句，这个语句的作用是修改root用户的口令为root：</p>
-<p><code>mysql&gt; alter user &#39;root&#39;@&#39;localhost&#39; identified by &#39;root&#39;;</code></p>
-<p>结果：</p>
-<p><code>Query OK, 0 rows affected</code></p>
-<h3 id="MySql-数据库-插入表情字符报错-java-sql-SQLException-Incorrect-string-value-‘-xF0-x9F-x98-x87"><a href="#MySql-数据库-插入表情字符报错-java-sql-SQLException-Incorrect-string-value-‘-xF0-x9F-x98-x87" class="headerlink" title="MySql 数据库 插入表情字符报错 [java.sql.SQLException: Incorrect string value: ‘\xF0\x9F\x98\x87]"></a>MySql 数据库 插入表情字符报错 [java.sql.SQLException: Incorrect string value: ‘\xF0\x9F\x98\x87]</h3><p>解决办法: mysql安装目录下找到 my.ini 文件并做修改</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[mysqld]</span><br><span class="line">character-set-server=utf8mb4</span><br><span class="line">[mysql]</span><br><span class="line">default-character-set=utf8mb4</span><br></pre></td></tr></table></figure>
-
-<p>修改后重启mysql</p>
-<p>将已经建好的表转成utf8mb4</p>
-<p>更改数据库编码:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ALTER DATABASE 数据库名 CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;</span><br></pre></td></tr></table></figure>
-
-<p>更改表的编码:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">alter table 表名 convert to character set utf8mb4 collate utf8mb4_bin;</span><br></pre></td></tr></table></figure>
-
-<p>修改mysql配置文件my.cnf (windows为my.ini)</p>
-<p>my.cnf一般在etc/mysql/my.cnf位置。找到后请在以下三部分里添加如下内容：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[client] </span><br><span class="line">default-character-set = utf8mb4 </span><br><span class="line">[mysql] </span><br><span class="line">default-character-set = utf8mb4 </span><br><span class="line">[mysqld] </span><br><span class="line">character-set-client-handshake = FALSE </span><br><span class="line">character-set-server = utf8mb4 </span><br><span class="line">collation-server = utf8mb4_unicode_ci </span><br><span class="line">init_connect=&apos;SET NAMES utf8mb4&apos;</span><br></pre></td></tr></table></figure>
-
-
-
-<h4 id="解决Mysql报错缺少libaio-so-1"><a href="#解决Mysql报错缺少libaio-so-1" class="headerlink" title="解决Mysql报错缺少libaio.so.1:"></a>解决Mysql报错缺少libaio.so.1:</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">64位系统安装：</span><br><span class="line"></span><br><span class="line">wget http://mirror.centos.org/centos/6/os/x86_64/Packages/libaio-0.3.107-10.el6.x86_64.rpm</span><br><span class="line"></span><br><span class="line">rpm -ivh libaio-0.3.107-10.el6.x86_64.rpm</span><br><span class="line"></span><br><span class="line">32位系统现在很少了，yum似乎默认安装32位的：</span><br><span class="line"></span><br><span class="line">yum install libaio.so.1</span><br></pre></td></tr></table></figure>
-
-<h4 id="ssh连接提示“REMOTE-HOST-IDENTIFICATION-HAS-CHANGED-”解决办法"><a href="#ssh连接提示“REMOTE-HOST-IDENTIFICATION-HAS-CHANGED-”解决办法" class="headerlink" title="ssh连接提示“REMOTE HOST IDENTIFICATION HAS CHANGED! ”解决办法"></a>ssh连接提示“REMOTE HOST IDENTIFICATION HAS CHANGED! ”解决办法</h4><p>ssh会把你每个你访问过计算机的公钥(public key)都记录在~/.ssh/known_hosts。当下次访问相同计算机时，OpenSSH会核对公钥。如果公钥不同，OpenSSH会发出警告，避免你受到DNS Hijack之类的***。 </p>
-<p>既然找到原因了，那就好解决了，直接编辑~/.ssh/known_hosts，将需要连接的那个IP相关rsa信息删除即可。，再次成功的话，它会将内容继续写入到 ~/.ssh/known_hosts中。</p>
-]]></content>
-      <categories>
-        <category>数据库</category>
-      </categories>
-  </entry>
-  <entry>
     <title>CentOS7.4 Mysql5.7.26离线安装教程</title>
     <url>/2019/12/10/CentOS7.4%20Mysql5.7.26%E7%A6%BB%E7%BA%BF%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><h5 id="mysql离线安装包下载地址："><a href="#mysql离线安装包下载地址：" class="headerlink" title="mysql离线安装包下载地址："></a>mysql离线安装包下载地址：</h5><p><code>https://downloads.mysql.com/archives/community/</code></p>
@@ -970,6 +1082,71 @@
       </categories>
   </entry>
   <entry>
+    <title>数据库常见问题汇总</title>
+    <url>/2019/12/10/%E6%95%B0%E6%8D%AE%E5%BA%93/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><h3 id="1153-Got-a-packet-bigger-than-‘max-allowed-packet’-bytes"><a href="#1153-Got-a-packet-bigger-than-‘max-allowed-packet’-bytes" class="headerlink" title="1153 - Got a packet bigger than ‘max_allowed_packet’ bytes"></a>1153 - Got a packet bigger than ‘max_allowed_packet’ bytes</h3><p>数据库数据同步导入时,文件过大导致出现此错误, 注意: 此种方式不用重启sql服务,只是临时修改.</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">mysql&gt; show VARIABLES like '%max_allowed_packet%';</span><br><span class="line">+<span class="comment">--------------------------+-------+</span></span><br><span class="line">| Variable_name            | Value |</span><br><span class="line">+<span class="comment">--------------------------+-------+</span></span><br><span class="line">| max_allowed_packet       | 2048  |</span><br><span class="line">| slave_max_allowed_packet | 2048  |</span><br><span class="line">+<span class="comment">--------------------------+-------+</span></span><br><span class="line">2 rows in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; <span class="keyword">set</span> <span class="keyword">global</span> net_buffer_length=<span class="number">1000000</span>;</span><br><span class="line">Query OK, 0 rows affected, 1 warning (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; set global max_allowed_packet=1000000000;</span><br><span class="line">Query OK, 0 rows affected, 1 warning (0.00 sec)</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="Mac启动MySql服务-ERROR-1045-28000-Access-denied-for-user-‘root’-’localhost’-using-password-NO"><a href="#Mac启动MySql服务-ERROR-1045-28000-Access-denied-for-user-‘root’-’localhost’-using-password-NO" class="headerlink" title="Mac启动MySql服务 ERROR 1045 (28000): Access denied for user ‘root’@’localhost’ (using password: NO)"></a>Mac启动MySql服务 ERROR 1045 (28000): Access denied for user ‘root’@’localhost’ (using password: NO)</h3><p>解决方法：<br>第一步：如果mysql服务正在进行，将之停止。<br>第二步：在终端中以管理员权限启动mysqld_safe，命令如下：</p>
+<p><code>sudo /usr/local/mysql/bin/mysqld_safe --skip-grant-tables</code></p>
+<p>执行结果如下：</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="number">2016</span><span class="number">-06</span><span class="number">-12</span>T08:<span class="number">29</span>:<span class="number">17.6</span>NZ mysqld_safe Logging to <span class="string">'/usr/local/mysql/data/lyqdeMacBook-Pro.local.err'</span>.</span><br><span class="line"><span class="number">2016</span><span class="number">-06</span><span class="number">-12</span>T08:<span class="number">29</span>:<span class="number">17.6</span>NZ mysqld_safe Starting mysqld daemon <span class="keyword">with</span> databases <span class="keyword">from</span> /usr/local/mysql/data</span><br></pre></td></tr></table></figure>
+
+<p>第三步：不要关闭当前的终端窗口，新建一个终端窗口，输入如下命令，回车登录mysql</p>
+<p><code>/usr/local/mysql/bin/mysql</code></p>
+<p>登录后，看到欢迎信息：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Welcome to the MySQL monitor.  Commands end with ; or \g.</span><br><span class="line">Your MySQL connection id is 37</span><br><span class="line">Server version: 5.7.13 MySQL Community Server (GPL)</span><br><span class="line"></span><br><span class="line">Copyright (c) 2000, 2016, Oracle and/or its affiliates. All rights reserved.</span><br><span class="line"></span><br><span class="line">Oracle is a registered trademark of Oracle Corporation and/or its</span><br><span class="line">affiliates. Other names may be trademarks of their respective</span><br><span class="line">owners.</span><br><span class="line"></span><br><span class="line">Type &apos;help;&apos; or &apos;\h&apos; for help. Type &apos;\c&apos; to clear the current input statement.</span><br><span class="line"></span><br><span class="line">mysql&gt;</span><br></pre></td></tr></table></figure>
+
+<p>打开”mysql”这个数据库，SQL如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Reading table information for completion of table and column names</span><br><span class="line">You can turn off this feature to get a quicker startup with -A</span><br><span class="line"></span><br><span class="line">Database changed</span><br><span class="line">mysql&gt;</span><br></pre></td></tr></table></figure>
+
+<p>然后，更新root的密码，SQL如下：</p>
+<p><code>mysql&gt; update user set authentication_string=password(&#39;root&#39;) where Host=&#39;localhost&#39; and User=&#39;root&#39;;</code></p>
+<p>注意：<br>①有的版本的mysql中，密码可能存储在password字段中，可以使用”describe user;”命令来查看下表结构再操作</p>
+<p>②authentication_string的值一定通过password函数来计算(password(‘root’))</p>
+<p>执行结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Query OK, 1 row affected, 1 warning (0.01 sec)</span><br><span class="line">Rows matched: 1  Changed: 1  Warnings: 1</span><br></pre></td></tr></table></figure>
+
+<p>退出mysql（执行sql语句：exit)</p>
+<p>最后一步：将mysqld_safe进程杀死，重启mysqld。</p>
+<p>可能会遇到的问题</p>
+<p>登录mysql</p>
+<p><code>/usr/local/mysql/bin/mysql -uroot -proot</code></p>
+<p>这个时候，如果执行查询之类的操作，比如执行”show databases;”，可能会有如下提示:</p>
+<p><code>ERROR 1820 (HY000): You must reset your password using ALTER USER statement before executing this statement.</code></p>
+<p>根据提示进行操作，输入如下SQL语句，这个语句的作用是修改root用户的口令为root：</p>
+<p><code>mysql&gt; alter user &#39;root&#39;@&#39;localhost&#39; identified by &#39;root&#39;;</code></p>
+<p>结果：</p>
+<p><code>Query OK, 0 rows affected</code></p>
+<h3 id="MySql-数据库-插入表情字符报错-java-sql-SQLException-Incorrect-string-value-‘-xF0-x9F-x98-x87"><a href="#MySql-数据库-插入表情字符报错-java-sql-SQLException-Incorrect-string-value-‘-xF0-x9F-x98-x87" class="headerlink" title="MySql 数据库 插入表情字符报错 [java.sql.SQLException: Incorrect string value: ‘\xF0\x9F\x98\x87]"></a>MySql 数据库 插入表情字符报错 [java.sql.SQLException: Incorrect string value: ‘\xF0\x9F\x98\x87]</h3><p>解决办法: mysql安装目录下找到 my.ini 文件并做修改</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[mysqld]</span><br><span class="line">character-set-server=utf8mb4</span><br><span class="line">[mysql]</span><br><span class="line">default-character-set=utf8mb4</span><br></pre></td></tr></table></figure>
+
+<p>修改后重启mysql</p>
+<p>将已经建好的表转成utf8mb4</p>
+<p>更改数据库编码:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ALTER DATABASE 数据库名 CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;</span><br></pre></td></tr></table></figure>
+
+<p>更改表的编码:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">alter table 表名 convert to character set utf8mb4 collate utf8mb4_bin;</span><br></pre></td></tr></table></figure>
+
+<p>修改mysql配置文件my.cnf (windows为my.ini)</p>
+<p>my.cnf一般在etc/mysql/my.cnf位置。找到后请在以下三部分里添加如下内容：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[client] </span><br><span class="line">default-character-set = utf8mb4 </span><br><span class="line">[mysql] </span><br><span class="line">default-character-set = utf8mb4 </span><br><span class="line">[mysqld] </span><br><span class="line">character-set-client-handshake = FALSE </span><br><span class="line">character-set-server = utf8mb4 </span><br><span class="line">collation-server = utf8mb4_unicode_ci </span><br><span class="line">init_connect=&apos;SET NAMES utf8mb4&apos;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="解决Mysql报错缺少libaio-so-1"><a href="#解决Mysql报错缺少libaio-so-1" class="headerlink" title="解决Mysql报错缺少libaio.so.1:"></a>解决Mysql报错缺少libaio.so.1:</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">64位系统安装：</span><br><span class="line"></span><br><span class="line">wget http://mirror.centos.org/centos/6/os/x86_64/Packages/libaio-0.3.107-10.el6.x86_64.rpm</span><br><span class="line"></span><br><span class="line">rpm -ivh libaio-0.3.107-10.el6.x86_64.rpm</span><br><span class="line"></span><br><span class="line">32位系统现在很少了，yum似乎默认安装32位的：</span><br><span class="line"></span><br><span class="line">yum install libaio.so.1</span><br></pre></td></tr></table></figure>
+
+<h4 id="ssh连接提示“REMOTE-HOST-IDENTIFICATION-HAS-CHANGED-”解决办法"><a href="#ssh连接提示“REMOTE-HOST-IDENTIFICATION-HAS-CHANGED-”解决办法" class="headerlink" title="ssh连接提示“REMOTE HOST IDENTIFICATION HAS CHANGED! ”解决办法"></a>ssh连接提示“REMOTE HOST IDENTIFICATION HAS CHANGED! ”解决办法</h4><p>ssh会把你每个你访问过计算机的公钥(public key)都记录在~/.ssh/known_hosts。当下次访问相同计算机时，OpenSSH会核对公钥。如果公钥不同，OpenSSH会发出警告，避免你受到DNS Hijack之类的***。 </p>
+<p>既然找到原因了，那就好解决了，直接编辑~/.ssh/known_hosts，将需要连接的那个IP相关rsa信息删除即可。，再次成功的话，它会将内容继续写入到 ~/.ssh/known_hosts中。</p>
+]]></content>
+      <categories>
+        <category>数据库</category>
+      </categories>
+  </entry>
+  <entry>
     <title>常用工具</title>
     <url>/2019/12/04/%E5%B8%B8%E7%94%A8%E5%B7%A5%E5%85%B7/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><h2 id="常用工具汇总"><a href="#常用工具汇总" class="headerlink" title="常用工具汇总"></a>常用工具汇总</h2><h3 id="Pulse-Secure-for-Mac-VPN工具"><a href="#Pulse-Secure-for-Mac-VPN工具" class="headerlink" title="Pulse Secure for Mac (VPN工具)"></a>Pulse Secure for Mac (VPN工具)</h3><p>官网地址: <a href="https://www.pulsesecure.net/" target="_blank" rel="noopener">https://www.pulsesecure.net/</a></p>
@@ -982,6 +1159,18 @@
 ]]></content>
       <categories>
         <category>工具</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>Windows Server 2002 使用记录</title>
+    <url>/2019/11/09/Windows%20Server%202002%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>前段时间接到一个为公司客户开发官网的任务, 框架使用Jeesite, 前后端分离项目, 数据库是Mysql5.7。接下来就记录下遭遇的一切。</p>
+<p>大约三天开发完后台服务及管理界面的配置, 配合前台接口调试用了一天, 然后客户购买的阿里云服务器, 我原以为是Linux服务器, 所以也没多问就按照之前的习惯, 用Mac的ssh直接连接, 提示 22端口访问被拒绝, 什么鬼? 22端口没开, 然后几经辗转要到阿里云账号并登录到管理后台, 重置了实例密码(因为客户也不知道密码是啥), 说实在的, 我连Windows电脑都好些年不用了, 所有的命令行也不怎么会, 这可难到我了,  研究了好一阵子, 我才知道windows有自己的远程连接工具, 并且需要开放的端口是 3389, 然后阿里云后台配置网络安全组, 开放 80, 3389 , 3306 入规则访问权限, 分别是网路请求, 远程控制 和 数据库, 方便我以后的开发调试工作, 等真正交付的时候再关闭掉 3389和3306,  然后用Tomcat开始部署, 其实使用这一个服务就可以了, 但是个人习惯还是兼顾使用了 Nginx服务, 然后 下载Java JDK 配置环境变量这一套常规操作。</p>
+<p>远程访问我用客户的账号配置好后台网络, 然后重置并获取到新的服务器密码后, (这里再插一句, 服务器主机的开机账号密码默认是 administrator  和 服务器密码 我才知道 之前以为是俩密码) 然后安装了Teamviewer工具, 为了双保险又安装了蒲公英, 之前Team不说是有漏洞嘛, 但是我觉得蒲公英免费版的太慢了, 卡的很难受, 还是Team比较快捷高效 然后磕磕绊绊的服务起开了, 根据IP外网也能访问了</p>
+<p>第二天客户说访问不到服务了, 我登录发现密码错误, 难道客户密码改了? 但是客户说没改, 我又远程访问的客户电脑, 再通过他的浏览器访问的服务器, 然后重置了密码, 一顿操作还是没发现问题, localhost访问服务没问题, 那就是网络的问题了, 发现防火墙被用户开启了, 那就是防火墙的问题了, 单独开放了80端口, 搞定, 可以正常外网访问了, 然后防止客户重启服务器 服务中断的问题, 需要配置Tomcat和Nginx自启服务, Tomcat服务自启比较简单</p>
+]]></content>
+      <categories>
+        <category>随笔</category>
       </categories>
   </entry>
   <entry>
@@ -1035,18 +1224,6 @@
 <pre><code>### 最后的效果图我就不放了, 在上面有!!!</code></pre>]]></content>
       <categories>
         <category>微信小程序</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>Windows Server 2002 使用记录</title>
-    <url>/2019/11/09/Windows%20Server%202002%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>前段时间接到一个为公司客户开发官网的任务, 框架使用Jeesite, 前后端分离项目, 数据库是Mysql5.7。接下来就记录下遭遇的一切。</p>
-<p>大约三天开发完后台服务及管理界面的配置, 配合前台接口调试用了一天, 然后客户购买的阿里云服务器, 我原以为是Linux服务器, 所以也没多问就按照之前的习惯, 用Mac的ssh直接连接, 提示 22端口访问被拒绝, 什么鬼? 22端口没开, 然后几经辗转要到阿里云账号并登录到管理后台, 重置了实例密码(因为客户也不知道密码是啥), 说实在的, 我连Windows电脑都好些年不用了, 所有的命令行也不怎么会, 这可难到我了,  研究了好一阵子, 我才知道windows有自己的远程连接工具, 并且需要开放的端口是 3389, 然后阿里云后台配置网络安全组, 开放 80, 3389 , 3306 入规则访问权限, 分别是网路请求, 远程控制 和 数据库, 方便我以后的开发调试工作, 等真正交付的时候再关闭掉 3389和3306,  然后用Tomcat开始部署, 其实使用这一个服务就可以了, 但是个人习惯还是兼顾使用了 Nginx服务, 然后 下载Java JDK 配置环境变量这一套常规操作。</p>
-<p>远程访问我用客户的账号配置好后台网络, 然后重置并获取到新的服务器密码后, (这里再插一句, 服务器主机的开机账号密码默认是 administrator  和 服务器密码 我才知道 之前以为是俩密码) 然后安装了Teamviewer工具, 为了双保险又安装了蒲公英, 之前Team不说是有漏洞嘛, 但是我觉得蒲公英免费版的太慢了, 卡的很难受, 还是Team比较快捷高效 然后磕磕绊绊的服务起开了, 根据IP外网也能访问了</p>
-<p>第二天客户说访问不到服务了, 我登录发现密码错误, 难道客户密码改了? 但是客户说没改, 我又远程访问的客户电脑, 再通过他的浏览器访问的服务器, 然后重置了密码, 一顿操作还是没发现问题, localhost访问服务没问题, 那就是网络的问题了, 发现防火墙被用户开启了, 那就是防火墙的问题了, 单独开放了80端口, 搞定, 可以正常外网访问了, 然后防止客户重启服务器 服务中断的问题, 需要配置Tomcat和Nginx自启服务, Tomcat服务自启比较简单</p>
-]]></content>
-      <categories>
-        <category>随笔</category>
       </categories>
   </entry>
   <entry>
