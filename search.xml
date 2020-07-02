@@ -18,6 +18,268 @@
 <p><code>java -version</code></p>
 ]]></content>
       <categories>
+        <category>运维</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>Java项目开发笔记_01</title>
+    <url>/2020/06/06/Java%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91%E7%AC%94%E8%AE%B0_01/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><hr>
+<h3 id="项目开发技术栈"><a href="#项目开发技术栈" class="headerlink" title="项目开发技术栈"></a>项目开发技术栈</h3><ul>
+<li><h4 id="后端开发工具和环境：JDK8-IDEA-Maven3-x"><a href="#后端开发工具和环境：JDK8-IDEA-Maven3-x" class="headerlink" title="后端开发工具和环境：JDK8 + IDEA + Maven3.x"></a>后端开发工具和环境：JDK8 + IDEA + Maven3.x</h4></li>
+<li><h4 id="后端技术栈：-Springboot2-x-Spring5-Mybatis3-x-Mysql-JWT-Guava缓存-Jmeter5-x压测"><a href="#后端技术栈：-Springboot2-x-Spring5-Mybatis3-x-Mysql-JWT-Guava缓存-Jmeter5-x压测" class="headerlink" title="后端技术栈： Springboot2.x + Spring5 +Mybatis3.x + Mysql + JWT + Guava缓存 + Jmeter5.x压测"></a>后端技术栈： Springboot2.x + Spring5 +Mybatis3.x + Mysql + JWT + Guava缓存 + Jmeter5.x压测</h4></li>
+<li><h4 id="前端技术栈：VueCli4-3-Vue2-6-VueX-Axios-移动端CUBE-UI框架-VSCode"><a href="#前端技术栈：VueCli4-3-Vue2-6-VueX-Axios-移动端CUBE-UI框架-VSCode" class="headerlink" title="前端技术栈：VueCli4.3 + Vue2.6 + VueX + Axios + 移动端CUBE-UI框架 + VSCode"></a>前端技术栈：VueCli4.3 + Vue2.6 + VueX + Axios + 移动端CUBE-UI框架 + VSCode</h4></li>
+<li><h4 id="部署：华为云Centos7-Nginx静态文件服务器-Nginx部署后端双节点-域名配置解析"><a href="#部署：华为云Centos7-Nginx静态文件服务器-Nginx部署后端双节点-域名配置解析" class="headerlink" title="部署：华为云Centos7 + Nginx静态文件服务器 + Nginx部署后端双节点 + 域名配置解析"></a>部署：华为云Centos7 + Nginx静态文件服务器 + Nginx部署后端双节点 + 域名配置解析</h4></li>
+</ul>
+<hr>
+<p>###Spring5的简单学习</p>
+<h4 id="什么是注解："><a href="#什么是注解：" class="headerlink" title="什么是注解："></a>什么是注解：</h4><ul>
+<li>Java注解是附加在代码中的一些元信息， 用于一些工具在编译，运行时进行解析和使用，起到说明配置的功能</li>
+<li>注解本质上继承 Annotation接口，我们可以通过反射获取注解的相关信息，从而做些逻辑操作</li>
+<li>springboot里面大量使用了注解，@Controller、 @RestController、 @service、 @Autowire 等</li>
+</ul>
+<h4 id="什么是Spring框架："><a href="#什么是Spring框架：" class="headerlink" title="什么是Spring框架："></a>什么是Spring框架：</h4><ul>
+<li><p>轻量级的 DI / IoC 和 AOP容器的开源框架</p>
+</li>
+<li><p>有啥好处：</p>
+<ul>
+<li><p>管理创建和组装对象之间的依赖关系， 加了Spring注解的类会自动创建一个实例，加到IOC容器里面，然后哪里需要它，就自动赋值过去</p>
+<ul>
+<li><p>使用前： 手工创建</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Controller -&gt; Service -&gt; Dao</span><br><span class="line">Usercontroller</span><br><span class="line">private UserService useService = new UserService();</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用后：Spring创建， 自动注入</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Controller -&gt; Service -&gt; Dao</span><br><span class="line">Usercontroller</span><br><span class="line"></span><br><span class="line">@Autowire</span><br><span class="line">private UserService useService</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="SpringBoot2-x和SpringCloud微服务的关系"><a href="#SpringBoot2-x和SpringCloud微服务的关系" class="headerlink" title="SpringBoot2.x和SpringCloud微服务的关系"></a>SpringBoot2.x和SpringCloud微服务的关系</h3><table>
+<thead>
+<tr>
+<th align="center">单体应用</th>
+<th align="center">微服务</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">开发速度慢</td>
+<td align="center">易开发、理解和维护</td>
+</tr>
+<tr>
+<td align="center">启动时间长</td>
+<td align="center">独立的部署和启动</td>
+</tr>
+<tr>
+<td align="center">依赖庞大</td>
+<td align="center">问题：分布式系统的（分布式事务问题）、需要多个服务（服务治理）</td>
+</tr>
+</tbody></table>
+<p><strong>SpringCloud基于SpringBoot 多了几个组件 多了几个依赖和注解  注册中心 网关 服务 鉴权 等等很多模块 例如注册中心可以理解为一个项目 是基于SpringBoot的</strong></p>
+<hr>
+<h3 id="SpringBoot官网"><a href="#SpringBoot官网" class="headerlink" title="SpringBoot官网"></a>SpringBoot官网</h3><p><a href="https://spring.io/projects/spring-boot#overview" target="_blank" rel="noopener">官方文档</a></p>
+<hr>
+<h3 id="SpringBoot常用注解"><a href="#SpringBoot常用注解" class="headerlink" title="SpringBoot常用注解"></a>SpringBoot常用注解</h3><h4 id="Controller"><a href="#Controller" class="headerlink" title="@Controller"></a>@Controller</h4><p>作用：用于标记这个类是控制器，返回页面的时候使用，如果要返回JSON，则需要在接口上使用@ResponseBody才可以</p>
+<p>####@RestController</p>
+<p>作用：用于标记一个类是控制器，返回JSON数据的时候使用，如果使用这个注释，则接口返回数据会被序列化为JSON</p>
+<p><strong>所以：@RestController = @Controller + @ResponseBody</strong></p>
+<h4 id="RequestMapping"><a href="#RequestMapping" class="headerlink" title="@RequestMapping"></a>@RequestMapping</h4><p>作用：路由映射，用于类上做1级映射；用于某个方法上做子路径</p>
+<h4 id="SpringBootApplication"><a href="#SpringBootApplication" class="headerlink" title="@SpringBootApplication"></a>@SpringBootApplication</h4><p>作用：用于标记是SpringBoot应用，里面包含多个子注解，即</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">@SpringBootApplication = @Configuration + @EnableAutoConfiguration + @ComponentScan</span><br><span class="line">@Configuration：主要标注于某个类上，用于Spring扫描注入，一般结合@Bean使用</span><br><span class="line">@EnableAutoConfiguration：启用Spring的自动加载配置，自动载入应用程序所需的Bean</span><br><span class="line">@ComponentScan：告诉Spring扫描包的范围，默认是Application类所在的全部子包，可以指定其它包</span><br><span class="line">@ComponentScan(&#123;&quot;net.xdclass.package1&quot;, &quot;net.xdclass.package2&quot;&#125;)</span><br></pre></td></tr></table></figure>
+
+
+
+<hr>
+<h3 id="SpringBoot目录结构和静态资源访问"><a href="#SpringBoot目录结构和静态资源访问" class="headerlink" title="SpringBoot目录结构和静态资源访问"></a>SpringBoot目录结构和静态资源访问</h3><ul>
+<li><p>目录</p>
+<ul>
+<li>src/main/java:</li>
+<li>src/main/resources:</li>
+<li>static:</li>
+<li>templates:</li>
+<li>config:</li>
+<li>resources:</li>
+</ul>
+</li>
+<li><p>同个文件的加载顺序，静态资源文件 Spring Boot 默认会挨个从</p>
+<ul>
+<li>META/resources &gt;</li>
+<li>resources &gt;</li>
+<li>static &gt;</li>
+<li>public</li>
+</ul>
+<p>内部寻找是否存相应的资源，如果有就直接返回，不在默认加载的目录则找不到</p>
+</li>
+<li><p>默认配置</p>
+<ul>
+<li>spring.resources.static-locations = classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/</li>
+</ul>
+</li>
+<li><p>基本互联网企业 静态资源文件存储在CDN, HTML, CSS, 图片等</p>
+</li>
+<li><p>CDN：内容分发网络</p>
+</li>
+<li><p>文件服务器：阿里云OSS</p>
+</li>
+</ul>
+<hr>
+<h3 id="SpringBoot启动方式和部署"><a href="#SpringBoot启动方式和部署" class="headerlink" title="SpringBoot启动方式和部署"></a>SpringBoot启动方式和部署</h3><ul>
+<li><p>IDEA开发中启动</p>
+<ul>
+<li>本地开发中常用</li>
+</ul>
+</li>
+<li><p>外置Tomcat中启动</p>
+<ul>
+<li>接近淘汰</li>
+<li>tomtact版本兼容问题复杂</li>
+<li>微服务容器化部署复杂</li>
+</ul>
+</li>
+<li><p>Jar包方式打包启动</p>
+<ul>
+<li>官方推荐，工具中最常用</li>
+<li>步骤：pom文件新增maven插件</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>如果没有加，执行 -jar 包，报错如下</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">java -jar in spring-boot-demo-0.0.1-SNAPSHOT.jar</span><br><span class="line">no main manifest attribute, in spring-boot-demo-0.0.1-SNAPSHOT.jar</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>必备打包启动命令</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">构建：mvn install</span><br><span class="line">构建跳过测试类： mvn install -Dmaven.test.skip=true</span><br><span class="line"></span><br><span class="line">target目录下对应的jar包就是打包后的项目</span><br><span class="line">进到对应的target目录启动 java -jar xxxx.jar 即可</span><br><span class="line"></span><br><span class="line">守护进程启动(后台运行)：nohup java -jar xxxx.jar &amp;</span><br><span class="line">#nohup命令只有linux和mac系统有</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<hr>
+<h3 id="在线教育项目原型分析"><a href="#在线教育项目原型分析" class="headerlink" title="在线教育项目原型分析"></a>在线教育项目原型分析</h3><ul>
+<li><h4 id="项目简介"><a href="#项目简介" class="headerlink" title="项目简介"></a>项目简介</h4><p>在线教育互联网项目，前后端分离，支持高并发访问</p>
+</li>
+<li><h4 id="需求模块"><a href="#需求模块" class="headerlink" title="需求模块"></a>需求模块</h4><ul>
+<li><p>用户注册-登录</p>
+</li>
+<li><p>视频管理模块CRUD</p>
+</li>
+<li><p>视频列表查询</p>
+</li>
+<li><p>全局异常处理</p>
+</li>
+<li><p>日志统计记录</p>
+<p>….</p>
+</li>
+</ul>
+</li>
+<li><h4 id="数据查询和存储"><a href="#数据查询和存储" class="headerlink" title="数据查询和存储"></a>数据查询和存储</h4><ul>
+<li>全齐内存数据库存储-HashMap-ArrayList</li>
+<li>后期使用数据库存储</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="项目架构搭建-包模块"><a href="#项目架构搭建-包模块" class="headerlink" title="项目架构搭建 包模块"></a>项目架构搭建 包模块</h3><ul>
+<li><h4 id="创建项目"><a href="#创建项目" class="headerlink" title="创建项目"></a>创建项目</h4></li>
+<li><h4 id="配置启动类"><a href="#配置启动类" class="headerlink" title="配置启动类"></a>配置启动类</h4></li>
+<li><h4 id="建立对应的包"><a href="#建立对应的包" class="headerlink" title="建立对应的包"></a>建立对应的包</h4><ul>
+<li>controller</li>
+<li>service</li>
+<li>dao</li>
+<li>domain</li>
+<li>utils</li>
+</ul>
+</li>
+<li><h4 id="初始化数据开发：视频、章、默认用户信息"><a href="#初始化数据开发：视频、章、默认用户信息" class="headerlink" title="初始化数据开发：视频、章、默认用户信息"></a>初始化数据开发：视频、章、默认用户信息</h4></li>
+</ul>
+<hr>
+<h3 id="SpringBoot2-x内部定制JSON字段"><a href="#SpringBoot2-x内部定制JSON字段" class="headerlink" title="SpringBoot2.x内部定制JSON字段"></a>SpringBoot2.x内部定制JSON字段</h3><ul>
+<li>常用框架 阿里 fastjson 谷歌gson</li>
+<li>JavaBean序列化为JSON<ul>
+<li>性能：jackjson &gt; fastjson &gt; gson &gt; json-lib 同一个结构</li>
+<li>jackon、fastjson、gson类库各有所长，各有自己的专长</li>
+<li>空间换时间、时间换空间</li>
+</ul>
+</li>
+<li>Jackson处理相关<ul>
+<li>指定字段不返回：@JsonIgnore</li>
+<li>指定日期格式：@JsonFormat(pattern=”yyyy-MM-dd hh:mm:ss”, local=”zh”, timezone=:”GMT+8”)</li>
+<li>空字段不反回：@JsonInclude(Include.NON_NULL)</li>
+<li>指定别名：@JsonProperty</li>
+</ul>
+</li>
+<li>开发功能：视频创建时间返回自定义格式；过滤用户敏感信息</li>
+</ul>
+<hr>
+<h3 id="SpringBoot2-x结合dev-tool-实现IDEA项目热部署"><a href="#SpringBoot2-x结合dev-tool-实现IDEA项目热部署" class="headerlink" title="SpringBoot2.x结合dev-tool 实现IDEA项目热部署"></a>SpringBoot2.x结合dev-tool 实现IDEA项目热部署</h3><ul>
+<li><p>步骤</p>
+<ul>
+<li>pom文件添加依赖包</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-devtools<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">optional</span>&gt;</span>true<span class="tag">&lt;/<span class="name">optional</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">				<span class="comment">&lt;!--必须添加这个配置--&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">fork</span>&gt;</span>true<span class="tag">&lt;/<span class="name">fork</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>IDEA配置<ul>
+<li>windows和mac一致</li>
+</ul>
+</li>
+</ul>
+<p>![image-20200701143456381](/Users/moneylee/Library/Application Support/typora-user-images/image-20200701143456381.png)</p>
+<ul>
+<li>使用快捷键打开</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">默认快捷键：</span><br><span class="line">	windows: shift + ctrl + alt + /</span><br><span class="line">	mac: shift + command + alt + /</span><br></pre></td></tr></table></figure>
+
+<p><img alt="image-20200701145339996" data-src="https://tva1.sinaimg.cn/large/007S8ZIlly1ggbh6ngn6fj309t03emxk.jpg" class="lazyload"></p>
+</li>
+</ul>
+<p>  <img alt="image-20200701145438979" data-src="https://tva1.sinaimg.cn/large/007S8ZIlly1ggbh83098uj30ti0mb0zk.jpg" class="lazyload"></p>
+<hr>
+<h3 id="SpringBoot2-x常见配置文件"><a href="#SpringBoot2-x常见配置文件" class="headerlink" title="SpringBoot2.x常见配置文件"></a>SpringBoot2.x常见配置文件</h3><ul>
+<li><p>常见配置文件格式：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">xml、properties、json、yaml</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>SpringBoot里常用yml</p>
+<ul>
+<li>YAML</li>
+<li>写YAML要比XML快得多（无需关注标签或引号）不同层次之间的缩进可以使用不同的空格数目</li>
+<li>注意：key后面的冒号，后面一定要跟一个空格，树状结构</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="SpringBoot注解配置文件映射属性和实体类"><a href="#SpringBoot注解配置文件映射属性和实体类" class="headerlink" title="SpringBoot注解配置文件映射属性和实体类"></a>SpringBoot注解配置文件映射属性和实体类</h3><p><strong>简介：使用@Value注解配置文件自动映射到属性和实体类</strong></p>
+<ul>
+<li><h4 id="配置文件加载"><a href="#配置文件加载" class="headerlink" title="配置文件加载"></a>配置文件加载</h4><ul>
+<li><p>方式一</p>
+<ul>
+<li>1、Controller上面配置 @PropertySource({“classpath:resource.properties”})</li>
+<li>2、增加属性 @Value(“test.name”)  private String name;</li>
+</ul>
+</li>
+<li><p>方式二</p>
+<ul>
+<li><p>1、添加 @Component注解；</p>
+</li>
+<li><p>2、使用 @PropertySoure 注解指定配置文件位置；</p>
+</li>
+<li><p>3、使用 @ConfigurationProperties 注解，设置相关属性；</p>
+</li>
+<li><p>4、必须 通过注入IOC对象Resource进来，才能在类中使用获取的配置文件值</p>
+<p>​        @Autowrie private ServerSettings serverSetting；</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+]]></content>
+      <categories>
         <category>Java</category>
       </categories>
   </entry>
@@ -526,6 +788,109 @@
       </categories>
   </entry>
   <entry>
+    <title>Linux环境下Mysql数据库自动备份脚本</title>
+    <url>/2019/12/10/Linux%E7%8E%AF%E5%A2%83%E4%B8%8BMysql%E6%95%B0%E6%8D%AE%E5%BA%93%E8%87%AA%E5%8A%A8%E5%A4%87%E4%BB%BD%E8%84%9A%E6%9C%AC/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><h4 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h4><h5 id="创建好备份使用的文件夹"><a href="#创建好备份使用的文件夹" class="headerlink" title="创建好备份使用的文件夹"></a>创建好备份使用的文件夹</h5><p>存放最新备份文件的文件夹：</p>
+<p><code>mkdir /mnt/backup/bakmysql</code></p>
+<p>存放历史备份的文件夹：</p>
+<p><code>mkdir /mnt/backup/backmysqlold</code></p>
+<h5 id="编辑脚本"><a href="#编辑脚本" class="headerlink" title="编辑脚本"></a>编辑脚本</h5><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">用户名</span></span><br><span class="line">db_user="root"</span><br><span class="line"><span class="meta">#</span><span class="bash">密码</span></span><br><span class="line">db_passwd="123456"</span><br><span class="line"><span class="meta">#</span><span class="bash">数据库名</span></span><br><span class="line">db_name="lc_data"</span><br><span class="line"><span class="meta">#</span><span class="bash">指定数据库安装路径 可以让crontab找到执行文件 如果直接写mysqldump仅在本地执行脚本好使 crontab执行是空文件</span></span><br><span class="line">tool="/usr/local/mysql5.7/bin/mysqldump"</span><br><span class="line"><span class="meta">#</span><span class="bash">进入备份目录将之前的移动到old目录</span></span><br><span class="line">cd /mnt/backup/bakmysql</span><br><span class="line">echo "you are in bakmysql directory now"</span><br><span class="line"><span class="meta">#</span><span class="bash">将当前备份的数据移动到旧文件夹内</span></span><br><span class="line">mv lc_data* /mnt/backup/bakmysqlold</span><br><span class="line">echo "Old databases are moved to bakmysqlold folder"</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 备份目录</span></span><br><span class="line">backup_dir="/mnt/backup/bakmysql"</span><br><span class="line"><span class="meta">#</span><span class="bash"> 备份日期</span></span><br><span class="line">time=$(date +"%Y-%m-%d")</span><br><span class="line"><span class="meta">$</span><span class="bash">tool --defaults-extra-file=/etc/my.cnf <span class="variable">$db_name</span> &gt; <span class="string">"<span class="variable">$backup_dir</span>/<span class="variable">$db_name</span>"</span>_<span class="string">"<span class="variable">$time</span>.sql"</span></span></span><br><span class="line">echo "your database backup successfully completed"</span><br><span class="line"><span class="meta">#</span><span class="bash">这里将7天之前的备份文件删掉</span></span><br><span class="line">SevenDays=$(date -d -7day  +"%Y-%m-%d")</span><br><span class="line">if [ -f /mnt/backup/bakmysqlold/lc_data_$SevenDays.sql ]</span><br><span class="line">then</span><br><span class="line">rm -rf /mnt/backup/bakmysqlold/lc_data_$SevenDays.sql</span><br><span class="line">echo "you have delete 7days ago bak sql file "</span><br><span class="line">else</span><br><span class="line">echo "7days ago bak sql file not exist "</span><br><span class="line">echo "bash complete"</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="注意点："><a href="#注意点：" class="headerlink" title="注意点："></a>注意点：</h4><p>1，上面的脚本执行可能会报错， 错误信息：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">避免命令行使用password的安全警告：Warning: Using a password on the command line interface can be insecure.</span><br></pre></td></tr></table></figure>
+
+<p>在mysql5.6之后不允许这样用明文，不安全</p>
+<p>解决办法：</p>
+<p><code>vi /etc/my.cnf</code></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[client]</span><br><span class="line">host=localhost</span><br><span class="line">user=root</span><br><span class="line">password=123456</span><br></pre></td></tr></table></figure>
+
+
+
+<p>2，编辑定时任务</p>
+<p><code>crontab -e</code></p>
+<p>每分钟执行一次（测试使用）</p>
+<p><code>*/1 * * * * /mnt/backup/lc_data.sh</code></p>
+<p>每天23：59分执行一次</p>
+<p><code>59 23 * * * /mnt/backup/lc_data.sh</code> </p>
+<p>每周一执行一次</p>
+<p><code>0 16 * * 1 /mnt/backup/lc_data.sh</code></p>
+<p>查看已经保存的定时任务</p>
+<p><code>crontab -l</code></p>
+<p>参考：</p>
+<p><img alt="aHR0cHM6Ly9pbWcyMDE4LmNuYmxvZ3MuY29tL2Jsb2cvMTc0OTQ1Ni8yMDE5MDcvMTc0OTQ1Ni0yMDE5MDcyNDEzNTExOTE5NS0xNTQxNzcxMDQ4LnBuZw" data-src="https://tva1.sinaimg.cn/large/007S8ZIlly1gfxx0ggzugj30eu0cdmxd.jpg" class="lazyload"></p>
+]]></content>
+      <categories>
+        <category>数据库</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>数据库常见问题汇总</title>
+    <url>/2019/12/10/%E6%95%B0%E6%8D%AE%E5%BA%93/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><h3 id="1153-Got-a-packet-bigger-than-‘max-allowed-packet’-bytes"><a href="#1153-Got-a-packet-bigger-than-‘max-allowed-packet’-bytes" class="headerlink" title="1153 - Got a packet bigger than ‘max_allowed_packet’ bytes"></a>1153 - Got a packet bigger than ‘max_allowed_packet’ bytes</h3><p>数据库数据同步导入时,文件过大导致出现此错误, 注意: 此种方式不用重启sql服务,只是临时修改.</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">mysql&gt; show VARIABLES like '%max_allowed_packet%';</span><br><span class="line">+<span class="comment">--------------------------+-------+</span></span><br><span class="line">| Variable_name            | Value |</span><br><span class="line">+<span class="comment">--------------------------+-------+</span></span><br><span class="line">| max_allowed_packet       | 2048  |</span><br><span class="line">| slave_max_allowed_packet | 2048  |</span><br><span class="line">+<span class="comment">--------------------------+-------+</span></span><br><span class="line">2 rows in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; <span class="keyword">set</span> <span class="keyword">global</span> net_buffer_length=<span class="number">1000000</span>;</span><br><span class="line">Query OK, 0 rows affected, 1 warning (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; set global max_allowed_packet=1000000000;</span><br><span class="line">Query OK, 0 rows affected, 1 warning (0.00 sec)</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="Mac启动MySql服务-ERROR-1045-28000-Access-denied-for-user-‘root’-’localhost’-using-password-NO"><a href="#Mac启动MySql服务-ERROR-1045-28000-Access-denied-for-user-‘root’-’localhost’-using-password-NO" class="headerlink" title="Mac启动MySql服务 ERROR 1045 (28000): Access denied for user ‘root’@’localhost’ (using password: NO)"></a>Mac启动MySql服务 ERROR 1045 (28000): Access denied for user ‘root’@’localhost’ (using password: NO)</h3><p>解决方法：<br>第一步：如果mysql服务正在进行，将之停止。<br>第二步：在终端中以管理员权限启动mysqld_safe，命令如下：</p>
+<p><code>sudo /usr/local/mysql/bin/mysqld_safe --skip-grant-tables</code></p>
+<p>执行结果如下：</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="number">2016</span><span class="number">-06</span><span class="number">-12</span>T08:<span class="number">29</span>:<span class="number">17.6</span>NZ mysqld_safe Logging to <span class="string">'/usr/local/mysql/data/lyqdeMacBook-Pro.local.err'</span>.</span><br><span class="line"><span class="number">2016</span><span class="number">-06</span><span class="number">-12</span>T08:<span class="number">29</span>:<span class="number">17.6</span>NZ mysqld_safe Starting mysqld daemon <span class="keyword">with</span> databases <span class="keyword">from</span> /usr/local/mysql/data</span><br></pre></td></tr></table></figure>
+
+<p>第三步：不要关闭当前的终端窗口，新建一个终端窗口，输入如下命令，回车登录mysql</p>
+<p><code>/usr/local/mysql/bin/mysql</code></p>
+<p>登录后，看到欢迎信息：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Welcome to the MySQL monitor.  Commands end with ; or \g.</span><br><span class="line">Your MySQL connection id is 37</span><br><span class="line">Server version: 5.7.13 MySQL Community Server (GPL)</span><br><span class="line"></span><br><span class="line">Copyright (c) 2000, 2016, Oracle and/or its affiliates. All rights reserved.</span><br><span class="line"></span><br><span class="line">Oracle is a registered trademark of Oracle Corporation and/or its</span><br><span class="line">affiliates. Other names may be trademarks of their respective</span><br><span class="line">owners.</span><br><span class="line"></span><br><span class="line">Type &apos;help;&apos; or &apos;\h&apos; for help. Type &apos;\c&apos; to clear the current input statement.</span><br><span class="line"></span><br><span class="line">mysql&gt;</span><br></pre></td></tr></table></figure>
+
+<p>打开”mysql”这个数据库，SQL如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Reading table information for completion of table and column names</span><br><span class="line">You can turn off this feature to get a quicker startup with -A</span><br><span class="line"></span><br><span class="line">Database changed</span><br><span class="line">mysql&gt;</span><br></pre></td></tr></table></figure>
+
+<p>然后，更新root的密码，SQL如下：</p>
+<p><code>mysql&gt; update user set authentication_string=password(&#39;root&#39;) where Host=&#39;localhost&#39; and User=&#39;root&#39;;</code></p>
+<p>注意：<br>①有的版本的mysql中，密码可能存储在password字段中，可以使用”describe user;”命令来查看下表结构再操作</p>
+<p>②authentication_string的值一定通过password函数来计算(password(‘root’))</p>
+<p>执行结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Query OK, 1 row affected, 1 warning (0.01 sec)</span><br><span class="line">Rows matched: 1  Changed: 1  Warnings: 1</span><br></pre></td></tr></table></figure>
+
+<p>退出mysql（执行sql语句：exit)</p>
+<p>最后一步：将mysqld_safe进程杀死，重启mysqld。</p>
+<p>可能会遇到的问题</p>
+<p>登录mysql</p>
+<p><code>/usr/local/mysql/bin/mysql -uroot -proot</code></p>
+<p>这个时候，如果执行查询之类的操作，比如执行”show databases;”，可能会有如下提示:</p>
+<p><code>ERROR 1820 (HY000): You must reset your password using ALTER USER statement before executing this statement.</code></p>
+<p>根据提示进行操作，输入如下SQL语句，这个语句的作用是修改root用户的口令为root：</p>
+<p><code>mysql&gt; alter user &#39;root&#39;@&#39;localhost&#39; identified by &#39;root&#39;;</code></p>
+<p>结果：</p>
+<p><code>Query OK, 0 rows affected</code></p>
+<h3 id="MySql-数据库-插入表情字符报错-java-sql-SQLException-Incorrect-string-value-‘-xF0-x9F-x98-x87"><a href="#MySql-数据库-插入表情字符报错-java-sql-SQLException-Incorrect-string-value-‘-xF0-x9F-x98-x87" class="headerlink" title="MySql 数据库 插入表情字符报错 [java.sql.SQLException: Incorrect string value: ‘\xF0\x9F\x98\x87]"></a>MySql 数据库 插入表情字符报错 [java.sql.SQLException: Incorrect string value: ‘\xF0\x9F\x98\x87]</h3><p>解决办法: mysql安装目录下找到 my.ini 文件并做修改</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[mysqld]</span><br><span class="line">character-set-server=utf8mb4</span><br><span class="line">[mysql]</span><br><span class="line">default-character-set=utf8mb4</span><br></pre></td></tr></table></figure>
+
+<p>修改后重启mysql</p>
+<p>将已经建好的表转成utf8mb4</p>
+<p>更改数据库编码:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ALTER DATABASE 数据库名 CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;</span><br></pre></td></tr></table></figure>
+
+<p>更改表的编码:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">alter table 表名 convert to character set utf8mb4 collate utf8mb4_bin;</span><br></pre></td></tr></table></figure>
+
+<p>修改mysql配置文件my.cnf (windows为my.ini)</p>
+<p>my.cnf一般在etc/mysql/my.cnf位置。找到后请在以下三部分里添加如下内容：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[client] </span><br><span class="line">default-character-set = utf8mb4 </span><br><span class="line">[mysql] </span><br><span class="line">default-character-set = utf8mb4 </span><br><span class="line">[mysqld] </span><br><span class="line">character-set-client-handshake = FALSE </span><br><span class="line">character-set-server = utf8mb4 </span><br><span class="line">collation-server = utf8mb4_unicode_ci </span><br><span class="line">init_connect=&apos;SET NAMES utf8mb4&apos;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="解决Mysql报错缺少libaio-so-1"><a href="#解决Mysql报错缺少libaio-so-1" class="headerlink" title="解决Mysql报错缺少libaio.so.1:"></a>解决Mysql报错缺少libaio.so.1:</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">64位系统安装：</span><br><span class="line"></span><br><span class="line">wget http://mirror.centos.org/centos/6/os/x86_64/Packages/libaio-0.3.107-10.el6.x86_64.rpm</span><br><span class="line"></span><br><span class="line">rpm -ivh libaio-0.3.107-10.el6.x86_64.rpm</span><br><span class="line"></span><br><span class="line">32位系统现在很少了，yum似乎默认安装32位的：</span><br><span class="line"></span><br><span class="line">yum install libaio.so.1</span><br></pre></td></tr></table></figure>
+
+<h4 id="ssh连接提示“REMOTE-HOST-IDENTIFICATION-HAS-CHANGED-”解决办法"><a href="#ssh连接提示“REMOTE-HOST-IDENTIFICATION-HAS-CHANGED-”解决办法" class="headerlink" title="ssh连接提示“REMOTE HOST IDENTIFICATION HAS CHANGED! ”解决办法"></a>ssh连接提示“REMOTE HOST IDENTIFICATION HAS CHANGED! ”解决办法</h4><p>ssh会把你每个你访问过计算机的公钥(public key)都记录在~/.ssh/known_hosts。当下次访问相同计算机时，OpenSSH会核对公钥。如果公钥不同，OpenSSH会发出警告，避免你受到DNS Hijack之类的***。 </p>
+<p>既然找到原因了，那就好解决了，直接编辑~/.ssh/known_hosts，将需要连接的那个IP相关rsa信息删除即可。，再次成功的话，它会将内容继续写入到 ~/.ssh/known_hosts中。</p>
+]]></content>
+      <categories>
+        <category>数据库</category>
+      </categories>
+  </entry>
+  <entry>
     <title>CentOS7.4 Mysql5.7.26离线安装教程</title>
     <url>/2019/12/10/CentOS7.4%20Mysql5.7.26%E7%A6%BB%E7%BA%BF%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><h5 id="mysql离线安装包下载地址："><a href="#mysql离线安装包下载地址：" class="headerlink" title="mysql离线安装包下载地址："></a>mysql离线安装包下载地址：</h5><p><code>https://downloads.mysql.com/archives/community/</code></p>
@@ -605,109 +970,6 @@
       </categories>
   </entry>
   <entry>
-    <title>数据库常见问题汇总</title>
-    <url>/2019/12/10/%E6%95%B0%E6%8D%AE%E5%BA%93/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><h3 id="1153-Got-a-packet-bigger-than-‘max-allowed-packet’-bytes"><a href="#1153-Got-a-packet-bigger-than-‘max-allowed-packet’-bytes" class="headerlink" title="1153 - Got a packet bigger than ‘max_allowed_packet’ bytes"></a>1153 - Got a packet bigger than ‘max_allowed_packet’ bytes</h3><p>数据库数据同步导入时,文件过大导致出现此错误, 注意: 此种方式不用重启sql服务,只是临时修改.</p>
-<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">mysql&gt; show VARIABLES like '%max_allowed_packet%';</span><br><span class="line">+<span class="comment">--------------------------+-------+</span></span><br><span class="line">| Variable_name            | Value |</span><br><span class="line">+<span class="comment">--------------------------+-------+</span></span><br><span class="line">| max_allowed_packet       | 2048  |</span><br><span class="line">| slave_max_allowed_packet | 2048  |</span><br><span class="line">+<span class="comment">--------------------------+-------+</span></span><br><span class="line">2 rows in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; <span class="keyword">set</span> <span class="keyword">global</span> net_buffer_length=<span class="number">1000000</span>;</span><br><span class="line">Query OK, 0 rows affected, 1 warning (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; set global max_allowed_packet=1000000000;</span><br><span class="line">Query OK, 0 rows affected, 1 warning (0.00 sec)</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="Mac启动MySql服务-ERROR-1045-28000-Access-denied-for-user-‘root’-’localhost’-using-password-NO"><a href="#Mac启动MySql服务-ERROR-1045-28000-Access-denied-for-user-‘root’-’localhost’-using-password-NO" class="headerlink" title="Mac启动MySql服务 ERROR 1045 (28000): Access denied for user ‘root’@’localhost’ (using password: NO)"></a>Mac启动MySql服务 ERROR 1045 (28000): Access denied for user ‘root’@’localhost’ (using password: NO)</h3><p>解决方法：<br>第一步：如果mysql服务正在进行，将之停止。<br>第二步：在终端中以管理员权限启动mysqld_safe，命令如下：</p>
-<p><code>sudo /usr/local/mysql/bin/mysqld_safe --skip-grant-tables</code></p>
-<p>执行结果如下：</p>
-<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="number">2016</span><span class="number">-06</span><span class="number">-12</span>T08:<span class="number">29</span>:<span class="number">17.6</span>NZ mysqld_safe Logging to <span class="string">'/usr/local/mysql/data/lyqdeMacBook-Pro.local.err'</span>.</span><br><span class="line"><span class="number">2016</span><span class="number">-06</span><span class="number">-12</span>T08:<span class="number">29</span>:<span class="number">17.6</span>NZ mysqld_safe Starting mysqld daemon <span class="keyword">with</span> databases <span class="keyword">from</span> /usr/local/mysql/data</span><br></pre></td></tr></table></figure>
-
-<p>第三步：不要关闭当前的终端窗口，新建一个终端窗口，输入如下命令，回车登录mysql</p>
-<p><code>/usr/local/mysql/bin/mysql</code></p>
-<p>登录后，看到欢迎信息：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Welcome to the MySQL monitor.  Commands end with ; or \g.</span><br><span class="line">Your MySQL connection id is 37</span><br><span class="line">Server version: 5.7.13 MySQL Community Server (GPL)</span><br><span class="line"></span><br><span class="line">Copyright (c) 2000, 2016, Oracle and/or its affiliates. All rights reserved.</span><br><span class="line"></span><br><span class="line">Oracle is a registered trademark of Oracle Corporation and/or its</span><br><span class="line">affiliates. Other names may be trademarks of their respective</span><br><span class="line">owners.</span><br><span class="line"></span><br><span class="line">Type &apos;help;&apos; or &apos;\h&apos; for help. Type &apos;\c&apos; to clear the current input statement.</span><br><span class="line"></span><br><span class="line">mysql&gt;</span><br></pre></td></tr></table></figure>
-
-<p>打开”mysql”这个数据库，SQL如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Reading table information for completion of table and column names</span><br><span class="line">You can turn off this feature to get a quicker startup with -A</span><br><span class="line"></span><br><span class="line">Database changed</span><br><span class="line">mysql&gt;</span><br></pre></td></tr></table></figure>
-
-<p>然后，更新root的密码，SQL如下：</p>
-<p><code>mysql&gt; update user set authentication_string=password(&#39;root&#39;) where Host=&#39;localhost&#39; and User=&#39;root&#39;;</code></p>
-<p>注意：<br>①有的版本的mysql中，密码可能存储在password字段中，可以使用”describe user;”命令来查看下表结构再操作</p>
-<p>②authentication_string的值一定通过password函数来计算(password(‘root’))</p>
-<p>执行结果如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Query OK, 1 row affected, 1 warning (0.01 sec)</span><br><span class="line">Rows matched: 1  Changed: 1  Warnings: 1</span><br></pre></td></tr></table></figure>
-
-<p>退出mysql（执行sql语句：exit)</p>
-<p>最后一步：将mysqld_safe进程杀死，重启mysqld。</p>
-<p>可能会遇到的问题</p>
-<p>登录mysql</p>
-<p><code>/usr/local/mysql/bin/mysql -uroot -proot</code></p>
-<p>这个时候，如果执行查询之类的操作，比如执行”show databases;”，可能会有如下提示:</p>
-<p><code>ERROR 1820 (HY000): You must reset your password using ALTER USER statement before executing this statement.</code></p>
-<p>根据提示进行操作，输入如下SQL语句，这个语句的作用是修改root用户的口令为root：</p>
-<p><code>mysql&gt; alter user &#39;root&#39;@&#39;localhost&#39; identified by &#39;root&#39;;</code></p>
-<p>结果：</p>
-<p><code>Query OK, 0 rows affected</code></p>
-<h3 id="MySql-数据库-插入表情字符报错-java-sql-SQLException-Incorrect-string-value-‘-xF0-x9F-x98-x87"><a href="#MySql-数据库-插入表情字符报错-java-sql-SQLException-Incorrect-string-value-‘-xF0-x9F-x98-x87" class="headerlink" title="MySql 数据库 插入表情字符报错 [java.sql.SQLException: Incorrect string value: ‘\xF0\x9F\x98\x87]"></a>MySql 数据库 插入表情字符报错 [java.sql.SQLException: Incorrect string value: ‘\xF0\x9F\x98\x87]</h3><p>解决办法: mysql安装目录下找到 my.ini 文件并做修改</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[mysqld]</span><br><span class="line">character-set-server=utf8mb4</span><br><span class="line">[mysql]</span><br><span class="line">default-character-set=utf8mb4</span><br></pre></td></tr></table></figure>
-
-<p>修改后重启mysql</p>
-<p>将已经建好的表转成utf8mb4</p>
-<p>更改数据库编码:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ALTER DATABASE 数据库名 CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;</span><br></pre></td></tr></table></figure>
-
-<p>更改表的编码:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">alter table 表名 convert to character set utf8mb4 collate utf8mb4_bin;</span><br></pre></td></tr></table></figure>
-
-<p>修改mysql配置文件my.cnf (windows为my.ini)</p>
-<p>my.cnf一般在etc/mysql/my.cnf位置。找到后请在以下三部分里添加如下内容：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[client] </span><br><span class="line">default-character-set = utf8mb4 </span><br><span class="line">[mysql] </span><br><span class="line">default-character-set = utf8mb4 </span><br><span class="line">[mysqld] </span><br><span class="line">character-set-client-handshake = FALSE </span><br><span class="line">character-set-server = utf8mb4 </span><br><span class="line">collation-server = utf8mb4_unicode_ci </span><br><span class="line">init_connect=&apos;SET NAMES utf8mb4&apos;</span><br></pre></td></tr></table></figure>
-
-
-
-<h4 id="解决Mysql报错缺少libaio-so-1"><a href="#解决Mysql报错缺少libaio-so-1" class="headerlink" title="解决Mysql报错缺少libaio.so.1:"></a>解决Mysql报错缺少libaio.so.1:</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">64位系统安装：</span><br><span class="line"></span><br><span class="line">wget http://mirror.centos.org/centos/6/os/x86_64/Packages/libaio-0.3.107-10.el6.x86_64.rpm</span><br><span class="line"></span><br><span class="line">rpm -ivh libaio-0.3.107-10.el6.x86_64.rpm</span><br><span class="line"></span><br><span class="line">32位系统现在很少了，yum似乎默认安装32位的：</span><br><span class="line"></span><br><span class="line">yum install libaio.so.1</span><br></pre></td></tr></table></figure>
-
-<h4 id="ssh连接提示“REMOTE-HOST-IDENTIFICATION-HAS-CHANGED-”解决办法"><a href="#ssh连接提示“REMOTE-HOST-IDENTIFICATION-HAS-CHANGED-”解决办法" class="headerlink" title="ssh连接提示“REMOTE HOST IDENTIFICATION HAS CHANGED! ”解决办法"></a>ssh连接提示“REMOTE HOST IDENTIFICATION HAS CHANGED! ”解决办法</h4><p>ssh会把你每个你访问过计算机的公钥(public key)都记录在~/.ssh/known_hosts。当下次访问相同计算机时，OpenSSH会核对公钥。如果公钥不同，OpenSSH会发出警告，避免你受到DNS Hijack之类的***。 </p>
-<p>既然找到原因了，那就好解决了，直接编辑~/.ssh/known_hosts，将需要连接的那个IP相关rsa信息删除即可。，再次成功的话，它会将内容继续写入到 ~/.ssh/known_hosts中。</p>
-]]></content>
-      <categories>
-        <category>数据库</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>Linux环境下Mysql数据库自动备份脚本</title>
-    <url>/2019/12/10/Linux%E7%8E%AF%E5%A2%83%E4%B8%8BMysql%E6%95%B0%E6%8D%AE%E5%BA%93%E8%87%AA%E5%8A%A8%E5%A4%87%E4%BB%BD%E8%84%9A%E6%9C%AC/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><h4 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h4><h5 id="创建好备份使用的文件夹"><a href="#创建好备份使用的文件夹" class="headerlink" title="创建好备份使用的文件夹"></a>创建好备份使用的文件夹</h5><p>存放最新备份文件的文件夹：</p>
-<p><code>mkdir /mnt/backup/bakmysql</code></p>
-<p>存放历史备份的文件夹：</p>
-<p><code>mkdir /mnt/backup/backmysqlold</code></p>
-<h5 id="编辑脚本"><a href="#编辑脚本" class="headerlink" title="编辑脚本"></a>编辑脚本</h5><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">用户名</span></span><br><span class="line">db_user="root"</span><br><span class="line"><span class="meta">#</span><span class="bash">密码</span></span><br><span class="line">db_passwd="123456"</span><br><span class="line"><span class="meta">#</span><span class="bash">数据库名</span></span><br><span class="line">db_name="lc_data"</span><br><span class="line"><span class="meta">#</span><span class="bash">指定数据库安装路径 可以让crontab找到执行文件 如果直接写mysqldump仅在本地执行脚本好使 crontab执行是空文件</span></span><br><span class="line">tool="/usr/local/mysql5.7/bin/mysqldump"</span><br><span class="line"><span class="meta">#</span><span class="bash">进入备份目录将之前的移动到old目录</span></span><br><span class="line">cd /mnt/backup/bakmysql</span><br><span class="line">echo "you are in bakmysql directory now"</span><br><span class="line"><span class="meta">#</span><span class="bash">将当前备份的数据移动到旧文件夹内</span></span><br><span class="line">mv lc_data* /mnt/backup/bakmysqlold</span><br><span class="line">echo "Old databases are moved to bakmysqlold folder"</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 备份目录</span></span><br><span class="line">backup_dir="/mnt/backup/bakmysql"</span><br><span class="line"><span class="meta">#</span><span class="bash"> 备份日期</span></span><br><span class="line">time=$(date +"%Y-%m-%d")</span><br><span class="line"><span class="meta">$</span><span class="bash">tool --defaults-extra-file=/etc/my.cnf <span class="variable">$db_name</span> &gt; <span class="string">"<span class="variable">$backup_dir</span>/<span class="variable">$db_name</span>"</span>_<span class="string">"<span class="variable">$time</span>.sql"</span></span></span><br><span class="line">echo "your database backup successfully completed"</span><br><span class="line"><span class="meta">#</span><span class="bash">这里将7天之前的备份文件删掉</span></span><br><span class="line">SevenDays=$(date -d -7day  +"%Y-%m-%d")</span><br><span class="line">if [ -f /mnt/backup/bakmysqlold/lc_data_$SevenDays.sql ]</span><br><span class="line">then</span><br><span class="line">rm -rf /mnt/backup/bakmysqlold/lc_data_$SevenDays.sql</span><br><span class="line">echo "you have delete 7days ago bak sql file "</span><br><span class="line">else</span><br><span class="line">echo "7days ago bak sql file not exist "</span><br><span class="line">echo "bash complete"</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
-
-
-
-<h4 id="注意点："><a href="#注意点：" class="headerlink" title="注意点："></a>注意点：</h4><p>1，上面的脚本执行可能会报错， 错误信息：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">避免命令行使用password的安全警告：Warning: Using a password on the command line interface can be insecure.</span><br></pre></td></tr></table></figure>
-
-<p>在mysql5.6之后不允许这样用明文，不安全</p>
-<p>解决办法：</p>
-<p><code>vi /etc/my.cnf</code></p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[client]</span><br><span class="line">host=localhost</span><br><span class="line">user=root</span><br><span class="line">password=123456</span><br></pre></td></tr></table></figure>
-
-
-
-<p>2，编辑定时任务</p>
-<p><code>crontab -e</code></p>
-<p>每分钟执行一次（测试使用）</p>
-<p><code>*/1 * * * * /mnt/backup/lc_data.sh</code></p>
-<p>每天23：59分执行一次</p>
-<p><code>59 23 * * * /mnt/backup/lc_data.sh</code> </p>
-<p>每周一执行一次</p>
-<p><code>0 16 * * 1 /mnt/backup/lc_data.sh</code></p>
-<p>查看已经保存的定时任务</p>
-<p><code>crontab -l</code></p>
-<p>参考：</p>
-<p><img alt="aHR0cHM6Ly9pbWcyMDE4LmNuYmxvZ3MuY29tL2Jsb2cvMTc0OTQ1Ni8yMDE5MDcvMTc0OTQ1Ni0yMDE5MDcyNDEzNTExOTE5NS0xNTQxNzcxMDQ4LnBuZw" data-src="https://tva1.sinaimg.cn/large/007S8ZIlly1gfxx0ggzugj30eu0cdmxd.jpg" class="lazyload"></p>
-]]></content>
-      <categories>
-        <category>数据库</category>
-      </categories>
-  </entry>
-  <entry>
     <title>常用工具</title>
     <url>/2019/12/04/%E5%B8%B8%E7%94%A8%E5%B7%A5%E5%85%B7/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><h2 id="常用工具汇总"><a href="#常用工具汇总" class="headerlink" title="常用工具汇总"></a>常用工具汇总</h2><h3 id="Pulse-Secure-for-Mac-VPN工具"><a href="#Pulse-Secure-for-Mac-VPN工具" class="headerlink" title="Pulse Secure for Mac (VPN工具)"></a>Pulse Secure for Mac (VPN工具)</h3><p>官网地址: <a href="https://www.pulsesecure.net/" target="_blank" rel="noopener">https://www.pulsesecure.net/</a></p>
@@ -720,26 +982,6 @@
 ]]></content>
       <categories>
         <category>工具</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>开篇</title>
-    <url>/2019/11/09/%E5%BC%80%E7%AF%87/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><h3 id="原本想使用-spring-boot-vue-开发一款博客系统-但是平时也没有多少时间-做出来的样式也不是很喜欢。今天无意间发现Hexo这个开源的博客框架-决定拿来试一试-效果还不错-今后会继续完善下去-我也会将-简书、掘金的一些之前写作的文章导入进来-希望通过它能让我养成技术文档整理归纳的好习惯-我也会在此更新一些生活上的故事和心得体悟。"><a href="#原本想使用-spring-boot-vue-开发一款博客系统-但是平时也没有多少时间-做出来的样式也不是很喜欢。今天无意间发现Hexo这个开源的博客框架-决定拿来试一试-效果还不错-今后会继续完善下去-我也会将-简书、掘金的一些之前写作的文章导入进来-希望通过它能让我养成技术文档整理归纳的好习惯-我也会在此更新一些生活上的故事和心得体悟。" class="headerlink" title="原本想使用 spring-boot + vue 开发一款博客系统, 但是平时也没有多少时间, 做出来的样式也不是很喜欢。今天无意间发现Hexo这个开源的博客框架, 决定拿来试一试, 效果还不错, 今后会继续完善下去, 我也会将 简书、掘金的一些之前写作的文章导入进来, 希望通过它能让我养成技术文档整理归纳的好习惯, 我也会在此更新一些生活上的故事和心得体悟。"></a>原本想使用 spring-boot + vue 开发一款博客系统, 但是平时也没有多少时间, 做出来的样式也不是很喜欢。今天无意间发现Hexo这个开源的博客框架, 决定拿来试一试, 效果还不错, 今后会继续完善下去, 我也会将 简书、掘金的一些之前写作的文章导入进来, 希望通过它能让我养成技术文档整理归纳的好习惯, 我也会在此更新一些生活上的故事和心得体悟。</h3>]]></content>
-      <categories>
-        <category>随笔</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>Windows Server 2002 使用记录</title>
-    <url>/2019/11/09/Windows%20Server%202002%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>前段时间接到一个为公司客户开发官网的任务, 框架使用Jeesite, 前后端分离项目, 数据库是Mysql5.7。接下来就记录下遭遇的一切。</p>
-<p>大约三天开发完后台服务及管理界面的配置, 配合前台接口调试用了一天, 然后客户购买的阿里云服务器, 我原以为是Linux服务器, 所以也没多问就按照之前的习惯, 用Mac的ssh直接连接, 提示 22端口访问被拒绝, 什么鬼? 22端口没开, 然后几经辗转要到阿里云账号并登录到管理后台, 重置了实例密码(因为客户也不知道密码是啥), 说实在的, 我连Windows电脑都好些年不用了, 所有的命令行也不怎么会, 这可难到我了,  研究了好一阵子, 我才知道windows有自己的远程连接工具, 并且需要开放的端口是 3389, 然后阿里云后台配置网络安全组, 开放 80, 3389 , 3306 入规则访问权限, 分别是网路请求, 远程控制 和 数据库, 方便我以后的开发调试工作, 等真正交付的时候再关闭掉 3389和3306,  然后用Tomcat开始部署, 其实使用这一个服务就可以了, 但是个人习惯还是兼顾使用了 Nginx服务, 然后 下载Java JDK 配置环境变量这一套常规操作。</p>
-<p>远程访问我用客户的账号配置好后台网络, 然后重置并获取到新的服务器密码后, (这里再插一句, 服务器主机的开机账号密码默认是 administrator  和 服务器密码 我才知道 之前以为是俩密码) 然后安装了Teamviewer工具, 为了双保险又安装了蒲公英, 之前Team不说是有漏洞嘛, 但是我觉得蒲公英免费版的太慢了, 卡的很难受, 还是Team比较快捷高效 然后磕磕绊绊的服务起开了, 根据IP外网也能访问了</p>
-<p>第二天客户说访问不到服务了, 我登录发现密码错误, 难道客户密码改了? 但是客户说没改, 我又远程访问的客户电脑, 再通过他的浏览器访问的服务器, 然后重置了密码, 一顿操作还是没发现问题, localhost访问服务没问题, 那就是网络的问题了, 发现防火墙被用户开启了, 那就是防火墙的问题了, 单独开放了80端口, 搞定, 可以正常外网访问了, 然后防止客户重启服务器 服务中断的问题, 需要配置Tomcat和Nginx自启服务, Tomcat服务自启比较简单</p>
-]]></content>
-      <categories>
-        <category>随笔</category>
       </categories>
   </entry>
   <entry>
@@ -793,6 +1035,26 @@
 <pre><code>### 最后的效果图我就不放了, 在上面有!!!</code></pre>]]></content>
       <categories>
         <category>微信小程序</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>Windows Server 2002 使用记录</title>
+    <url>/2019/11/09/Windows%20Server%202002%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>前段时间接到一个为公司客户开发官网的任务, 框架使用Jeesite, 前后端分离项目, 数据库是Mysql5.7。接下来就记录下遭遇的一切。</p>
+<p>大约三天开发完后台服务及管理界面的配置, 配合前台接口调试用了一天, 然后客户购买的阿里云服务器, 我原以为是Linux服务器, 所以也没多问就按照之前的习惯, 用Mac的ssh直接连接, 提示 22端口访问被拒绝, 什么鬼? 22端口没开, 然后几经辗转要到阿里云账号并登录到管理后台, 重置了实例密码(因为客户也不知道密码是啥), 说实在的, 我连Windows电脑都好些年不用了, 所有的命令行也不怎么会, 这可难到我了,  研究了好一阵子, 我才知道windows有自己的远程连接工具, 并且需要开放的端口是 3389, 然后阿里云后台配置网络安全组, 开放 80, 3389 , 3306 入规则访问权限, 分别是网路请求, 远程控制 和 数据库, 方便我以后的开发调试工作, 等真正交付的时候再关闭掉 3389和3306,  然后用Tomcat开始部署, 其实使用这一个服务就可以了, 但是个人习惯还是兼顾使用了 Nginx服务, 然后 下载Java JDK 配置环境变量这一套常规操作。</p>
+<p>远程访问我用客户的账号配置好后台网络, 然后重置并获取到新的服务器密码后, (这里再插一句, 服务器主机的开机账号密码默认是 administrator  和 服务器密码 我才知道 之前以为是俩密码) 然后安装了Teamviewer工具, 为了双保险又安装了蒲公英, 之前Team不说是有漏洞嘛, 但是我觉得蒲公英免费版的太慢了, 卡的很难受, 还是Team比较快捷高效 然后磕磕绊绊的服务起开了, 根据IP外网也能访问了</p>
+<p>第二天客户说访问不到服务了, 我登录发现密码错误, 难道客户密码改了? 但是客户说没改, 我又远程访问的客户电脑, 再通过他的浏览器访问的服务器, 然后重置了密码, 一顿操作还是没发现问题, localhost访问服务没问题, 那就是网络的问题了, 发现防火墙被用户开启了, 那就是防火墙的问题了, 单独开放了80端口, 搞定, 可以正常外网访问了, 然后防止客户重启服务器 服务中断的问题, 需要配置Tomcat和Nginx自启服务, Tomcat服务自启比较简单</p>
+]]></content>
+      <categories>
+        <category>随笔</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>开篇</title>
+    <url>/2019/11/09/%E5%BC%80%E7%AF%87/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><h3 id="原本想使用-spring-boot-vue-开发一款博客系统-但是平时也没有多少时间-做出来的样式也不是很喜欢。今天无意间发现Hexo这个开源的博客框架-决定拿来试一试-效果还不错-今后会继续完善下去-我也会将-简书、掘金的一些之前写作的文章导入进来-希望通过它能让我养成技术文档整理归纳的好习惯-我也会在此更新一些生活上的故事和心得体悟。"><a href="#原本想使用-spring-boot-vue-开发一款博客系统-但是平时也没有多少时间-做出来的样式也不是很喜欢。今天无意间发现Hexo这个开源的博客框架-决定拿来试一试-效果还不错-今后会继续完善下去-我也会将-简书、掘金的一些之前写作的文章导入进来-希望通过它能让我养成技术文档整理归纳的好习惯-我也会在此更新一些生活上的故事和心得体悟。" class="headerlink" title="原本想使用 spring-boot + vue 开发一款博客系统, 但是平时也没有多少时间, 做出来的样式也不是很喜欢。今天无意间发现Hexo这个开源的博客框架, 决定拿来试一试, 效果还不错, 今后会继续完善下去, 我也会将 简书、掘金的一些之前写作的文章导入进来, 希望通过它能让我养成技术文档整理归纳的好习惯, 我也会在此更新一些生活上的故事和心得体悟。"></a>原本想使用 spring-boot + vue 开发一款博客系统, 但是平时也没有多少时间, 做出来的样式也不是很喜欢。今天无意间发现Hexo这个开源的博客框架, 决定拿来试一试, 效果还不错, 今后会继续完善下去, 我也会将 简书、掘金的一些之前写作的文章导入进来, 希望通过它能让我养成技术文档整理归纳的好习惯, 我也会在此更新一些生活上的故事和心得体悟。</h3>]]></content>
+      <categories>
+        <category>随笔</category>
       </categories>
   </entry>
   <entry>
@@ -1073,28 +1335,6 @@
       </categories>
   </entry>
   <entry>
-    <title>Swift开发的一些小知识点(更新状态)</title>
-    <url>/2016/11/15/Swift%E5%BC%80%E5%8F%91%E4%B8%80%E4%BA%9B%E5%B0%8F%E7%9F%A5%E8%AF%86%E7%82%B9/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><h3 id="Swift项目程序入口main函数在哪"><a href="#Swift项目程序入口main函数在哪" class="headerlink" title="Swift项目程序入口main函数在哪?"></a>Swift项目程序入口main函数在哪?</h3><p>Xcode新建的Swift项目中 发现没有main函数入口, 哪里去了呢, 在Appdelegate.swfit 上发现一个注解</p>
-<p><code>@UIApplicationMain</code></p>
-<p>这个注解会自动生成一个程序的入口, 但是如果在一些特殊情况下, 我们需要自定义 UIApplication该怎么办呢, 新建一个Swift文件, 命名为 main.swift    在其内实现main函数</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> UIKit</span><br><span class="line"><span class="comment">//自定义UIApplication</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyApplication</span>: <span class="title">UIApplication</span> </span>&#123;&#125;</span><br><span class="line"><span class="comment">//使用自定义的UIApplication</span></span><br><span class="line"><span class="type">UIApplicationMain</span>(<span class="type">CommandLine</span>.argc, <span class="type">CommandLine</span>.unsafeArgv, <span class="type">NSStringFromClass</span>(<span class="type">MyApplication</span>.<span class="keyword">self</span>), <span class="type">NSStringFromClass</span>(<span class="type">AppDelegate</span>.<span class="keyword">self</span>))</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="Swift调用OC"><a href="#Swift调用OC" class="headerlink" title="Swift调用OC"></a>Swift调用OC</h3><p>在swift项目新建OC类, 会弹出提示如下图</p>
-<p><img alt="截屏2019-11-12下午10.44.09" data-src="https://tva1.sinaimg.cn/large/006y8mN6ly1g8vn1f9shqj30va07gjx0.jpg" class="lazyload"></p>
-<p>会询问你是否创建桥接文件, 点击创建桥接文件, 在工程目录内会出现产生的桥接文件</p>
-<p><img alt="Snip20191112_1" data-src="https://tva1.sinaimg.cn/large/006y8mN6ly1g8vn39auvvj307903u3yn.jpg" class="lazyload"></p>
-<p>桥接文件的文件名固定格式 <strong>{targetName}-Bridging-Header.h</strong></p>
-<p>这个头文件,引入一些OC的类, 暴露给Swift使用.</p>
-<p><code>#import &quot;Change.h&quot;</code></p>
-]]></content>
-      <categories>
-        <category>iOS</category>
-      </categories>
-  </entry>
-  <entry>
     <title>《如何使用CocoaPods：2016.11.15版》</title>
     <url>/2016/11/15/%E3%80%8A%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8CocoaPods%EF%BC%9A2016.11.15%E7%89%88%E3%80%8B/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>一、CocoaPods的简介：</p>
@@ -1161,12 +1401,46 @@
       </categories>
   </entry>
   <entry>
+    <title>Swift开发的一些小知识点(更新状态)</title>
+    <url>/2016/11/15/Swift%E5%BC%80%E5%8F%91%E4%B8%80%E4%BA%9B%E5%B0%8F%E7%9F%A5%E8%AF%86%E7%82%B9/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><h3 id="Swift项目程序入口main函数在哪"><a href="#Swift项目程序入口main函数在哪" class="headerlink" title="Swift项目程序入口main函数在哪?"></a>Swift项目程序入口main函数在哪?</h3><p>Xcode新建的Swift项目中 发现没有main函数入口, 哪里去了呢, 在Appdelegate.swfit 上发现一个注解</p>
+<p><code>@UIApplicationMain</code></p>
+<p>这个注解会自动生成一个程序的入口, 但是如果在一些特殊情况下, 我们需要自定义 UIApplication该怎么办呢, 新建一个Swift文件, 命名为 main.swift    在其内实现main函数</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> UIKit</span><br><span class="line"><span class="comment">//自定义UIApplication</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyApplication</span>: <span class="title">UIApplication</span> </span>&#123;&#125;</span><br><span class="line"><span class="comment">//使用自定义的UIApplication</span></span><br><span class="line"><span class="type">UIApplicationMain</span>(<span class="type">CommandLine</span>.argc, <span class="type">CommandLine</span>.unsafeArgv, <span class="type">NSStringFromClass</span>(<span class="type">MyApplication</span>.<span class="keyword">self</span>), <span class="type">NSStringFromClass</span>(<span class="type">AppDelegate</span>.<span class="keyword">self</span>))</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="Swift调用OC"><a href="#Swift调用OC" class="headerlink" title="Swift调用OC"></a>Swift调用OC</h3><p>在swift项目新建OC类, 会弹出提示如下图</p>
+<p><img alt="截屏2019-11-12下午10.44.09" data-src="https://tva1.sinaimg.cn/large/006y8mN6ly1g8vn1f9shqj30va07gjx0.jpg" class="lazyload"></p>
+<p>会询问你是否创建桥接文件, 点击创建桥接文件, 在工程目录内会出现产生的桥接文件</p>
+<p><img alt="Snip20191112_1" data-src="https://tva1.sinaimg.cn/large/006y8mN6ly1g8vn39auvvj307903u3yn.jpg" class="lazyload"></p>
+<p>桥接文件的文件名固定格式 <strong>{targetName}-Bridging-Header.h</strong></p>
+<p>这个头文件,引入一些OC的类, 暴露给Swift使用.</p>
+<p><code>#import &quot;Change.h&quot;</code></p>
+]]></content>
+      <categories>
+        <category>iOS</category>
+      </categories>
+  </entry>
+  <entry>
     <title>Linux常用命令</title>
     <url>/2016/08/06/Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><h4 id="守护进程启动spring-boot项目"><a href="#守护进程启动spring-boot项目" class="headerlink" title="守护进程启动spring-boot项目:"></a>守护进程启动spring-boot项目:</h4><p><code>nohup java -jar repair-api.jar &gt; log.file 2&gt;&amp;1 &amp;</code></p>
 <h4 id="实时查看日志信息-接上"><a href="#实时查看日志信息-接上" class="headerlink" title="实时查看日志信息(接上):"></a>实时查看日志信息(接上):</h4><p><code>tail -f log.file</code></p>
-<h4 id="查看某个端口的进程id"><a href="#查看某个端口的进程id" class="headerlink" title="查看某个端口的进程id:"></a>查看某个端口的进程id:</h4><p><code>losof -i:8080</code></p>
+<h4 id="查看某个端口的进程id"><a href="#查看某个端口的进程id" class="headerlink" title="查看某个端口的进程id:"></a>查看某个端口的进程id:</h4><p><code>lsof -i:8080</code></p>
 <h4 id="通过进程id-关闭某个端口-注-中括号请忽略"><a href="#通过进程id-关闭某个端口-注-中括号请忽略" class="headerlink" title="通过进程id 关闭某个端口(注:中括号请忽略):"></a>通过进程id 关闭某个端口(注:中括号请忽略):</h4><p><code>kill -9 [从上面获取的进程id]</code></p>
+<h4 id="创建mysql-utf8mb4数据库"><a href="#创建mysql-utf8mb4数据库" class="headerlink" title="创建mysql  utf8mb4数据库"></a>创建mysql  utf8mb4数据库</h4><p><code>create database zctqgl default character set utf8mb4 collate utf8mb4_unicode_ci;</code></p>
+<h4 id="进入mysql-docker容器内"><a href="#进入mysql-docker容器内" class="headerlink" title="进入mysql docker容器内"></a>进入mysql docker容器内</h4><p><code>docker exec -it mysql bash</code></p>
+<h4 id="复制-sql文件到docker容器内"><a href="#复制-sql文件到docker容器内" class="headerlink" title="复制.sql文件到docker容器内"></a>复制.sql文件到docker容器内</h4><p><code>docker cp xxx.sql mysql:/zcjksb.sql</code></p>
+<p><code>ls -l xxx.sql</code></p>
+<h4 id="ssh连接服务器"><a href="#ssh连接服务器" class="headerlink" title="ssh连接服务器"></a>ssh连接服务器</h4><p><code>ssh xxx@192.168.0.124</code></p>
+<h4 id="scp传输文件"><a href="#scp传输文件" class="headerlink" title="scp传输文件"></a>scp传输文件</h4><p><code>scp -P 1070 xxx.jar xxx@xx.x.xx.xxx:~/</code></p>
+<h4 id="移动当前文件夹内容至上一级目录"><a href="#移动当前文件夹内容至上一级目录" class="headerlink" title="移动当前文件夹内容至上一级目录"></a>移动当前文件夹内容至上一级目录</h4><p><code>mv * ../</code></p>
+<h4 id="删除名为-RUNOOB-的数据库"><a href="#删除名为-RUNOOB-的数据库" class="headerlink" title="删除名为 RUNOOB 的数据库"></a>删除名为 RUNOOB 的数据库</h4><p><code>mysql&gt; drop database RUNOOB;</code></p>
+<h4 id="查询某张表里最新后一条数据"><a href="#查询某张表里最新后一条数据" class="headerlink" title="查询某张表里最新后一条数据"></a>查询某张表里最新后一条数据</h4><p>mysql:</p>
+<p><code>select * from table order by id DESC limit 1</code></p>
+<p>oracle:</p>
+<p><code>select * from emp where id in (select max(id) from emp);</code></p>
 ]]></content>
       <categories>
         <category>Linux</category>
