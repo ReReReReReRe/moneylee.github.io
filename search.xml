@@ -22,6 +22,284 @@
       </categories>
   </entry>
   <entry>
+    <title>Java项目开发笔记_03</title>
+    <url>/2020/06/08/Java%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91%E7%AC%94%E8%AE%B0_03/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><h3 id="SpringBoot2-x定时任务schedule讲解"><a href="#SpringBoot2-x定时任务schedule讲解" class="headerlink" title="SpringBoot2.x定时任务schedule讲解"></a>SpringBoot2.x定时任务schedule讲解</h3><ul>
+<li><p>使用场景：</p>
+<ul>
+<li>某个时间处理某个任务</li>
+<li>发邮件、发短信等</li>
+<li>消息提醒</li>
+<li>订单通知</li>
+<li>统计报表系统</li>
+<li>…</li>
+</ul>
+</li>
+<li><p>常见定时任务</p>
+<ul>
+<li>Java自带的java.util.Timer类配置比较麻烦，时间延后问题</li>
+<li>Quartz框架：配置更简单，xml或直接适合分布式或大型调度作业</li>
+<li>SpringBoot框架自带</li>
+</ul>
+</li>
+<li><p>SpringBoot使用注解方式开启定时任务</p>
+<ul>
+<li>启动类里面 @EnableScheduling开启你定时任务，自动扫描</li>
+<li>定时任务业务类，加注解 @Component被容器扫描</li>
+<li>定时执行的方法加上注解 @Scheduled(fixedRate=2000) 定期执行一次</li>
+</ul>
+</li>
+<li><p>SpringBoot常用定时任务表达式配置和在线生成器</p>
+<ul>
+<li>cron定时任务表达式 @Scheduled(cron=”*/1 * * * * *”)表示每秒</li>
+<li><a href="https://tool.lu/crontab" target="_blank" rel="noopener">Cron在线工具</a></li>
+</ul>
+</li>
+<li><p>SpringBoot2.x异步任务EnableAsync</p>
+<p>使用场景：</p>
+<ul>
+<li>适用于处理log、发送邮件、短信… 等等</li>
+<li>下单接口 -&gt; 查库存 1000</li>
+<li>余额校验 15000</li>
+<li>风控用户 1000</li>
+<li>启动类里面使用@EnableAsync注解开启功能，自动扫描</li>
+<li>定义异步任务类并使用@Component标记组件被容器扫描，异步方法上加上@Async</li>
+</ul>
+</li>
+<li><p>SpringBoot2.x异步任务Future获取结果</p>
+<ul>
+<li>注意点：<ul>
+<li>要把异步任务封装到类里面，不能直接写到Controller</li>
+<li>增加Future<String>返回结果 AsyncResult<String>（”task执行完成”);</li>
+<li>如果需要拿到结果 需要判断全部的 task.isDone()</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">package com.moneylee.xdstudy.task;</span><br><span class="line"></span><br><span class="line">import org.springframework.scheduling.annotation.Async;</span><br><span class="line">import org.springframework.scheduling.annotation.AsyncResult;</span><br><span class="line">import org.springframework.stereotype.Component;</span><br><span class="line"></span><br><span class="line">import java.util.concurrent.Future;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * @className: Async</span><br><span class="line"> * @Description: 异步任务</span><br><span class="line"> * @Author moneylee</span><br><span class="line"> * @Date 2020-07-02 18:41</span><br><span class="line"> * @Version 1.0</span><br><span class="line"> **/</span><br><span class="line">@Component</span><br><span class="line">@Async</span><br><span class="line">public class AsyncTask &#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    public void task1() &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            Thread.sleep(4000L);</span><br><span class="line">        &#125; catch (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(&quot;task 1&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void task2() &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            Thread.sleep(4000L);</span><br><span class="line">        &#125; catch (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(&quot;task 2&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void task3() &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            Thread.sleep(4000L);</span><br><span class="line">        &#125; catch (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(&quot;task 3&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public Future&lt;String&gt; task4() &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            Thread.sleep(4000L);</span><br><span class="line">        &#125; catch (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(&quot;task 4&quot;);</span><br><span class="line">        return new AsyncResult&lt;String&gt;(&quot;任务4&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public Future&lt;String&gt; task5() &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            Thread.sleep(4000L);</span><br><span class="line">        &#125; catch (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(&quot;task 5&quot;);</span><br><span class="line">        return new AsyncResult&lt;String&gt;(&quot;任务5&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>Java项目开发笔记_04</title>
+    <url>/2020/06/08/Java%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91%E7%AC%94%E8%AE%B0_04/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p><strong>Java项目开发笔记04-0x的代码在：</strong><a href="https://gitee.com/moneylee/java_learning__02" target="_blank" rel="noopener">gitee</a></p>
+<h2 id="设计应用的核心数据库表-ER图"><a href="#设计应用的核心数据库表-ER图" class="headerlink" title="设计应用的核心数据库表-ER图"></a>设计应用的核心数据库表-ER图</h2><p><strong>简介：</strong></p>
+<ul>
+<li>在线教育站点速揽 xdclass.net</li>
+<li>ER图只是回顾：<ul>
+<li>实体对象：矩形</li>
+<li>属性：椭圆</li>
+<li>关系：菱形</li>
+</ul>
+</li>
+<li>核心库表<ul>
+<li>video</li>
+<li>chapter</li>
+<li>episode</li>
+<li>user</li>
+<li>video_order</li>
+<li>video_banner</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="JavaWeb通过原生jdbc访问数据库"><a href="#JavaWeb通过原生jdbc访问数据库" class="headerlink" title="JavaWeb通过原生jdbc访问数据库"></a>JavaWeb通过原生jdbc访问数据库</h3><ul>
+<li><p>原生jdbc访问数据库步骤</p>
+<ul>
+<li>加载JDBC驱动程序</li>
+<li>创建数据库的连接</li>
+<li>创建prepareStatement</li>
+<li>执行SQL语句</li>
+<li>处理结果集</li>
+<li>关闭jdbc对象资源</li>
+</ul>
+</li>
+<li><p>SpringBoot项目测试原生JDBC连接</p>
+<ul>
+<li>加载依赖包</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">			&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">			&lt;artifactId&gt;spring-boot-starter-jdbc&lt;/artifactId&gt;</span><br><span class="line">		&lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">		&lt;dependency&gt;</span><br><span class="line">			&lt;groupId&gt;mysql&lt;/groupId&gt;</span><br><span class="line">			&lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;</span><br><span class="line">		&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>main函数测试</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">package com.moneylee.xdstudy;</span><br><span class="line"></span><br><span class="line">import java.sql.Connection;</span><br><span class="line">import java.sql.DriverManager;</span><br><span class="line">import java.sql.ResultSet;</span><br><span class="line">import java.sql.Statement;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * @className: JdbcApp</span><br><span class="line"> * @Description: TODO</span><br><span class="line"> * @Author moneylee</span><br><span class="line"> * @Date 2020-07-03 09:23</span><br><span class="line"> * @Version 1.0</span><br><span class="line"> **/</span><br><span class="line">public class JdbcApp &#123;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * - 加载JDBC驱动程序</span><br><span class="line">     * - 创建数据库的连接</span><br><span class="line">     * - 创建prepareStatement</span><br><span class="line">     * - 执行SQL语句</span><br><span class="line">     * - 处理结果集</span><br><span class="line">     * - 关闭jdbc对象资源</span><br><span class="line">     * @param args</span><br><span class="line">     */</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) throws Exception &#123;</span><br><span class="line"></span><br><span class="line">        Class.forName(&quot;com.mysql.cj.jdbc.Driver&quot;);</span><br><span class="line">        //连接</span><br><span class="line">        String url = &quot;jdbc:mysql://127.0.0.1:3306/xdclass?useUnicode=true&amp;charaterEncoding=utf-8&amp;useSSL=false&quot;;</span><br><span class="line"></span><br><span class="line">        String username = &quot;root&quot;;</span><br><span class="line">        String password = &quot;12345678&quot;;</span><br><span class="line">        //获取连接对象，并连接数据库</span><br><span class="line">        Connection connection = DriverManager.getConnection(url, username, password);</span><br><span class="line"></span><br><span class="line">        Statement statement = connection.createStatement();</span><br><span class="line"></span><br><span class="line">        ResultSet resultSet = statement.executeQuery(&quot;select * from video&quot;);</span><br><span class="line"></span><br><span class="line">        while (resultSet.next()) &#123;</span><br><span class="line"></span><br><span class="line">            System.out.println(&quot;视频标题&quot; + resultSet.getString(&quot;title&quot;));</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        statement.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<h2 id="原生JDBC访问数据库缺点和ORM框架介绍"><a href="#原生JDBC访问数据库缺点和ORM框架介绍" class="headerlink" title="原生JDBC访问数据库缺点和ORM框架介绍"></a>原生JDBC访问数据库缺点和ORM框架介绍</h2><ul>
+<li>原生jdbc缺点：<ul>
+<li>每次要加载驱动，连接信息是硬编码</li>
+<li>sql和java代码耦合在一起，改动不易</li>
+<li>参数设置缺少灵活性</li>
+<li>处理结果麻烦。不能自动映射到实体类</li>
+<li>连接资源不能复用，资源浪费</li>
+</ul>
+</li>
+<li>什么是ORM框架<ul>
+<li>对数据库的表和POJO对象做映射的框架</li>
+</ul>
+</li>
+<li>市面上的ORM框架<ul>
+<li>hibernate<ul>
+<li>比较笨重，sql调优麻烦</li>
+<li>不推荐</li>
+</ul>
+</li>
+<li>JPA - Spring Data JPA<ul>
+<li>Java persistrnce API，轻量级，部分中小项目适合</li>
+<li>次推荐</li>
+</ul>
+</li>
+<li>mybatis<ul>
+<li>半自动化（半ORM框架），便于写sql，轻量级，广泛使用</li>
+<li>推荐</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="新版ORM框架Mybatis3-x基础知识"><a href="#新版ORM框架Mybatis3-x基础知识" class="headerlink" title="新版ORM框架Mybatis3.x基础知识"></a>新版ORM框架Mybatis3.x基础知识</h3><ul>
+<li>什么是Mybatis<ul>
+<li>Apahce的一个开源项目</li>
+<li>一款优秀的持久层框架，它支持自定义sql，存储过程及高级映射</li>
+<li>免除了几乎所有JDBC代码以及设置参数和获取结果集的工作</li>
+<li>通过简单的xml或注解来配置和映射Java对象到数据库中的记录</li>
+</ul>
+</li>
+<li>核心流程：<ul>
+<li>每个基于Mybatis的应用都是一个以一个 SqseesionFactory的实例为核心</li>
+<li>SqseesionFactory的实例可以通过SqseesionFactoryBuilder获得</li>
+<li>SqseesionFactoryBuilder可以从XML配置文件或一个预先配置的Configuration实例来构建出SqseesionFactory实例</li>
+<li>工厂设计模式里面需要获取Sqseesion，里面提供了在数据库执行SQL命令所需的方法</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="Mybatis开发必备控制台打印SQL"><a href="#Mybatis开发必备控制台打印SQL" class="headerlink" title="Mybatis开发必备控制台打印SQL"></a>Mybatis开发必备控制台打印SQL</h3><ul>
+<li>Mybatis使用流程<ul>
+<li>创建mybatis-config.xml全局配置文件</li>
+<li>创建XXXMapper.xml配置文件</li>
+<li>创建SqlSessionFactory创建SqlSession对象</li>
+<li>用SqlSession执行增删改查CRUD</li>
+</ul>
+</li>
+<li>内置的日志工厂提供日志功能，使用log4j配置打印sql，添加依赖：</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.slf4j<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>slf4j-log4j12<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">version</span>&gt;</span>1.7.26<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>在应用的classpath中创建名称为log4j.properties的文件</li>
+</ul>
+<figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="meta">log4j.rootLogger</span>=<span class="string">ERROR, stdout</span></span><br><span class="line"></span><br><span class="line"><span class="meta">log4j.logger.net.xdclass</span>=<span class="string">DEBUG</span></span><br><span class="line"><span class="comment">#trace内容会打印更多</span></span><br><span class="line"><span class="comment">#log4j.logger.net.xdclass=TRACE</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#细化到打印某个mapper</span></span><br><span class="line"><span class="comment">#log4j.logger.net.xdclass.online_class.dao.VideoMapper.selectById=TRACE</span></span><br><span class="line"></span><br><span class="line"><span class="meta">log4j.appender.stdout</span>=<span class="string">org.apache.log4j.ConsoleAppender</span></span><br><span class="line"><span class="meta">log4j.appender.stdout.layout</span>=<span class="string">org.apache.log4j.PatternLayout</span></span><br><span class="line"><span class="meta">log4j.appender.stdout.layout.ConversionPattern</span>=<span class="string">%5p [%t] - %m%n</span></span><br></pre></td></tr></table></figure>
+
+
+
+<hr>
+<h3 id="Mybatis参数别名使用"><a href="#Mybatis参数别名使用" class="headerlink" title="Mybatis参数别名使用"></a>Mybatis参数别名使用</h3><ul>
+<li><p>常用的查询</p>
+<ul>
+<li>默认参数查询<ul>
+<li>单个参数，可以使用别名，也可以使用默认的名称，默认名称的话可以随意</li>
+</ul>
+</li>
+<li>使用参数别名</li>
+<li>迷糊查询</li>
+<li>mysql自带函数使用</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">"selectByPointAndTitleLike"</span> <span class="attr">resultType</span>=<span class="string">"com.moneylee.xdstudy_02.domain.Video"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">     select * from video where point=#&#123;point&#125; and title like concat('%', #&#123;title&#125;,'%')</span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>重点：参考记得取别名，方便识别和使用</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"> <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 根据视频id查找视频对象</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> videoId</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function">Video <span class="title">selectById</span><span class="params">(@Param(<span class="string">"video_id"</span>)</span> <span class="keyword">int</span> videoId)</span>;</span><br><span class="line">    <span class="comment">//Video selectById(int videoId);</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 根据评分和标题模糊查询</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> point</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> title</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function">List&lt;Video&gt; <span class="title">selectByPointAndTitleLike</span><span class="params">(@Param(<span class="string">"point"</span>)</span> <span class="keyword">double</span> point, @<span class="title">Param</span><span class="params">(<span class="string">"title"</span>)</span> String title)</span>;</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<hr>
+<h3 id="Mybatis配置驼峰字段映射java对象和数据库字段"><a href="#Mybatis配置驼峰字段映射java对象和数据库字段" class="headerlink" title="Mybatis配置驼峰字段映射java对象和数据库字段"></a>Mybatis配置驼峰字段映射java对象和数据库字段</h3><ul>
+<li>数据库字段是下划线，java属性是驼峰，如何查询映射上去<ul>
+<li>方法一：<code>select cover_img as coverImg from video</code> 多字段如何处理</li>
+</ul>
+</li>
+<li>Mybatis自带配置（加载配置文件顶部）</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!--下划线自动映射驼峰字段--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">settings</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">setting</span> <span class="attr">name</span>=<span class="string">"mapUnderscoreToCamelCase"</span> <span class="attr">value</span>=<span class="string">"true"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">settings</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<hr>
+<h3 id="Mybatis入参paramaeterType的取值类型"><a href="#Mybatis入参paramaeterType的取值类型" class="headerlink" title="Mybatis入参paramaeterType的取值类型"></a>Mybatis入参paramaeterType的取值类型</h3><ul>
+<li><p>parameterType 参数类型</p>
+<ul>
+<li>可以是基本类型</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line">parameterType="java.lang.Integer"</span><br><span class="line">parameterType="java.lang.String"</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>可以是java集合List或者Map</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">parameterType=&quot;java.util.Map&quot;</span><br><span class="line">parameterType=&quot;java.util.List&quot;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>可以是java自定义对象</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">parameterType=&quot;com.moneylee.xdstudy_02.domain.Video&quot;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>取参数值，具体某个字段的类型，从java类型映射到数据库类型</p>
+<ul>
+<li>例子 #(title, jdbcType=VARCHAR)</li>
+<li>注意<ul>
+<li>多数情况下不加正常使用，但是如果出现报错：无效的列类型，则是缺少jdbcType；</li>
+<li>只有当字段可以为NULL时才需要jdbcType属性</li>
+</ul>
+</li>
+<li>常见的数据库类型和java列席对比</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;select id=&quot;selectByPointAndTitleLike&quot;  resultType=&quot;com.moneylee.xdstudy_02.domain.Video&quot;&gt;</span><br><span class="line">  </span><br><span class="line">       select * from video where point=#&#123;point, jdbcType=DOUBLE&#125; and title like concat(&apos;%&apos;, #&#123;title, jdbcType=VARCHAR&#125;,&apos;%&apos;)</span><br><span class="line">  </span><br><span class="line">&lt;/select&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>常见的数据库类型和java列席对比</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">JDBC Type								Java Type</span><br><span class="line">CHAR										String</span><br><span class="line">VARCHAR									String	</span><br><span class="line">LONGVARCHAR							String</span><br><span class="line">NUMERIC									java.math.BigDecimal</span><br><span class="line">DECIMAL									java.math.BigDecimal</span><br><span class="line">BIT											boolean</span><br><span class="line">BOOLEAN									boolean	</span><br><span class="line">TINYINT									byte</span><br><span class="line">SMALLINT								short</span><br><span class="line">INTEGER									INTEGER</span><br><span class="line">INTEGER									int</span><br><span class="line">BIGINT									long</span><br><span class="line">REAL										float</span><br><span class="line">FLOAT										double</span><br><span class="line">DOUBLE									double</span><br><span class="line">BINARY									byte[]</span><br><span class="line">VARBINARY								byte[]</span><br><span class="line">LONGVARBINARY						byte[]</span><br><span class="line">DATE										java.sql.Date</span><br><span class="line">TIME										java.sql.Time</span><br><span class="line">TIMESTAMP								java.sql.Timestamp</span><br><span class="line">CLOB										Clob</span><br><span class="line">BLOB										Blob</span><br><span class="line">ARRAY										Array</span><br><span class="line">DISTINCT								mapping of underlying type</span><br><span class="line">STRUCT									Struct</span><br><span class="line">REF											Ref</span><br><span class="line">DATALINK								java.net.URL</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<hr>
+<h3 id="Mybatis插入语法之新增和自增主键"><a href="#Mybatis插入语法之新增和自增主键" class="headerlink" title="Mybatis插入语法之新增和自增主键"></a>Mybatis插入语法之新增和自增主键</h3><ul>
+<li><p>新增一条记录</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">INSERT INTO `xdclass`.`video`(`id`, `title`, `summary`, `cover_img`, `price`, `create_time`, `c_id`, `point`) VALUES (47, &apos;Nodejs教程零基础入门到项目实战前端视频教程&apos;, &apos;https://file.xdclass.net/video/2020/node/node_detail.png&apos;, &apos;https://file.xdclass.net/video/2020/node/node.png&apos;, 6980, &apos;2019-12-24 22:14:00&apos;, 16, 8.90);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>如何获得插入的自增主键</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"> </span><br></pre></td></tr></table></figure>
+</li>
+<li><p>代码</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"> </span><br></pre></td></tr></table></figure>
+
+
+
+
+
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+  </entry>
+  <entry>
     <title>Java项目开发笔记_02</title>
     <url>/2020/06/07/Java%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91%E7%AC%94%E8%AE%B0_02/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><hr>
@@ -202,6 +480,7 @@
     <title>Java项目开发笔记_01</title>
     <url>/2020/06/06/Java%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91%E7%AC%94%E8%AE%B0_01/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><hr>
+<p><strong>Java项目开发笔记01-03的源码在</strong>: <a href="https://gitee.com/moneylee/java_learning" target="_blank" rel="noopener">gitee</a></p>
 <h3 id="项目开发技术栈"><a href="#项目开发技术栈" class="headerlink" title="项目开发技术栈"></a>项目开发技术栈</h3><ul>
 <li><h4 id="后端开发工具和环境：JDK8-IDEA-Maven3-x"><a href="#后端开发工具和环境：JDK8-IDEA-Maven3-x" class="headerlink" title="后端开发工具和环境：JDK8 + IDEA + Maven3.x"></a>后端开发工具和环境：JDK8 + IDEA + Maven3.x</h4></li>
 <li><h4 id="后端技术栈：-Springboot2-x-Spring5-Mybatis3-x-Mysql-JWT-Guava缓存-Jmeter5-x压测"><a href="#后端技术栈：-Springboot2-x-Spring5-Mybatis3-x-Mysql-JWT-Guava缓存-Jmeter5-x压测" class="headerlink" title="后端技术栈： Springboot2.x + Spring5 +Mybatis3.x + Mysql + JWT + Guava缓存 + Jmeter5.x压测"></a>后端技术栈： Springboot2.x + Spring5 +Mybatis3.x + Mysql + JWT + Guava缓存 + Jmeter5.x压测</h4></li>
@@ -959,47 +1238,10 @@
     <url>/2020/02/03/iOS13%E9%80%82%E9%85%8D%E6%B7%B1%E8%89%B2%E6%A8%A1%E5%BC%8F/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>前段时间收到客户的反应 说试用中的App 有的界面UI有问题,  之前都是真机调试过的, 心里也很诧异, 然后用自己的手机试了下, 果然有的文本输入框的文字不显示, 有的列表背景颜色是黑色, 我就有点迷糊, 怎么会突然出现这种问题, 我首先想到的是修改代码, 给个颜色看看显示不, 然后相继的将有问题的位置都添加了Color, 一切正常, 但是这样显然没有解决隐患啊,  然后我又想到了是不是iOS13系统的原因, 因为我手机也是最近才升级了, 并且我使用了深色模式, 问题应该出现在这里, 果然我在手机设置里设置为浅色模式, 之前出现的问题就没了, 唉… 怎么可以这样,最后的解决办法 在 info.plist文件内添加<code>User Interface Style</code> 并且设置值为 <code>Light</code></p>
 <p>就会轻松解决上面的问题, 也不用担心我哪里漏掉这种显示Bug</p>
+<p><img alt="image-20200702170237555" data-src="https://tva1.sinaimg.cn/large/007S8ZIlly1ggcqj43c5uj309y05kab3.jpg" class="lazyload"></p>
 ]]></content>
       <categories>
         <category>iOS</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>Linux环境下Mysql数据库自动备份脚本</title>
-    <url>/2019/12/10/Linux%E7%8E%AF%E5%A2%83%E4%B8%8BMysql%E6%95%B0%E6%8D%AE%E5%BA%93%E8%87%AA%E5%8A%A8%E5%A4%87%E4%BB%BD%E8%84%9A%E6%9C%AC/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><h4 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h4><h5 id="创建好备份使用的文件夹"><a href="#创建好备份使用的文件夹" class="headerlink" title="创建好备份使用的文件夹"></a>创建好备份使用的文件夹</h5><p>存放最新备份文件的文件夹：</p>
-<p><code>mkdir /mnt/backup/bakmysql</code></p>
-<p>存放历史备份的文件夹：</p>
-<p><code>mkdir /mnt/backup/backmysqlold</code></p>
-<h5 id="编辑脚本"><a href="#编辑脚本" class="headerlink" title="编辑脚本"></a>编辑脚本</h5><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">用户名</span></span><br><span class="line">db_user="root"</span><br><span class="line"><span class="meta">#</span><span class="bash">密码</span></span><br><span class="line">db_passwd="123456"</span><br><span class="line"><span class="meta">#</span><span class="bash">数据库名</span></span><br><span class="line">db_name="lc_data"</span><br><span class="line"><span class="meta">#</span><span class="bash">指定数据库安装路径 可以让crontab找到执行文件 如果直接写mysqldump仅在本地执行脚本好使 crontab执行是空文件</span></span><br><span class="line">tool="/usr/local/mysql5.7/bin/mysqldump"</span><br><span class="line"><span class="meta">#</span><span class="bash">进入备份目录将之前的移动到old目录</span></span><br><span class="line">cd /mnt/backup/bakmysql</span><br><span class="line">echo "you are in bakmysql directory now"</span><br><span class="line"><span class="meta">#</span><span class="bash">将当前备份的数据移动到旧文件夹内</span></span><br><span class="line">mv lc_data* /mnt/backup/bakmysqlold</span><br><span class="line">echo "Old databases are moved to bakmysqlold folder"</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 备份目录</span></span><br><span class="line">backup_dir="/mnt/backup/bakmysql"</span><br><span class="line"><span class="meta">#</span><span class="bash"> 备份日期</span></span><br><span class="line">time=$(date +"%Y-%m-%d")</span><br><span class="line"><span class="meta">$</span><span class="bash">tool --defaults-extra-file=/etc/my.cnf <span class="variable">$db_name</span> &gt; <span class="string">"<span class="variable">$backup_dir</span>/<span class="variable">$db_name</span>"</span>_<span class="string">"<span class="variable">$time</span>.sql"</span></span></span><br><span class="line">echo "your database backup successfully completed"</span><br><span class="line"><span class="meta">#</span><span class="bash">这里将7天之前的备份文件删掉</span></span><br><span class="line">SevenDays=$(date -d -7day  +"%Y-%m-%d")</span><br><span class="line">if [ -f /mnt/backup/bakmysqlold/lc_data_$SevenDays.sql ]</span><br><span class="line">then</span><br><span class="line">rm -rf /mnt/backup/bakmysqlold/lc_data_$SevenDays.sql</span><br><span class="line">echo "you have delete 7days ago bak sql file "</span><br><span class="line">else</span><br><span class="line">echo "7days ago bak sql file not exist "</span><br><span class="line">echo "bash complete"</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
-
-
-
-<h4 id="注意点："><a href="#注意点：" class="headerlink" title="注意点："></a>注意点：</h4><p>1，上面的脚本执行可能会报错， 错误信息：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">避免命令行使用password的安全警告：Warning: Using a password on the command line interface can be insecure.</span><br></pre></td></tr></table></figure>
-
-<p>在mysql5.6之后不允许这样用明文，不安全</p>
-<p>解决办法：</p>
-<p><code>vi /etc/my.cnf</code></p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[client]</span><br><span class="line">host=localhost</span><br><span class="line">user=root</span><br><span class="line">password=123456</span><br></pre></td></tr></table></figure>
-
-
-
-<p>2，编辑定时任务</p>
-<p><code>crontab -e</code></p>
-<p>每分钟执行一次（测试使用）</p>
-<p><code>*/1 * * * * /mnt/backup/lc_data.sh</code></p>
-<p>每天23：59分执行一次</p>
-<p><code>59 23 * * * /mnt/backup/lc_data.sh</code> </p>
-<p>每周一执行一次</p>
-<p><code>0 16 * * 1 /mnt/backup/lc_data.sh</code></p>
-<p>查看已经保存的定时任务</p>
-<p><code>crontab -l</code></p>
-<p>参考：</p>
-<p><img alt="aHR0cHM6Ly9pbWcyMDE4LmNuYmxvZ3MuY29tL2Jsb2cvMTc0OTQ1Ni8yMDE5MDcvMTc0OTQ1Ni0yMDE5MDcyNDEzNTExOTE5NS0xNTQxNzcxMDQ4LnBuZw" data-src="https://tva1.sinaimg.cn/large/007S8ZIlly1gfxx0ggzugj30eu0cdmxd.jpg" class="lazyload"></p>
-]]></content>
-      <categories>
-        <category>数据库</category>
       </categories>
   </entry>
   <entry>
@@ -1147,6 +1389,44 @@
       </categories>
   </entry>
   <entry>
+    <title>Linux环境下Mysql数据库自动备份脚本</title>
+    <url>/2019/12/10/Linux%E7%8E%AF%E5%A2%83%E4%B8%8BMysql%E6%95%B0%E6%8D%AE%E5%BA%93%E8%87%AA%E5%8A%A8%E5%A4%87%E4%BB%BD%E8%84%9A%E6%9C%AC/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><h4 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h4><h5 id="创建好备份使用的文件夹"><a href="#创建好备份使用的文件夹" class="headerlink" title="创建好备份使用的文件夹"></a>创建好备份使用的文件夹</h5><p>存放最新备份文件的文件夹：</p>
+<p><code>mkdir /mnt/backup/bakmysql</code></p>
+<p>存放历史备份的文件夹：</p>
+<p><code>mkdir /mnt/backup/backmysqlold</code></p>
+<h5 id="编辑脚本"><a href="#编辑脚本" class="headerlink" title="编辑脚本"></a>编辑脚本</h5><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">用户名</span></span><br><span class="line">db_user="root"</span><br><span class="line"><span class="meta">#</span><span class="bash">密码</span></span><br><span class="line">db_passwd="123456"</span><br><span class="line"><span class="meta">#</span><span class="bash">数据库名</span></span><br><span class="line">db_name="lc_data"</span><br><span class="line"><span class="meta">#</span><span class="bash">指定数据库安装路径 可以让crontab找到执行文件 如果直接写mysqldump仅在本地执行脚本好使 crontab执行是空文件</span></span><br><span class="line">tool="/usr/local/mysql5.7/bin/mysqldump"</span><br><span class="line"><span class="meta">#</span><span class="bash">进入备份目录将之前的移动到old目录</span></span><br><span class="line">cd /mnt/backup/bakmysql</span><br><span class="line">echo "you are in bakmysql directory now"</span><br><span class="line"><span class="meta">#</span><span class="bash">将当前备份的数据移动到旧文件夹内</span></span><br><span class="line">mv lc_data* /mnt/backup/bakmysqlold</span><br><span class="line">echo "Old databases are moved to bakmysqlold folder"</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 备份目录</span></span><br><span class="line">backup_dir="/mnt/backup/bakmysql"</span><br><span class="line"><span class="meta">#</span><span class="bash"> 备份日期</span></span><br><span class="line">time=$(date +"%Y-%m-%d")</span><br><span class="line"><span class="meta">$</span><span class="bash">tool --defaults-extra-file=/etc/my.cnf <span class="variable">$db_name</span> &gt; <span class="string">"<span class="variable">$backup_dir</span>/<span class="variable">$db_name</span>"</span>_<span class="string">"<span class="variable">$time</span>.sql"</span></span></span><br><span class="line">echo "your database backup successfully completed"</span><br><span class="line"><span class="meta">#</span><span class="bash">这里将7天之前的备份文件删掉</span></span><br><span class="line">SevenDays=$(date -d -7day  +"%Y-%m-%d")</span><br><span class="line">if [ -f /mnt/backup/bakmysqlold/lc_data_$SevenDays.sql ]</span><br><span class="line">then</span><br><span class="line">rm -rf /mnt/backup/bakmysqlold/lc_data_$SevenDays.sql</span><br><span class="line">echo "you have delete 7days ago bak sql file "</span><br><span class="line">else</span><br><span class="line">echo "7days ago bak sql file not exist "</span><br><span class="line">echo "bash complete"</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="注意点："><a href="#注意点：" class="headerlink" title="注意点："></a>注意点：</h4><p>1，上面的脚本执行可能会报错， 错误信息：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">避免命令行使用password的安全警告：Warning: Using a password on the command line interface can be insecure.</span><br></pre></td></tr></table></figure>
+
+<p>在mysql5.6之后不允许这样用明文，不安全</p>
+<p>解决办法：</p>
+<p><code>vi /etc/my.cnf</code></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[client]</span><br><span class="line">host=localhost</span><br><span class="line">user=root</span><br><span class="line">password=123456</span><br></pre></td></tr></table></figure>
+
+
+
+<p>2，编辑定时任务</p>
+<p><code>crontab -e</code></p>
+<p>每分钟执行一次（测试使用）</p>
+<p><code>*/1 * * * * /mnt/backup/lc_data.sh</code></p>
+<p>每天23：59分执行一次</p>
+<p><code>59 23 * * * /mnt/backup/lc_data.sh</code> </p>
+<p>每周一执行一次</p>
+<p><code>0 16 * * 1 /mnt/backup/lc_data.sh</code></p>
+<p>查看已经保存的定时任务</p>
+<p><code>crontab -l</code></p>
+<p>参考：</p>
+<p><img alt="aHR0cHM6Ly9pbWcyMDE4LmNuYmxvZ3MuY29tL2Jsb2cvMTc0OTQ1Ni8yMDE5MDcvMTc0OTQ1Ni0yMDE5MDcyNDEzNTExOTE5NS0xNTQxNzcxMDQ4LnBuZw" data-src="https://tva1.sinaimg.cn/large/007S8ZIlly1gfxx0ggzugj30eu0cdmxd.jpg" class="lazyload"></p>
+]]></content>
+      <categories>
+        <category>数据库</category>
+      </categories>
+  </entry>
+  <entry>
     <title>常用工具</title>
     <url>/2019/12/04/%E5%B8%B8%E7%94%A8%E5%B7%A5%E5%85%B7/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><h2 id="常用工具汇总"><a href="#常用工具汇总" class="headerlink" title="常用工具汇总"></a>常用工具汇总</h2><h3 id="Pulse-Secure-for-Mac-VPN工具"><a href="#Pulse-Secure-for-Mac-VPN工具" class="headerlink" title="Pulse Secure for Mac (VPN工具)"></a>Pulse Secure for Mac (VPN工具)</h3><p>官网地址: <a href="https://www.pulsesecure.net/" target="_blank" rel="noopener">https://www.pulsesecure.net/</a></p>
@@ -1159,18 +1439,6 @@
 ]]></content>
       <categories>
         <category>工具</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>Windows Server 2002 使用记录</title>
-    <url>/2019/11/09/Windows%20Server%202002%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>前段时间接到一个为公司客户开发官网的任务, 框架使用Jeesite, 前后端分离项目, 数据库是Mysql5.7。接下来就记录下遭遇的一切。</p>
-<p>大约三天开发完后台服务及管理界面的配置, 配合前台接口调试用了一天, 然后客户购买的阿里云服务器, 我原以为是Linux服务器, 所以也没多问就按照之前的习惯, 用Mac的ssh直接连接, 提示 22端口访问被拒绝, 什么鬼? 22端口没开, 然后几经辗转要到阿里云账号并登录到管理后台, 重置了实例密码(因为客户也不知道密码是啥), 说实在的, 我连Windows电脑都好些年不用了, 所有的命令行也不怎么会, 这可难到我了,  研究了好一阵子, 我才知道windows有自己的远程连接工具, 并且需要开放的端口是 3389, 然后阿里云后台配置网络安全组, 开放 80, 3389 , 3306 入规则访问权限, 分别是网路请求, 远程控制 和 数据库, 方便我以后的开发调试工作, 等真正交付的时候再关闭掉 3389和3306,  然后用Tomcat开始部署, 其实使用这一个服务就可以了, 但是个人习惯还是兼顾使用了 Nginx服务, 然后 下载Java JDK 配置环境变量这一套常规操作。</p>
-<p>远程访问我用客户的账号配置好后台网络, 然后重置并获取到新的服务器密码后, (这里再插一句, 服务器主机的开机账号密码默认是 administrator  和 服务器密码 我才知道 之前以为是俩密码) 然后安装了Teamviewer工具, 为了双保险又安装了蒲公英, 之前Team不说是有漏洞嘛, 但是我觉得蒲公英免费版的太慢了, 卡的很难受, 还是Team比较快捷高效 然后磕磕绊绊的服务起开了, 根据IP外网也能访问了</p>
-<p>第二天客户说访问不到服务了, 我登录发现密码错误, 难道客户密码改了? 但是客户说没改, 我又远程访问的客户电脑, 再通过他的浏览器访问的服务器, 然后重置了密码, 一顿操作还是没发现问题, localhost访问服务没问题, 那就是网络的问题了, 发现防火墙被用户开启了, 那就是防火墙的问题了, 单独开放了80端口, 搞定, 可以正常外网访问了, 然后防止客户重启服务器 服务中断的问题, 需要配置Tomcat和Nginx自启服务, Tomcat服务自启比较简单</p>
-]]></content>
-      <categories>
-        <category>随笔</category>
       </categories>
   </entry>
   <entry>
@@ -1230,6 +1498,18 @@
     <title>开篇</title>
     <url>/2019/11/09/%E5%BC%80%E7%AF%87/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><h3 id="原本想使用-spring-boot-vue-开发一款博客系统-但是平时也没有多少时间-做出来的样式也不是很喜欢。今天无意间发现Hexo这个开源的博客框架-决定拿来试一试-效果还不错-今后会继续完善下去-我也会将-简书、掘金的一些之前写作的文章导入进来-希望通过它能让我养成技术文档整理归纳的好习惯-我也会在此更新一些生活上的故事和心得体悟。"><a href="#原本想使用-spring-boot-vue-开发一款博客系统-但是平时也没有多少时间-做出来的样式也不是很喜欢。今天无意间发现Hexo这个开源的博客框架-决定拿来试一试-效果还不错-今后会继续完善下去-我也会将-简书、掘金的一些之前写作的文章导入进来-希望通过它能让我养成技术文档整理归纳的好习惯-我也会在此更新一些生活上的故事和心得体悟。" class="headerlink" title="原本想使用 spring-boot + vue 开发一款博客系统, 但是平时也没有多少时间, 做出来的样式也不是很喜欢。今天无意间发现Hexo这个开源的博客框架, 决定拿来试一试, 效果还不错, 今后会继续完善下去, 我也会将 简书、掘金的一些之前写作的文章导入进来, 希望通过它能让我养成技术文档整理归纳的好习惯, 我也会在此更新一些生活上的故事和心得体悟。"></a>原本想使用 spring-boot + vue 开发一款博客系统, 但是平时也没有多少时间, 做出来的样式也不是很喜欢。今天无意间发现Hexo这个开源的博客框架, 决定拿来试一试, 效果还不错, 今后会继续完善下去, 我也会将 简书、掘金的一些之前写作的文章导入进来, 希望通过它能让我养成技术文档整理归纳的好习惯, 我也会在此更新一些生活上的故事和心得体悟。</h3>]]></content>
+      <categories>
+        <category>随笔</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>Windows Server 2002 使用记录</title>
+    <url>/2019/11/09/Windows%20Server%202002%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>前段时间接到一个为公司客户开发官网的任务, 框架使用Jeesite, 前后端分离项目, 数据库是Mysql5.7。接下来就记录下遭遇的一切。</p>
+<p>大约三天开发完后台服务及管理界面的配置, 配合前台接口调试用了一天, 然后客户购买的阿里云服务器, 我原以为是Linux服务器, 所以也没多问就按照之前的习惯, 用Mac的ssh直接连接, 提示 22端口访问被拒绝, 什么鬼? 22端口没开, 然后几经辗转要到阿里云账号并登录到管理后台, 重置了实例密码(因为客户也不知道密码是啥), 说实在的, 我连Windows电脑都好些年不用了, 所有的命令行也不怎么会, 这可难到我了,  研究了好一阵子, 我才知道windows有自己的远程连接工具, 并且需要开放的端口是 3389, 然后阿里云后台配置网络安全组, 开放 80, 3389 , 3306 入规则访问权限, 分别是网路请求, 远程控制 和 数据库, 方便我以后的开发调试工作, 等真正交付的时候再关闭掉 3389和3306,  然后用Tomcat开始部署, 其实使用这一个服务就可以了, 但是个人习惯还是兼顾使用了 Nginx服务, 然后 下载Java JDK 配置环境变量这一套常规操作。</p>
+<p>远程访问我用客户的账号配置好后台网络, 然后重置并获取到新的服务器密码后, (这里再插一句, 服务器主机的开机账号密码默认是 administrator  和 服务器密码 我才知道 之前以为是俩密码) 然后安装了Teamviewer工具, 为了双保险又安装了蒲公英, 之前Team不说是有漏洞嘛, 但是我觉得蒲公英免费版的太慢了, 卡的很难受, 还是Team比较快捷高效 然后磕磕绊绊的服务起开了, 根据IP外网也能访问了</p>
+<p>第二天客户说访问不到服务了, 我登录发现密码错误, 难道客户密码改了? 但是客户说没改, 我又远程访问的客户电脑, 再通过他的浏览器访问的服务器, 然后重置了密码, 一顿操作还是没发现问题, localhost访问服务没问题, 那就是网络的问题了, 发现防火墙被用户开启了, 那就是防火墙的问题了, 单独开放了80端口, 搞定, 可以正常外网访问了, 然后防止客户重启服务器 服务中断的问题, 需要配置Tomcat和Nginx自启服务, Tomcat服务自启比较简单</p>
+]]></content>
       <categories>
         <category>随笔</category>
       </categories>
@@ -1512,6 +1792,28 @@
       </categories>
   </entry>
   <entry>
+    <title>Swift开发的一些小知识点(更新状态)</title>
+    <url>/2016/11/15/Swift%E5%BC%80%E5%8F%91%E4%B8%80%E4%BA%9B%E5%B0%8F%E7%9F%A5%E8%AF%86%E7%82%B9/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><h3 id="Swift项目程序入口main函数在哪"><a href="#Swift项目程序入口main函数在哪" class="headerlink" title="Swift项目程序入口main函数在哪?"></a>Swift项目程序入口main函数在哪?</h3><p>Xcode新建的Swift项目中 发现没有main函数入口, 哪里去了呢, 在Appdelegate.swfit 上发现一个注解</p>
+<p><code>@UIApplicationMain</code></p>
+<p>这个注解会自动生成一个程序的入口, 但是如果在一些特殊情况下, 我们需要自定义 UIApplication该怎么办呢, 新建一个Swift文件, 命名为 main.swift    在其内实现main函数</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> UIKit</span><br><span class="line"><span class="comment">//自定义UIApplication</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyApplication</span>: <span class="title">UIApplication</span> </span>&#123;&#125;</span><br><span class="line"><span class="comment">//使用自定义的UIApplication</span></span><br><span class="line"><span class="type">UIApplicationMain</span>(<span class="type">CommandLine</span>.argc, <span class="type">CommandLine</span>.unsafeArgv, <span class="type">NSStringFromClass</span>(<span class="type">MyApplication</span>.<span class="keyword">self</span>), <span class="type">NSStringFromClass</span>(<span class="type">AppDelegate</span>.<span class="keyword">self</span>))</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="Swift调用OC"><a href="#Swift调用OC" class="headerlink" title="Swift调用OC"></a>Swift调用OC</h3><p>在swift项目新建OC类, 会弹出提示如下图</p>
+<p><img alt="截屏2019-11-12下午10.44.09" data-src="https://tva1.sinaimg.cn/large/006y8mN6ly1g8vn1f9shqj30va07gjx0.jpg" class="lazyload"></p>
+<p>会询问你是否创建桥接文件, 点击创建桥接文件, 在工程目录内会出现产生的桥接文件</p>
+<p><img alt="Snip20191112_1" data-src="https://tva1.sinaimg.cn/large/006y8mN6ly1g8vn39auvvj307903u3yn.jpg" class="lazyload"></p>
+<p>桥接文件的文件名固定格式 <strong>{targetName}-Bridging-Header.h</strong></p>
+<p>这个头文件,引入一些OC的类, 暴露给Swift使用.</p>
+<p><code>#import &quot;Change.h&quot;</code></p>
+]]></content>
+      <categories>
+        <category>iOS</category>
+      </categories>
+  </entry>
+  <entry>
     <title>《如何使用CocoaPods：2016.11.15版》</title>
     <url>/2016/11/15/%E3%80%8A%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8CocoaPods%EF%BC%9A2016.11.15%E7%89%88%E3%80%8B/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>一、CocoaPods的简介：</p>
@@ -1572,28 +1874,6 @@
 <p>找到 User Header Search Paths  双击后面空白处 点击+号 输入 $(PODS_ROOT) 最有改选 recursive</p>
 <p><img alt="截屏2019-11-12下午3.20.50" data-src="https://tva1.sinaimg.cn/large/006y8mN6ly1g8vapkh4awj311a0g0jwh.jpg" class="lazyload"></p>
 <p>大功告成！</p>
-]]></content>
-      <categories>
-        <category>iOS</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>Swift开发的一些小知识点(更新状态)</title>
-    <url>/2016/11/15/Swift%E5%BC%80%E5%8F%91%E4%B8%80%E4%BA%9B%E5%B0%8F%E7%9F%A5%E8%AF%86%E7%82%B9/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><h3 id="Swift项目程序入口main函数在哪"><a href="#Swift项目程序入口main函数在哪" class="headerlink" title="Swift项目程序入口main函数在哪?"></a>Swift项目程序入口main函数在哪?</h3><p>Xcode新建的Swift项目中 发现没有main函数入口, 哪里去了呢, 在Appdelegate.swfit 上发现一个注解</p>
-<p><code>@UIApplicationMain</code></p>
-<p>这个注解会自动生成一个程序的入口, 但是如果在一些特殊情况下, 我们需要自定义 UIApplication该怎么办呢, 新建一个Swift文件, 命名为 main.swift    在其内实现main函数</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> UIKit</span><br><span class="line"><span class="comment">//自定义UIApplication</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyApplication</span>: <span class="title">UIApplication</span> </span>&#123;&#125;</span><br><span class="line"><span class="comment">//使用自定义的UIApplication</span></span><br><span class="line"><span class="type">UIApplicationMain</span>(<span class="type">CommandLine</span>.argc, <span class="type">CommandLine</span>.unsafeArgv, <span class="type">NSStringFromClass</span>(<span class="type">MyApplication</span>.<span class="keyword">self</span>), <span class="type">NSStringFromClass</span>(<span class="type">AppDelegate</span>.<span class="keyword">self</span>))</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="Swift调用OC"><a href="#Swift调用OC" class="headerlink" title="Swift调用OC"></a>Swift调用OC</h3><p>在swift项目新建OC类, 会弹出提示如下图</p>
-<p><img alt="截屏2019-11-12下午10.44.09" data-src="https://tva1.sinaimg.cn/large/006y8mN6ly1g8vn1f9shqj30va07gjx0.jpg" class="lazyload"></p>
-<p>会询问你是否创建桥接文件, 点击创建桥接文件, 在工程目录内会出现产生的桥接文件</p>
-<p><img alt="Snip20191112_1" data-src="https://tva1.sinaimg.cn/large/006y8mN6ly1g8vn39auvvj307903u3yn.jpg" class="lazyload"></p>
-<p>桥接文件的文件名固定格式 <strong>{targetName}-Bridging-Header.h</strong></p>
-<p>这个头文件,引入一些OC的类, 暴露给Swift使用.</p>
-<p><code>#import &quot;Change.h&quot;</code></p>
 ]]></content>
       <categories>
         <category>iOS</category>
