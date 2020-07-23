@@ -1,0 +1,348 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><title>Java项目开发笔记_01 | MoneyLee’s Blog</title><meta name="description" content="Java项目开发笔记_01"><meta name="keywords" content=""><meta name="author" content="李财"><meta name="copyright" content="李财"><meta name="format-detection" content="telephone=no"><link rel="shortcut icon" href="/img/favicon.ico"><link rel="preconnect" href="//cdn.jsdelivr.net"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Java项目开发笔记_01"><meta name="twitter:description" content="Java项目开发笔记_01"><meta name="twitter:image" content="https://tva1.sinaimg.cn/large/006y8mN6ly1g8vl4zhjzuj30qy0e0gyz.jpg"><meta property="og:type" content="article"><meta property="og:title" content="Java项目开发笔记_01"><meta property="og:url" content="http://moneylee.cn/2020/06/06/Java%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91%E7%AC%94%E8%AE%B0_01/"><meta property="og:site_name" content="MoneyLee’s Blog"><meta property="og:description" content="Java项目开发笔记_01"><meta property="og:image" content="https://tva1.sinaimg.cn/large/006y8mN6ly1g8vl4zhjzuj30qy0e0gyz.jpg"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><script src="https://cdn.jsdelivr.net/npm/js-cookie/dist/js.cookie.min.js"></script><script>const autoChangeMode = 'flase'
+var t = Cookies.get("theme");
+if (autoChangeMode == '1'){
+const isDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches
+const isLightMode = window.matchMedia("(prefers-color-scheme: light)").matches
+const isNotSpecified = window.matchMedia("(prefers-color-scheme: no-preference)").matches
+const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+if (t === undefined){
+  if (isLightMode) activateLightMode()
+  else if (isDarkMode) activateDarkMode()
+  else if (isNotSpecified || hasNoSupport){
+    console.log('You specified no preference for a color scheme or your browser does not support it. I Schedule dark mode during night time.')
+    now = new Date();
+    hour = now.getHours();
+    isNight = hour < 6 || hour >= 18
+    isNight ? activateDarkMode() : activateLightMode()
+}
+} else if (t == 'light') activateLightMode()
+else activateDarkMode()
+
+
+} else if (autoChangeMode == '2'){
+  now = new Date();
+  hour = now.getHours();
+  isNight = hour < 6 || hour >= 18
+  if(t === undefined) isNight? activateDarkMode() : activateLightMode()
+  else if (t === 'light') activateLightMode()
+  else activateDarkMode() 
+} else {
+  if ( t == 'dark' ) activateDarkMode()
+  else if ( t == 'light') activateLightMode()
+}
+
+function activateDarkMode(){
+  document.documentElement.setAttribute('data-theme', 'dark')
+  if (document.querySelector('meta[name="theme-color"]') !== null){
+    document.querySelector('meta[name="theme-color"]').setAttribute('content','#000')
+  }
+}
+function activateLightMode(){
+  document.documentElement.setAttribute('data-theme', 'light')
+  if (document.querySelector('meta[name="theme-color"]') !== null){
+  document.querySelector('meta[name="theme-color"]').setAttribute('content','#fff')
+  }
+}</script><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="canonical" href="http://moneylee.cn/2020/06/06/Java%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91%E7%AC%94%E8%AE%B0_01/"><link rel="prev" title="Java项目开发笔记_02" href="http://moneylee.cn/2020/06/07/Java%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91%E7%AC%94%E8%AE%B0_02/"><link rel="next" title="iOS SnapKit自动布局框架的学习整理" href="http://moneylee.cn/2020/06/03/iOS%20SnapKit%E8%87%AA%E5%8A%A8%E5%B8%83%E5%B1%80%E6%A1%86%E6%9E%B6%E7%9A%84%E5%AD%A6%E4%B9%A0%E6%95%B4%E7%90%86/"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容:${query}"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"cookieDomain":"http://moneylee.cn","msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"简"},
+  highlight_copy: 'true',
+  highlight_lang: 'true',
+  highlight_shrink: 'false',
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  bookmark: {
+    title: 'Snackbar.bookmark.title',
+    message_prev: '按',
+    message_next: '键将本页加入书签'
+  },
+  runtime_unit: '天',
+  copyright: undefined,
+  copy_copyright_js: false,
+  ClickShowText: undefined,
+  medium_zoom: 'false',
+  Snackbar: undefined
+  
+}</script></head><body><div id="header"> <div id="page-header"><span class="pull_left" id="blog_name"><a class="blog_title" id="site-name" href="/">MoneyLee’s Blog</a></span><i class="fa fa-bars fa-fw toggle-menu pull_right close" aria-hidden="true"></i><span class="pull_right menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/bbs/"><i class="fa-fw fa fa-coffee"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heart"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page"><i class="fa-fw fa fa-list" aria-hidden="true"></i><span> 影音</span><i class="fa fa-chevron-down menus-expand" aria-hidden="true"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fa fa-music"></i><span> 音乐</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fa fa-film"></i><span> 电影</span></a></li></ul></div></div></span><span class="pull_right" id="search_button"><a class="site-page social-icon search"><i class="fa fa-search fa-fw"></i><span> 搜索</span></a></span></div></div><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="lazyload avatar_img" src="https://i.loli.net/2019/11/10/SYvXMgCFuTNOVeZ.png" onerror="onerror=null;src='/img/friend_404.gif'"></div><div class="mobile_post_data"><div class="mobile_data_item is_center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">33</div></a></div></div><div class="mobile_data_item is_center">     <div class="mobile_data_link"><a href="/categories/"><div class="headline">分类</div><div class="length_num">10</div></a></div></div></div><hr><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/bbs/"><i class="fa-fw fa fa-coffee"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heart"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page"><i class="fa-fw fa fa-list" aria-hidden="true"></i><span> 影音</span><i class="fa fa-chevron-down menus-expand" aria-hidden="true"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fa fa-music"></i><span> 音乐</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fa fa-film"></i><span> 电影</span></a></li></ul></div></div></div><div id="mobile-sidebar-toc"><div class="toc_mobile_headline">目录</div><ol class="toc_mobile_items"><li class="toc_mobile_items-item toc_mobile_items-level-3"><a class="toc_mobile_items-link" href="#项目开发技术栈"><span class="toc_mobile_items-number">1.</span> <span class="toc_mobile_items-text">项目开发技术栈</span></a><ol class="toc_mobile_items-child"><li class="toc_mobile_items-item toc_mobile_items-level-4"><a class="toc_mobile_items-link" href="#后端开发工具和环境：JDK8-IDEA-Maven3-x"><span class="toc_mobile_items-number">1.1.</span> <span class="toc_mobile_items-text">后端开发工具和环境：JDK8 + IDEA + Maven3.x</span></a></li><li class="toc_mobile_items-item toc_mobile_items-level-4"><a class="toc_mobile_items-link" href="#后端技术栈：-Springboot2-x-Spring5-Mybatis3-x-Mysql-JWT-Guava缓存-Jmeter5-x压测"><span class="toc_mobile_items-number">1.2.</span> <span class="toc_mobile_items-text">后端技术栈： Springboot2.x + Spring5 +Mybatis3.x + Mysql + JWT + Guava缓存 + Jmeter5.x压测</span></a></li><li class="toc_mobile_items-item toc_mobile_items-level-4"><a class="toc_mobile_items-link" href="#前端技术栈：VueCli4-3-Vue2-6-VueX-Axios-移动端CUBE-UI框架-VSCode"><span class="toc_mobile_items-number">1.3.</span> <span class="toc_mobile_items-text">前端技术栈：VueCli4.3 + Vue2.6 + VueX + Axios + 移动端CUBE-UI框架 + VSCode</span></a></li><li class="toc_mobile_items-item toc_mobile_items-level-4"><a class="toc_mobile_items-link" href="#部署：华为云Centos7-Nginx静态文件服务器-Nginx部署后端双节点-域名配置解析"><span class="toc_mobile_items-number">1.4.</span> <span class="toc_mobile_items-text">部署：华为云Centos7 + Nginx静态文件服务器 + Nginx部署后端双节点 + 域名配置解析</span></a></li><li class="toc_mobile_items-item toc_mobile_items-level-4"><a class="toc_mobile_items-link" href="#什么是注解："><span class="toc_mobile_items-number">1.5.</span> <span class="toc_mobile_items-text">什么是注解：</span></a></li><li class="toc_mobile_items-item toc_mobile_items-level-4"><a class="toc_mobile_items-link" href="#什么是Spring框架："><span class="toc_mobile_items-number">1.6.</span> <span class="toc_mobile_items-text">什么是Spring框架：</span></a></li></ol></li><li class="toc_mobile_items-item toc_mobile_items-level-3"><a class="toc_mobile_items-link" href="#SpringBoot2-x和SpringCloud微服务的关系"><span class="toc_mobile_items-number">2.</span> <span class="toc_mobile_items-text">SpringBoot2.x和SpringCloud微服务的关系</span></a></li><li class="toc_mobile_items-item toc_mobile_items-level-3"><a class="toc_mobile_items-link" href="#SpringBoot官网"><span class="toc_mobile_items-number">3.</span> <span class="toc_mobile_items-text">SpringBoot官网</span></a></li><li class="toc_mobile_items-item toc_mobile_items-level-3"><a class="toc_mobile_items-link" href="#SpringBoot常用注解"><span class="toc_mobile_items-number">4.</span> <span class="toc_mobile_items-text">SpringBoot常用注解</span></a><ol class="toc_mobile_items-child"><li class="toc_mobile_items-item toc_mobile_items-level-4"><a class="toc_mobile_items-link" href="#Controller"><span class="toc_mobile_items-number">4.1.</span> <span class="toc_mobile_items-text">@Controller</span></a></li><li class="toc_mobile_items-item toc_mobile_items-level-4"><a class="toc_mobile_items-link" href="#RequestMapping"><span class="toc_mobile_items-number">4.2.</span> <span class="toc_mobile_items-text">@RequestMapping</span></a></li><li class="toc_mobile_items-item toc_mobile_items-level-4"><a class="toc_mobile_items-link" href="#SpringBootApplication"><span class="toc_mobile_items-number">4.3.</span> <span class="toc_mobile_items-text">@SpringBootApplication</span></a></li></ol></li><li class="toc_mobile_items-item toc_mobile_items-level-3"><a class="toc_mobile_items-link" href="#SpringBoot目录结构和静态资源访问"><span class="toc_mobile_items-number">5.</span> <span class="toc_mobile_items-text">SpringBoot目录结构和静态资源访问</span></a></li><li class="toc_mobile_items-item toc_mobile_items-level-3"><a class="toc_mobile_items-link" href="#SpringBoot启动方式和部署"><span class="toc_mobile_items-number">6.</span> <span class="toc_mobile_items-text">SpringBoot启动方式和部署</span></a></li><li class="toc_mobile_items-item toc_mobile_items-level-3"><a class="toc_mobile_items-link" href="#在线教育项目原型分析"><span class="toc_mobile_items-number">7.</span> <span class="toc_mobile_items-text">在线教育项目原型分析</span></a><ol class="toc_mobile_items-child"><li class="toc_mobile_items-item toc_mobile_items-level-4"><a class="toc_mobile_items-link" href="#项目简介"><span class="toc_mobile_items-number">7.1.</span> <span class="toc_mobile_items-text">项目简介</span></a></li><li class="toc_mobile_items-item toc_mobile_items-level-4"><a class="toc_mobile_items-link" href="#需求模块"><span class="toc_mobile_items-number">7.2.</span> <span class="toc_mobile_items-text">需求模块</span></a></li><li class="toc_mobile_items-item toc_mobile_items-level-4"><a class="toc_mobile_items-link" href="#数据查询和存储"><span class="toc_mobile_items-number">7.3.</span> <span class="toc_mobile_items-text">数据查询和存储</span></a></li></ol></li><li class="toc_mobile_items-item toc_mobile_items-level-3"><a class="toc_mobile_items-link" href="#项目架构搭建-包模块"><span class="toc_mobile_items-number">8.</span> <span class="toc_mobile_items-text">项目架构搭建 包模块</span></a><ol class="toc_mobile_items-child"><li class="toc_mobile_items-item toc_mobile_items-level-4"><a class="toc_mobile_items-link" href="#创建项目"><span class="toc_mobile_items-number">8.1.</span> <span class="toc_mobile_items-text">创建项目</span></a></li><li class="toc_mobile_items-item toc_mobile_items-level-4"><a class="toc_mobile_items-link" href="#配置启动类"><span class="toc_mobile_items-number">8.2.</span> <span class="toc_mobile_items-text">配置启动类</span></a></li><li class="toc_mobile_items-item toc_mobile_items-level-4"><a class="toc_mobile_items-link" href="#建立对应的包"><span class="toc_mobile_items-number">8.3.</span> <span class="toc_mobile_items-text">建立对应的包</span></a></li><li class="toc_mobile_items-item toc_mobile_items-level-4"><a class="toc_mobile_items-link" href="#初始化数据开发：视频、章、默认用户信息"><span class="toc_mobile_items-number">8.4.</span> <span class="toc_mobile_items-text">初始化数据开发：视频、章、默认用户信息</span></a></li></ol></li><li class="toc_mobile_items-item toc_mobile_items-level-3"><a class="toc_mobile_items-link" href="#SpringBoot2-x内部定制JSON字段"><span class="toc_mobile_items-number">9.</span> <span class="toc_mobile_items-text">SpringBoot2.x内部定制JSON字段</span></a></li><li class="toc_mobile_items-item toc_mobile_items-level-3"><a class="toc_mobile_items-link" href="#SpringBoot2-x结合dev-tool-实现IDEA项目热部署"><span class="toc_mobile_items-number">10.</span> <span class="toc_mobile_items-text">SpringBoot2.x结合dev-tool 实现IDEA项目热部署</span></a></li><li class="toc_mobile_items-item toc_mobile_items-level-3"><a class="toc_mobile_items-link" href="#SpringBoot2-x常见配置文件"><span class="toc_mobile_items-number">11.</span> <span class="toc_mobile_items-text">SpringBoot2.x常见配置文件</span></a></li><li class="toc_mobile_items-item toc_mobile_items-level-3"><a class="toc_mobile_items-link" href="#SpringBoot注解配置文件映射属性和实体类"><span class="toc_mobile_items-number">12.</span> <span class="toc_mobile_items-text">SpringBoot注解配置文件映射属性和实体类</span></a><ol class="toc_mobile_items-child"><li class="toc_mobile_items-item toc_mobile_items-level-4"><a class="toc_mobile_items-link" href="#配置文件加载"><span class="toc_mobile_items-number">12.1.</span> <span class="toc_mobile_items-text">配置文件加载</span></a></li></ol></li></ol></div></div><div id="body-wrap"><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true">     </i><div class="auto_open" id="sidebar"><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#项目开发技术栈"><span class="toc-number">1.</span> <span class="toc-text">项目开发技术栈</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#后端开发工具和环境：JDK8-IDEA-Maven3-x"><span class="toc-number">1.1.</span> <span class="toc-text">后端开发工具和环境：JDK8 + IDEA + Maven3.x</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#后端技术栈：-Springboot2-x-Spring5-Mybatis3-x-Mysql-JWT-Guava缓存-Jmeter5-x压测"><span class="toc-number">1.2.</span> <span class="toc-text">后端技术栈： Springboot2.x + Spring5 +Mybatis3.x + Mysql + JWT + Guava缓存 + Jmeter5.x压测</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#前端技术栈：VueCli4-3-Vue2-6-VueX-Axios-移动端CUBE-UI框架-VSCode"><span class="toc-number">1.3.</span> <span class="toc-text">前端技术栈：VueCli4.3 + Vue2.6 + VueX + Axios + 移动端CUBE-UI框架 + VSCode</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#部署：华为云Centos7-Nginx静态文件服务器-Nginx部署后端双节点-域名配置解析"><span class="toc-number">1.4.</span> <span class="toc-text">部署：华为云Centos7 + Nginx静态文件服务器 + Nginx部署后端双节点 + 域名配置解析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#什么是注解："><span class="toc-number">1.5.</span> <span class="toc-text">什么是注解：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#什么是Spring框架："><span class="toc-number">1.6.</span> <span class="toc-text">什么是Spring框架：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SpringBoot2-x和SpringCloud微服务的关系"><span class="toc-number">2.</span> <span class="toc-text">SpringBoot2.x和SpringCloud微服务的关系</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SpringBoot官网"><span class="toc-number">3.</span> <span class="toc-text">SpringBoot官网</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SpringBoot常用注解"><span class="toc-number">4.</span> <span class="toc-text">SpringBoot常用注解</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Controller"><span class="toc-number">4.1.</span> <span class="toc-text">@Controller</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#RequestMapping"><span class="toc-number">4.2.</span> <span class="toc-text">@RequestMapping</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SpringBootApplication"><span class="toc-number">4.3.</span> <span class="toc-text">@SpringBootApplication</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SpringBoot目录结构和静态资源访问"><span class="toc-number">5.</span> <span class="toc-text">SpringBoot目录结构和静态资源访问</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SpringBoot启动方式和部署"><span class="toc-number">6.</span> <span class="toc-text">SpringBoot启动方式和部署</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#在线教育项目原型分析"><span class="toc-number">7.</span> <span class="toc-text">在线教育项目原型分析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#项目简介"><span class="toc-number">7.1.</span> <span class="toc-text">项目简介</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#需求模块"><span class="toc-number">7.2.</span> <span class="toc-text">需求模块</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#数据查询和存储"><span class="toc-number">7.3.</span> <span class="toc-text">数据查询和存储</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#项目架构搭建-包模块"><span class="toc-number">8.</span> <span class="toc-text">项目架构搭建 包模块</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#创建项目"><span class="toc-number">8.1.</span> <span class="toc-text">创建项目</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#配置启动类"><span class="toc-number">8.2.</span> <span class="toc-text">配置启动类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#建立对应的包"><span class="toc-number">8.3.</span> <span class="toc-text">建立对应的包</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#初始化数据开发：视频、章、默认用户信息"><span class="toc-number">8.4.</span> <span class="toc-text">初始化数据开发：视频、章、默认用户信息</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SpringBoot2-x内部定制JSON字段"><span class="toc-number">9.</span> <span class="toc-text">SpringBoot2.x内部定制JSON字段</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SpringBoot2-x结合dev-tool-实现IDEA项目热部署"><span class="toc-number">10.</span> <span class="toc-text">SpringBoot2.x结合dev-tool 实现IDEA项目热部署</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SpringBoot2-x常见配置文件"><span class="toc-number">11.</span> <span class="toc-text">SpringBoot2.x常见配置文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SpringBoot注解配置文件映射属性和实体类"><span class="toc-number">12.</span> <span class="toc-text">SpringBoot注解配置文件映射属性和实体类</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#配置文件加载"><span class="toc-number">12.1.</span> <span class="toc-text">配置文件加载</span></a></li></ol></li></ol></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(https://tva1.sinaimg.cn/large/006y8mN6ly1g8vl4zhjzuj30qy0e0gyz.jpg)"><div id="post-info"><div id="post-title"><div class="posttitle">Java项目开发笔记_01</div></div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 发表于 2020-06-06<span class="post-meta__separator">|</span><i class="fa fa-history" aria-hidden="true"></i> 更新于 2020-07-03</time><span class="post-meta__separator mobile_hidden">|</span><span class="mobile_hidden"><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/Java/">Java</a></span><div class="post-meta-wordcount"><i class="fa fa-file-word-o post-meta__icon" aria-hidden="true"></i><span>字数总计: </span><span class="word-count">1.7k</span><span class="post-meta__separator">|</span><i class="fa fa-clock-o post-meta__icon" aria-hidden="true"></i><span>阅读时长: 6 分钟</span><span class="post-meta__separator">|</span><i class="fa fa-eye post-meta__icon" aria-hidden="true">       </i><span>阅读量: </span><span id="busuanzi_value_page_pv"></span></div></div></div></div><div class="layout layout_post" id="content-inner">   <article id="post"><div class="article-container" id="post-content"><hr>
+<p><strong>Java项目开发笔记01-03的源码在</strong>: <a href="https://gitee.com/moneylee/java_learning" target="_blank" rel="noopener">gitee</a></p>
+<h3 id="项目开发技术栈"><a href="#项目开发技术栈" class="headerlink" title="项目开发技术栈"></a>项目开发技术栈</h3><ul>
+<li><h4 id="后端开发工具和环境：JDK8-IDEA-Maven3-x"><a href="#后端开发工具和环境：JDK8-IDEA-Maven3-x" class="headerlink" title="后端开发工具和环境：JDK8 + IDEA + Maven3.x"></a>后端开发工具和环境：JDK8 + IDEA + Maven3.x</h4></li>
+<li><h4 id="后端技术栈：-Springboot2-x-Spring5-Mybatis3-x-Mysql-JWT-Guava缓存-Jmeter5-x压测"><a href="#后端技术栈：-Springboot2-x-Spring5-Mybatis3-x-Mysql-JWT-Guava缓存-Jmeter5-x压测" class="headerlink" title="后端技术栈： Springboot2.x + Spring5 +Mybatis3.x + Mysql + JWT + Guava缓存 + Jmeter5.x压测"></a>后端技术栈： Springboot2.x + Spring5 +Mybatis3.x + Mysql + JWT + Guava缓存 + Jmeter5.x压测</h4></li>
+<li><h4 id="前端技术栈：VueCli4-3-Vue2-6-VueX-Axios-移动端CUBE-UI框架-VSCode"><a href="#前端技术栈：VueCli4-3-Vue2-6-VueX-Axios-移动端CUBE-UI框架-VSCode" class="headerlink" title="前端技术栈：VueCli4.3 + Vue2.6 + VueX + Axios + 移动端CUBE-UI框架 + VSCode"></a>前端技术栈：VueCli4.3 + Vue2.6 + VueX + Axios + 移动端CUBE-UI框架 + VSCode</h4></li>
+<li><h4 id="部署：华为云Centos7-Nginx静态文件服务器-Nginx部署后端双节点-域名配置解析"><a href="#部署：华为云Centos7-Nginx静态文件服务器-Nginx部署后端双节点-域名配置解析" class="headerlink" title="部署：华为云Centos7 + Nginx静态文件服务器 + Nginx部署后端双节点 + 域名配置解析"></a>部署：华为云Centos7 + Nginx静态文件服务器 + Nginx部署后端双节点 + 域名配置解析</h4></li>
+</ul>
+<hr>
+<p>###Spring5的简单学习</p>
+<h4 id="什么是注解："><a href="#什么是注解：" class="headerlink" title="什么是注解："></a>什么是注解：</h4><ul>
+<li>Java注解是附加在代码中的一些元信息， 用于一些工具在编译，运行时进行解析和使用，起到说明配置的功能</li>
+<li>注解本质上继承 Annotation接口，我们可以通过反射获取注解的相关信息，从而做些逻辑操作</li>
+<li>springboot里面大量使用了注解，@Controller、 @RestController、 @service、 @Autowire 等</li>
+</ul>
+<h4 id="什么是Spring框架："><a href="#什么是Spring框架：" class="headerlink" title="什么是Spring框架："></a>什么是Spring框架：</h4><ul>
+<li><p>轻量级的 DI / IoC 和 AOP容器的开源框架</p>
+</li>
+<li><p>有啥好处：</p>
+<ul>
+<li><p>管理创建和组装对象之间的依赖关系， 加了Spring注解的类会自动创建一个实例，加到IOC容器里面，然后哪里需要它，就自动赋值过去</p>
+<ul>
+<li><p>使用前： 手工创建</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Controller -&gt; Service -&gt; Dao</span><br><span class="line">Usercontroller</span><br><span class="line">private UserService useService = new UserService();</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用后：Spring创建， 自动注入</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Controller -&gt; Service -&gt; Dao</span><br><span class="line">Usercontroller</span><br><span class="line"></span><br><span class="line">@Autowire</span><br><span class="line">private UserService useService</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="SpringBoot2-x和SpringCloud微服务的关系"><a href="#SpringBoot2-x和SpringCloud微服务的关系" class="headerlink" title="SpringBoot2.x和SpringCloud微服务的关系"></a>SpringBoot2.x和SpringCloud微服务的关系</h3><table>
+<thead>
+<tr>
+<th align="center">单体应用</th>
+<th align="center">微服务</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">开发速度慢</td>
+<td align="center">易开发、理解和维护</td>
+</tr>
+<tr>
+<td align="center">启动时间长</td>
+<td align="center">独立的部署和启动</td>
+</tr>
+<tr>
+<td align="center">依赖庞大</td>
+<td align="center">问题：分布式系统的（分布式事务问题）、需要多个服务（服务治理）</td>
+</tr>
+</tbody></table>
+<p><strong>SpringCloud基于SpringBoot 多了几个组件 多了几个依赖和注解  注册中心 网关 服务 鉴权 等等很多模块 例如注册中心可以理解为一个项目 是基于SpringBoot的</strong></p>
+<hr>
+<h3 id="SpringBoot官网"><a href="#SpringBoot官网" class="headerlink" title="SpringBoot官网"></a>SpringBoot官网</h3><p><a href="https://spring.io/projects/spring-boot#overview" target="_blank" rel="noopener">官方文档</a></p>
+<hr>
+<h3 id="SpringBoot常用注解"><a href="#SpringBoot常用注解" class="headerlink" title="SpringBoot常用注解"></a>SpringBoot常用注解</h3><h4 id="Controller"><a href="#Controller" class="headerlink" title="@Controller"></a>@Controller</h4><p>作用：用于标记这个类是控制器，返回页面的时候使用，如果要返回JSON，则需要在接口上使用@ResponseBody才可以</p>
+<p>####@RestController</p>
+<p>作用：用于标记一个类是控制器，返回JSON数据的时候使用，如果使用这个注释，则接口返回数据会被序列化为JSON</p>
+<p><strong>所以：@RestController = @Controller + @ResponseBody</strong></p>
+<h4 id="RequestMapping"><a href="#RequestMapping" class="headerlink" title="@RequestMapping"></a>@RequestMapping</h4><p>作用：路由映射，用于类上做1级映射；用于某个方法上做子路径</p>
+<h4 id="SpringBootApplication"><a href="#SpringBootApplication" class="headerlink" title="@SpringBootApplication"></a>@SpringBootApplication</h4><p>作用：用于标记是SpringBoot应用，里面包含多个子注解，即</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@SpringBootApplication = @Configuration + @EnableAutoConfiguration + @ComponentScan</span><br><span class="line">@Configuration：主要标注于某个类上，用于Spring扫描注入，一般结合@Bean使用</span><br><span class="line">@EnableAutoConfiguration：启用Spring的自动加载配置，自动载入应用程序所需的Bean</span><br><span class="line">@ComponentScan：告诉Spring扫描包的范围，默认是Application类所在的全部子包，可以指定其它包</span><br><span class="line">@ComponentScan(&#123;&quot;net.xdclass.package1&quot;, &quot;net.xdclass.package2&quot;&#125;)</span><br></pre></td></tr></table></figure>
+
+
+
+<hr>
+<h3 id="SpringBoot目录结构和静态资源访问"><a href="#SpringBoot目录结构和静态资源访问" class="headerlink" title="SpringBoot目录结构和静态资源访问"></a>SpringBoot目录结构和静态资源访问</h3><ul>
+<li><p>目录</p>
+<ul>
+<li>src/main/java:</li>
+<li>src/main/resources:</li>
+<li>static:</li>
+<li>templates:</li>
+<li>config:</li>
+<li>resources:</li>
+</ul>
+</li>
+<li><p>同个文件的加载顺序，静态资源文件 Spring Boot 默认会挨个从</p>
+<ul>
+<li>META/resources &gt;</li>
+<li>resources &gt;</li>
+<li>static &gt;</li>
+<li>public</li>
+</ul>
+<p>内部寻找是否存相应的资源，如果有就直接返回，不在默认加载的目录则找不到</p>
+</li>
+<li><p>默认配置</p>
+<ul>
+<li>spring.resources.static-locations = classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/</li>
+</ul>
+</li>
+<li><p>基本互联网企业 静态资源文件存储在CDN, HTML, CSS, 图片等</p>
+</li>
+<li><p>CDN：内容分发网络</p>
+</li>
+<li><p>文件服务器：阿里云OSS</p>
+</li>
+</ul>
+<hr>
+<h3 id="SpringBoot启动方式和部署"><a href="#SpringBoot启动方式和部署" class="headerlink" title="SpringBoot启动方式和部署"></a>SpringBoot启动方式和部署</h3><ul>
+<li><p>IDEA开发中启动</p>
+<ul>
+<li>本地开发中常用</li>
+</ul>
+</li>
+<li><p>外置Tomcat中启动</p>
+<ul>
+<li>接近淘汰</li>
+<li>tomtact版本兼容问题复杂</li>
+<li>微服务容器化部署复杂</li>
+</ul>
+</li>
+<li><p>Jar包方式打包启动</p>
+<ul>
+<li>官方推荐，工具中最常用</li>
+<li>步骤：pom文件新增maven插件</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>如果没有加，执行 -jar 包，报错如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">java -jar in spring-boot-demo-0.0.1-SNAPSHOT.jar</span><br><span class="line">no main manifest attribute, in spring-boot-demo-0.0.1-SNAPSHOT.jar</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>必备打包启动命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">构建：mvn install</span><br><span class="line">构建跳过测试类： mvn install -Dmaven.test.skip=true</span><br><span class="line"></span><br><span class="line">target目录下对应的jar包就是打包后的项目</span><br><span class="line">进到对应的target目录启动 java -jar xxxx.jar 即可</span><br><span class="line"></span><br><span class="line">守护进程启动(后台运行)：nohup java -jar xxxx.jar &amp;</span><br><span class="line">#nohup命令只有linux和mac系统有</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<hr>
+<h3 id="在线教育项目原型分析"><a href="#在线教育项目原型分析" class="headerlink" title="在线教育项目原型分析"></a>在线教育项目原型分析</h3><ul>
+<li><h4 id="项目简介"><a href="#项目简介" class="headerlink" title="项目简介"></a>项目简介</h4><p>在线教育互联网项目，前后端分离，支持高并发访问</p>
+</li>
+<li><h4 id="需求模块"><a href="#需求模块" class="headerlink" title="需求模块"></a>需求模块</h4><ul>
+<li><p>用户注册-登录</p>
+</li>
+<li><p>视频管理模块CRUD</p>
+</li>
+<li><p>视频列表查询</p>
+</li>
+<li><p>全局异常处理</p>
+</li>
+<li><p>日志统计记录</p>
+<p>….</p>
+</li>
+</ul>
+</li>
+<li><h4 id="数据查询和存储"><a href="#数据查询和存储" class="headerlink" title="数据查询和存储"></a>数据查询和存储</h4><ul>
+<li>全齐内存数据库存储-HashMap-ArrayList</li>
+<li>后期使用数据库存储</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="项目架构搭建-包模块"><a href="#项目架构搭建-包模块" class="headerlink" title="项目架构搭建 包模块"></a>项目架构搭建 包模块</h3><ul>
+<li><h4 id="创建项目"><a href="#创建项目" class="headerlink" title="创建项目"></a>创建项目</h4></li>
+<li><h4 id="配置启动类"><a href="#配置启动类" class="headerlink" title="配置启动类"></a>配置启动类</h4></li>
+<li><h4 id="建立对应的包"><a href="#建立对应的包" class="headerlink" title="建立对应的包"></a>建立对应的包</h4><ul>
+<li>controller</li>
+<li>service</li>
+<li>dao</li>
+<li>domain</li>
+<li>utils</li>
+</ul>
+</li>
+<li><h4 id="初始化数据开发：视频、章、默认用户信息"><a href="#初始化数据开发：视频、章、默认用户信息" class="headerlink" title="初始化数据开发：视频、章、默认用户信息"></a>初始化数据开发：视频、章、默认用户信息</h4></li>
+</ul>
+<hr>
+<h3 id="SpringBoot2-x内部定制JSON字段"><a href="#SpringBoot2-x内部定制JSON字段" class="headerlink" title="SpringBoot2.x内部定制JSON字段"></a>SpringBoot2.x内部定制JSON字段</h3><ul>
+<li>常用框架 阿里 fastjson 谷歌gson</li>
+<li>JavaBean序列化为JSON<ul>
+<li>性能：jackjson &gt; fastjson &gt; gson &gt; json-lib 同一个结构</li>
+<li>jackon、fastjson、gson类库各有所长，各有自己的专长</li>
+<li>空间换时间、时间换空间</li>
+</ul>
+</li>
+<li>Jackson处理相关<ul>
+<li>指定字段不返回：@JsonIgnore</li>
+<li>指定日期格式：@JsonFormat(pattern=”yyyy-MM-dd hh:mm:ss”, local=”zh”, timezone=:”GMT+8”)</li>
+<li>空字段不反回：@JsonInclude(Include.NON_NULL)</li>
+<li>指定别名：@JsonProperty</li>
+</ul>
+</li>
+<li>开发功能：视频创建时间返回自定义格式；过滤用户敏感信息</li>
+</ul>
+<hr>
+<h3 id="SpringBoot2-x结合dev-tool-实现IDEA项目热部署"><a href="#SpringBoot2-x结合dev-tool-实现IDEA项目热部署" class="headerlink" title="SpringBoot2.x结合dev-tool 实现IDEA项目热部署"></a>SpringBoot2.x结合dev-tool 实现IDEA项目热部署</h3><ul>
+<li><p>步骤</p>
+<ul>
+<li>pom文件添加依赖包</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-devtools<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">optional</span>&gt;</span>true<span class="tag">&lt;/<span class="name">optional</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">				<span class="comment">&lt;!--必须添加这个配置--&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">fork</span>&gt;</span>true<span class="tag">&lt;/<span class="name">fork</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>IDEA配置<ul>
+<li>windows和mac一致</li>
+</ul>
+</li>
+</ul>
+<p>![image-20200701143456381](/Users/moneylee/Library/Application Support/typora-user-images/image-20200701143456381.png)</p>
+<ul>
+<li>使用快捷键打开</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">默认快捷键：</span><br><span class="line">	windows: shift + ctrl + alt + /</span><br><span class="line">	mac: shift + command + alt + /</span><br></pre></td></tr></table></figure>
+
+<p><img alt="image-20200701145339996" data-src="https://tva1.sinaimg.cn/large/007S8ZIlly1ggbh6ngn6fj309t03emxk.jpg" class="lazyload"></p>
+</li>
+</ul>
+<p>  <img alt="image-20200701145438979" data-src="https://tva1.sinaimg.cn/large/007S8ZIlly1ggbh83098uj30ti0mb0zk.jpg" class="lazyload"></p>
+<hr>
+<h3 id="SpringBoot2-x常见配置文件"><a href="#SpringBoot2-x常见配置文件" class="headerlink" title="SpringBoot2.x常见配置文件"></a>SpringBoot2.x常见配置文件</h3><ul>
+<li><p>常见配置文件格式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xml、properties、json、yaml</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>SpringBoot里常用yml</p>
+<ul>
+<li>YAML</li>
+<li>写YAML要比XML快得多（无需关注标签或引号）不同层次之间的缩进可以使用不同的空格数目</li>
+<li>注意：key后面的冒号，后面一定要跟一个空格，树状结构</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="SpringBoot注解配置文件映射属性和实体类"><a href="#SpringBoot注解配置文件映射属性和实体类" class="headerlink" title="SpringBoot注解配置文件映射属性和实体类"></a>SpringBoot注解配置文件映射属性和实体类</h3><p><strong>简介：使用@Value注解配置文件自动映射到属性和实体类</strong></p>
+<ul>
+<li><h4 id="配置文件加载"><a href="#配置文件加载" class="headerlink" title="配置文件加载"></a>配置文件加载</h4><ul>
+<li><p>方式一</p>
+<ul>
+<li>1、Controller上面配置 @PropertySource({“classpath:resource.properties”})</li>
+<li>2、增加属性 @Value(“test.name”)  private String name;</li>
+</ul>
+</li>
+<li><p>方式二</p>
+<ul>
+<li><p>1、添加 @Component注解；</p>
+</li>
+<li><p>2、使用 @PropertySoure 注解指定配置文件位置；</p>
+</li>
+<li><p>3、使用 @ConfigurationProperties 注解，设置相关属性；</p>
+</li>
+<li><p>4、必须 通过注入IOC对象Resource进来，才能在类中使用获取的配置文件值</p>
+<p>​        @Autowrie private ServerSettings serverSetting；</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined" target="_blank" rel="noopener">李财</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://moneylee.cn/2020/06/06/Java%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91%E7%AC%94%E8%AE%B0_01/">http://moneylee.cn/2020/06/06/Java%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91%E7%AC%94%E8%AE%B0_01/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://moneylee.cn">MoneyLee’s Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://tva1.sinaimg.cn/large/006y8mN6ly1g8vl4zhjzuj30qy0e0gyz.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script></div></div><div class="post-reward"><a class="reward-button"><i class="fa fa-qrcode"></i> 打赏<div class="reward-main"><ul class="reward-all"><li class="reward-item"><img class="lazyload post-qr-code__img" src="/img/wechat_pay.jpg"><div class="post-qr-code__desc">微信</div></li><li class="reward-item"><img class="lazyload post-qr-code__img" src="/img/ali_pay.jpg"><div class="post-qr-code__desc">支付宝</div></li></ul></div></a></div><nav class="pagination_post" id="pagination"><div class="prev-post pull_left"><a href="/2020/06/07/Java%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91%E7%AC%94%E8%AE%B0_02/"><img class="prev_cover lazyload" data-src="https://tva1.sinaimg.cn/large/006y8mN6ly1g8vl4zhjzuj30qy0e0gyz.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="label">上一篇</div><div class="prev_info"><span>Java项目开发笔记_02</span></div></a></div><div class="next-post pull_right"><a href="/2020/06/03/iOS%20SnapKit%E8%87%AA%E5%8A%A8%E5%B8%83%E5%B1%80%E6%A1%86%E6%9E%B6%E7%9A%84%E5%AD%A6%E4%B9%A0%E6%95%B4%E7%90%86/"><img class="next_cover lazyload" data-src="https://tva1.sinaimg.cn/large/006y8mN6ly1g8vl0019wlj31ej0u0x6q.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="label">下一篇</div><div class="next_info"><span>iOS SnapKit自动布局框架的学习整理</span></div></a></div></nav><hr><div id="post-comment"><div class="comment_headling"><i class="fa fa-comments fa-fw" aria-hidden="true"></i><span> 评论</span></div><div class="vcomment" id="vcomment"></div><script src="https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js"></script><script>var notify = true == true ? true : false;
+var verify = false == true ? true : false;
+var GUEST_INFO = ['nick','mail','link'];
+var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+  return GUEST_INFO.indexOf(item) > -1
+});
+guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+
+window.valine = new Valine({
+  el:'#vcomment',
+  notify:notify,
+  verify:verify,
+  appId:'cwegaTRjEEQDwXSeYv292HAQ-gzGzoHsz',
+  appKey:'RJsydDBLD09ac0qBcRNafS2m',
+  placeholder:'请留下您的足迹吧!',
+  avatar:'monsterid',
+  guest_info:guest_info,
+  pageSize:'10',
+  lang:'zh-cn',
+  recordIP: true
+});</script></div></div></div><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2018 - 2020 By 李财</div><div class="framework-info"><span>强力驱动 </span><a href="http://hexo.io" target="_blank" rel="noopener"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 </span><a href="https://github.com/jerryc127/hexo-theme-butterfly" target="_blank" rel="noopener"><span>Butterfly</span></a></div><div class="footer_custom_text">Hi, welcome to my <a href="http://moneylee.cn/">blog</a>!</div><div class="icp"><a href="http://www.miit.gov.cn/" target="_blank" rel="noopener"><img class="icp-icon" src="/img/icp.png"><span>辽ICP备19008137号-1</span></a></div></div></footer></div><section class="rightside" id="rightside"><div id="rightside-config-hide"><i class="fa fa-book" id="readmode" title="阅读模式"></i><i class="fa fa-plus" id="font_plus" title="放大字体"></i><i class="fa fa-minus" id="font_minus" title="缩小字体"></i><a class="translate_chn_to_cht" id="translateLink" href="javascript:translatePage();" title="简繁转换" target="_self">简</a></div><div id="rightside-config-show"><div id="rightside_config" title="设置"><i class="fa fa-cog" aria-hidden="true"></i></div><a id="to_comment" href="#post-comment" title="直达评论"><i class="scroll_to_comment fa fa-comments">  </i></a><i class="fa fa-list-ul close" id="mobile-toc-button" title="目录" aria-hidden="true"></i><i class="fa fa-arrow-up" id="go-up" title="回到顶部" aria-hidden="true"></i></div></section><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script async src="/js/search/local-search.js"></script><script src="/js/tw_cn.js"></script><script>translateInitilization()
+</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@latest/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/lazysizes@latest/lazysizes.min.js" async=""></script><div class="search-dialog" id="local-search"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章"></div></div></div><hr><div id="local-search-results"><div id="local-hits"></div><div id="local-stats"><div class="local-search-stats__hr" id="hr"><span>由</span> <a href="https://github.com/wzpan/hexo-generator-search" target="_blank" rel="noopener" style="color:#49B1F5;">hexo-generator-search</a>
+ <span>提供支持</span></div></div></div><span class="search-close-button"><i class="fa fa-times"></i></span></div><div class="search-mask"></div></body></html>
