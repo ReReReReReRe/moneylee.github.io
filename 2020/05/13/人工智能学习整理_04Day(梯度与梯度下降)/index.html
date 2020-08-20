@@ -1,0 +1,128 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><title>人工智能学习整理_04Day(梯度与梯度下降) | MoneyLee’s Blog</title><meta name="description" content="人工智能学习整理_04Day(梯度与梯度下降)"><meta name="keywords" content=""><meta name="author" content="李财"><meta name="copyright" content="李财"><meta name="format-detection" content="telephone=no"><link rel="shortcut icon" href="/img/favicon.ico"><link rel="preconnect" href="//cdn.jsdelivr.net"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="人工智能学习整理_04Day(梯度与梯度下降)"><meta name="twitter:description" content="人工智能学习整理_04Day(梯度与梯度下降)"><meta name="twitter:image" content="https://tva1.sinaimg.cn/large/007S8ZIlly1gfszcmp5uuj30dw09gmxl.jpg"><meta property="og:type" content="article"><meta property="og:title" content="人工智能学习整理_04Day(梯度与梯度下降)"><meta property="og:url" content="http://moneylee.cn/2020/05/13/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AD%A6%E4%B9%A0%E6%95%B4%E7%90%86_04Day(%E6%A2%AF%E5%BA%A6%E4%B8%8E%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D)/"><meta property="og:site_name" content="MoneyLee’s Blog"><meta property="og:description" content="人工智能学习整理_04Day(梯度与梯度下降)"><meta property="og:image" content="https://tva1.sinaimg.cn/large/007S8ZIlly1gfszcmp5uuj30dw09gmxl.jpg"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><script src="https://cdn.jsdelivr.net/npm/js-cookie/dist/js.cookie.min.js"></script><script>const autoChangeMode = 'flase'
+var t = Cookies.get("theme");
+if (autoChangeMode == '1'){
+const isDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches
+const isLightMode = window.matchMedia("(prefers-color-scheme: light)").matches
+const isNotSpecified = window.matchMedia("(prefers-color-scheme: no-preference)").matches
+const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+if (t === undefined){
+  if (isLightMode) activateLightMode()
+  else if (isDarkMode) activateDarkMode()
+  else if (isNotSpecified || hasNoSupport){
+    console.log('You specified no preference for a color scheme or your browser does not support it. I Schedule dark mode during night time.')
+    now = new Date();
+    hour = now.getHours();
+    isNight = hour < 6 || hour >= 18
+    isNight ? activateDarkMode() : activateLightMode()
+}
+} else if (t == 'light') activateLightMode()
+else activateDarkMode()
+
+
+} else if (autoChangeMode == '2'){
+  now = new Date();
+  hour = now.getHours();
+  isNight = hour < 6 || hour >= 18
+  if(t === undefined) isNight? activateDarkMode() : activateLightMode()
+  else if (t === 'light') activateLightMode()
+  else activateDarkMode() 
+} else {
+  if ( t == 'dark' ) activateDarkMode()
+  else if ( t == 'light') activateLightMode()
+}
+
+function activateDarkMode(){
+  document.documentElement.setAttribute('data-theme', 'dark')
+  if (document.querySelector('meta[name="theme-color"]') !== null){
+    document.querySelector('meta[name="theme-color"]').setAttribute('content','#000')
+  }
+}
+function activateLightMode(){
+  document.documentElement.setAttribute('data-theme', 'light')
+  if (document.querySelector('meta[name="theme-color"]') !== null){
+  document.querySelector('meta[name="theme-color"]').setAttribute('content','#fff')
+  }
+}</script><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="canonical" href="http://moneylee.cn/2020/05/13/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AD%A6%E4%B9%A0%E6%95%B4%E7%90%86_04Day(%E6%A2%AF%E5%BA%A6%E4%B8%8E%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D)/"><link rel="prev" title="人工智能学习整理_05Day(反向传播算法)" href="http://moneylee.cn/2020/05/15/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AD%A6%E4%B9%A0%E6%95%B4%E7%90%86_05Day(%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD%E7%AE%97%E6%B3%95)/"><link rel="next" title="人工智能学习整理_03Day(深度学习浅谈)" href="http://moneylee.cn/2020/05/13/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AD%A6%E4%B9%A0%E6%95%B4%E7%90%86_03Day(%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%B5%85%E8%B0%88)/"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容:${query}"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"cookieDomain":"http://moneylee.cn","msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"简"},
+  highlight_copy: 'true',
+  highlight_lang: 'true',
+  highlight_shrink: 'false',
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  bookmark: {
+    title: 'Snackbar.bookmark.title',
+    message_prev: '按',
+    message_next: '键将本页加入书签'
+  },
+  runtime_unit: '天',
+  copyright: undefined,
+  copy_copyright_js: false,
+  ClickShowText: undefined,
+  medium_zoom: 'false',
+  Snackbar: undefined
+  
+}</script></head><body><div id="header"> <div id="page-header"><span class="pull_left" id="blog_name"><a class="blog_title" id="site-name" href="/">MoneyLee’s Blog</a></span><i class="fa fa-bars fa-fw toggle-menu pull_right close" aria-hidden="true"></i><span class="pull_right menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/bbs/"><i class="fa-fw fa fa-coffee"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heart"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page"><i class="fa-fw fa fa-list" aria-hidden="true"></i><span> 影音</span><i class="fa fa-chevron-down menus-expand" aria-hidden="true"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fa fa-music"></i><span> 音乐</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fa fa-film"></i><span> 电影</span></a></li></ul></div></div></span><span class="pull_right" id="search_button"><a class="site-page social-icon search"><i class="fa fa-search fa-fw"></i><span> 搜索</span></a></span></div></div><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="lazyload avatar_img" src="https://i.loli.net/2019/11/10/SYvXMgCFuTNOVeZ.png" onerror="onerror=null;src='/img/friend_404.gif'"></div><div class="mobile_post_data"><div class="mobile_data_item is_center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">35</div></a></div></div><div class="mobile_data_item is_center">     <div class="mobile_data_link"><a href="/categories/"><div class="headline">分类</div><div class="length_num">10</div></a></div></div></div><hr><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/bbs/"><i class="fa-fw fa fa-coffee"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heart"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page"><i class="fa-fw fa fa-list" aria-hidden="true"></i><span> 影音</span><i class="fa fa-chevron-down menus-expand" aria-hidden="true"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fa fa-music"></i><span> 音乐</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fa fa-film"></i><span> 电影</span></a></li></ul></div></div></div><div id="mobile-sidebar-toc"><div class="toc_mobile_headline">目录</div><ol class="toc_mobile_items"><li class="toc_mobile_items-item toc_mobile_items-level-1"><a class="toc_mobile_items-link" href="#机器学习-ML重要概念：梯度（Gradient）与梯度下降法（Gradient-Descent）"><span class="toc_mobile_items-number">1.</span> <span class="toc_mobile_items-text">[机器学习] ML重要概念：梯度（Gradient）与梯度下降法（Gradient Descent）</span></a><ol class="toc_mobile_items-child"><li class="toc_mobile_items-item toc_mobile_items-level-4"><a class="toc_mobile_items-link" href="#导数"><span class="toc_mobile_items-number">1.0.0.1.</span> <span class="toc_mobile_items-text">导数</span></a></li><li class="toc_mobile_items-item toc_mobile_items-level-4"><a class="toc_mobile_items-link" href="#导数与方向导数："><span class="toc_mobile_items-number">1.0.0.2.</span> <span class="toc_mobile_items-text">导数与方向导数：</span></a></li><li class="toc_mobile_items-item toc_mobile_items-level-4"><a class="toc_mobile_items-link" href="#导数与梯度"><span class="toc_mobile_items-number">1.0.0.3.</span> <span class="toc_mobile_items-text">导数与梯度</span></a></li><li class="toc_mobile_items-item toc_mobile_items-level-4"><a class="toc_mobile_items-link" href="#导数与向量"><span class="toc_mobile_items-number">1.0.0.4.</span> <span class="toc_mobile_items-text">导数与向量</span></a></li><li class="toc_mobile_items-item toc_mobile_items-level-4"><a class="toc_mobile_items-link" href="#梯度下降法"><span class="toc_mobile_items-number">1.0.0.5.</span> <span class="toc_mobile_items-text">梯度下降法</span></a></li></ol></li></ol></li></ol></li></ol></div></div><div id="body-wrap"><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true">     </i><div class="auto_open" id="sidebar"><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#机器学习-ML重要概念：梯度（Gradient）与梯度下降法（Gradient-Descent）"><span class="toc-number">1.</span> <span class="toc-text">[机器学习] ML重要概念：梯度（Gradient）与梯度下降法（Gradient Descent）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#导数"><span class="toc-number">1.0.0.1.</span> <span class="toc-text">导数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#导数与方向导数："><span class="toc-number">1.0.0.2.</span> <span class="toc-text">导数与方向导数：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#导数与梯度"><span class="toc-number">1.0.0.3.</span> <span class="toc-text">导数与梯度</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#导数与向量"><span class="toc-number">1.0.0.4.</span> <span class="toc-text">导数与向量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#梯度下降法"><span class="toc-number">1.0.0.5.</span> <span class="toc-text">梯度下降法</span></a></li></ol></li></ol></li></ol></li></ol></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(https://tva1.sinaimg.cn/large/007S8ZIlly1gfszcmp5uuj30dw09gmxl.jpg)"><div id="post-info"><div id="post-title"><div class="posttitle">人工智能学习整理_04Day(梯度与梯度下降)</div></div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 发表于 2020-05-13<span class="post-meta__separator">|</span><i class="fa fa-history" aria-hidden="true"></i> 更新于 2020-06-17</time><span class="post-meta__separator mobile_hidden">|</span><span class="mobile_hidden"><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">人工智能</a></span><div class="post-meta-wordcount"><i class="fa fa-file-word-o post-meta__icon" aria-hidden="true"></i><span>字数总计: </span><span class="word-count">1.6k</span><span class="post-meta__separator">|</span><i class="fa fa-clock-o post-meta__icon" aria-hidden="true"></i><span>阅读时长: 5 分钟</span><span class="post-meta__separator">|</span><i class="fa fa-eye post-meta__icon" aria-hidden="true">       </i><span>阅读量: </span><span id="busuanzi_value_page_pv"></span></div></div></div></div><div class="layout layout_post" id="content-inner">   <article id="post"><div class="article-container" id="post-content"><h1 id="机器学习-ML重要概念：梯度（Gradient）与梯度下降法（Gradient-Descent）"><a href="#机器学习-ML重要概念：梯度（Gradient）与梯度下降法（Gradient-Descent）" class="headerlink" title="[机器学习] ML重要概念：梯度（Gradient）与梯度下降法（Gradient Descent）"></a>[机器学习] ML重要概念：梯度（Gradient）与梯度下降法（Gradient Descent）</h1><p>####引言<br>　机器学习栏目记录我在学习Machine Learning过程的一些心得笔记，涵盖线性回归、逻辑回归、Softmax回归、神经网络和SVM等等，主要学习资料来自网上的免费课程和一些经典书籍，免费课程例如Standford Andrew Ng老师在Coursera的教程以及UFLDL Tutorial，经典书籍例如《统计学习方法》等，同时也参考了大量网上的相关资料（在后面列出）。
+　　</p>
+<p>####前言<br>　机器学习中的大部分问题都是优化问题，而绝大部分优化问题都可以使用梯度下降法处理，那么搞懂什么是梯度，什么是梯度下降法就非常重要！这是基础中的基础，也是必须掌握的概念！<br>　提到梯度，就必须从导数（derivative）、偏导数（partial derivative）和方向导数（directional derivative）讲起，弄清楚这些概念，才能够正确理解为什么在优化问题中使用梯度下降法来优化目标函数，并熟练掌握梯度下降法（Gradient Descent）。</p>
+<p>　本文主要记录我在学习机器学习过程中对梯度概念复习的笔记，主要参考《高等数学》《简明微积分》以及维基百科上的资料为主，文章小节安排如下：<br>　1）导数<br>　2）导数和偏导数<br>　3）导数与方向导数<br>　4）导数与梯度<br>　5）梯度下降法<br>　6）参考资料<br>　7）结语
+　</p>
+<h4 id="导数"><a href="#导数" class="headerlink" title="导数"></a>导数</h4><p>　一张图读懂导数与微分：</p>
+<p>　<img alt="20160325131532476" data-src="https://tva1.sinaimg.cn/large/007S8ZIlly1gft95bn3m7j30bu0abmyl.jpg" class="lazyload"><br>　这是高数中的一张经典图，如果忘记了导数微分的概念，基本看着这张图就能全部想起来。<br>　导数定义如下：</p>
+<p><img alt="2" data-src="https://tva1.sinaimg.cn/large/007S8ZIlly1gft96q5cshj30as01ua9u.jpg" class="lazyload"></p>
+<p>　<strong>反映的是函数y=f(x)在某一点处沿x轴正方向的变化率。</strong>再强调一遍，是<strong>函数f(x)在x轴上某一点处沿着x轴正方向的变化率/变化趋势。直观地看，也就是在x轴上某一点处，如果f’(x)&gt;0，说明f(x)的函数值在x点沿x轴正方向是趋于增加的；如果f’(x)&lt;0，说明f(x)的函数值在x点沿x轴正方向是趋于减少的</strong>。</p>
+<p>　这里补充上图中的Δy、dy等符号的意义及关系如下：<br>　Δx：x的变化量；<br>　dx：x的变化量Δx趋于0时，则记作微元dx；<br>　Δy：Δy=f(x0+Δx)-f(x0)，是函数的增量；<br>　dy：dy=f’(x0)dx，是切线的增量；<br>　当Δx→0时，dy与Δy都是无穷小，dy是Δy的主部，即Δy=dy+o(Δx).
+　</p>
+<p>####导数和偏导数<br>　偏导数的定义如下：</p>
+<p>​    <img alt="3" data-src="https://tva1.sinaimg.cn/large/007S8ZIlly1gft99z7am6j30jj01ta9v.jpg" class="lazyload">　
+　</p>
+<p>可以看到，<strong>导数与偏导数本质是一致的，都是当自变量的变化量趋于0时，函数值的变化量与自变量变化量比值的极限。直观地说，偏导数也就是函数在某一点上沿坐标轴正方向的的变化率。</strong><br>　区别在于：<br>　导数，指的是一元函数中，函数y=f(x)在某一点处沿x轴正方向的变化率；<br>　偏导数，指的是多元函数中，函数y=f(x1,x2,…,xn)在某一点处沿某一坐标轴（x1,x2,…,xn）正方向的变化率。
+　</p>
+<h4 id="导数与方向导数："><a href="#导数与方向导数：" class="headerlink" title="导数与方向导数："></a>导数与方向导数：</h4><p>　方向导数的定义如下：<br>　<img alt="4" data-src="https://tva1.sinaimg.cn/large/007S8ZIlly1gft9c7a5d0j30ly03uglh.jpg" class="lazyload">
+　</p>
+<p>在前面导数和偏导数的定义中，均是沿坐标轴正方向讨论函数的变化率。那么当我们讨论函数沿任意方向的变化率时，也就引出了方向导数的定义，即：<strong>某一点在某一趋近方向上的导数值。</strong><br>　通俗的解释是：<br>　我们不仅要知道函数在坐标轴正方向上的变化率（即偏导数），而且还要设法求得函数在其他特定方向上的变化率。而方向导数就是函数在其他特定方向上的变化率。
+　</p>
+<h4 id="导数与梯度"><a href="#导数与梯度" class="headerlink" title="导数与梯度"></a>导数与梯度</h4><p>　梯度的定义如下：</p>
+<p>​    　<img alt="5" data-src="https://tva1.sinaimg.cn/large/007S8ZIlly1gft9cw05n0j30av01ydfm.jpg" class="lazyload"><br>　梯度的提出只为回答一个问题：<br>　函数在变量空间的某一点处，沿着哪一个方向有最大的变化率？<br>　梯度定义如下：</p>
+<p>　<strong>函数在某一点的梯度是这样一个向量，它的方向与取得最大方向导数的方向一致，而它的模为方向导数的最大值。</strong></p>
+<p>　这里注意三点：<br>　1）梯度是一个向量，即有方向有大小；<br>　2）梯度的方向是最大方向导数的方向；<br>　3）梯度的值是最大方向导数的值。
+　</p>
+<h4 id="导数与向量"><a href="#导数与向量" class="headerlink" title="导数与向量"></a>导数与向量</h4><p>　<strong>提问：导数与偏导数与方向导数是向量么？</strong><br>　向量的定义是有方向（direction）有大小（magnitude）的量。<br>　从前面的定义可以这样看出，偏导数和方向导数表达的是函数在某一点沿某一方向的变化率，也是具有方向和大小的。因此从这个角度来理解，我们也可以把偏导数和方向导数看作是一个向量，向量的方向就是变化率的方向，向量的模，就是变化率的大小。<br>　那么沿着这样一种思路，就可以如下理解梯度：<br>　<strong>梯度即函数在某一点最大的方向导数，函数沿梯度方向函数有最大的变化率。</strong>
+　
+　</p>
+<h4 id="梯度下降法"><a href="#梯度下降法" class="headerlink" title="梯度下降法"></a>梯度下降法</h4><p>　既然在变量空间的某一点处，函数沿梯度方向具有最大的变化率，那么在优化目标函数的时候，自然是沿着<strong>负梯度方向</strong>去减小函数值，以此达到我们的优化目标。<br>　如何沿着负梯度方向减小函数值呢？既然梯度是偏导数的集合，如下：</p>
+<p>​          　<img alt="1" data-src="https://tva1.sinaimg.cn/large/007S8ZIlly1gft9ejgih8j30av01ydfm.jpg" class="lazyload"><br>　同时梯度和偏导数都是向量，那么参考向量运算法则，我们在每个变量轴上减小对应变量值即可，梯度下降法可以描述如下：<br>​                    　<img alt="3" data-src="https://tva1.sinaimg.cn/large/007S8ZIlly1gft9f712azj304u080q2r.jpg" class="lazyload"></p>
+<p>　以上就是梯度下降法的由来，大部分的机器学习任务，都可以利用Gradient Descent来进行优化。
+　
+　</p>
+<p>参考资料<br>参考书：<br>《高等数学》<br>《简明微积分》<br>参考链接：<br>梯度<br><a href="https://zh.wikipedia.org/zh-cn/%E5%81%8F%E5%AF%BC%E6%95%B0" target="_blank" rel="noopener">https://zh.wikipedia.org/zh-cn/%E5%81%8F%E5%AF%BC%E6%95%B0</a><br>方向导数和梯度<br><a href="http://blog.csdn.net/wolenski/article/details/8030654" target="_blank" rel="noopener">http://blog.csdn.net/wolenski/article/details/8030654</a></p>
+<p>附：<br>维基百科的可用Hosts文件<br><a href="http://www.williamlong.info/archives/4456.html" target="_blank" rel="noopener">http://www.williamlong.info/archives/4456.html</a><br>　<br>　<br>本文摘自CSDN博主「WangBo_NLPR」的原创文章<br>原文链接：<a href="https://blog.csdn.net/walilk/article/details/50978864" target="_blank" rel="noopener">https://blog.csdn.net/walilk/article/details/50978864</a></p>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined" target="_blank" rel="noopener">李财</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://moneylee.cn/2020/05/13/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AD%A6%E4%B9%A0%E6%95%B4%E7%90%86_04Day(%E6%A2%AF%E5%BA%A6%E4%B8%8E%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D)/">http://moneylee.cn/2020/05/13/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AD%A6%E4%B9%A0%E6%95%B4%E7%90%86_04Day(%E6%A2%AF%E5%BA%A6%E4%B8%8E%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D)/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://moneylee.cn">MoneyLee’s Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://tva1.sinaimg.cn/large/007S8ZIlly1gfszcmp5uuj30dw09gmxl.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script></div></div><div class="post-reward"><a class="reward-button"><i class="fa fa-qrcode"></i> 打赏<div class="reward-main"><ul class="reward-all"><li class="reward-item"><img class="lazyload post-qr-code__img" src="/img/wechat_pay.jpg"><div class="post-qr-code__desc">微信</div></li><li class="reward-item"><img class="lazyload post-qr-code__img" src="/img/ali_pay.jpg"><div class="post-qr-code__desc">支付宝</div></li></ul></div></a></div><nav class="pagination_post" id="pagination"><div class="prev-post pull_left"><a href="/2020/05/15/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AD%A6%E4%B9%A0%E6%95%B4%E7%90%86_05Day(%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD%E7%AE%97%E6%B3%95)/"><img class="prev_cover lazyload" data-src="https://tva1.sinaimg.cn/large/007S8ZIlly1gfszcmp5uuj30dw09gmxl.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="label">上一篇</div><div class="prev_info"><span>人工智能学习整理_05Day(反向传播算法)</span></div></a></div><div class="next-post pull_right"><a href="/2020/05/13/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AD%A6%E4%B9%A0%E6%95%B4%E7%90%86_03Day(%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%B5%85%E8%B0%88)/"><img class="next_cover lazyload" data-src="https://tva1.sinaimg.cn/large/007S8ZIlly1gfszcmp5uuj30dw09gmxl.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="label">下一篇</div><div class="next_info"><span>人工智能学习整理_03Day(深度学习浅谈)</span></div></a></div></nav><hr><div id="post-comment"><div class="comment_headling"><i class="fa fa-comments fa-fw" aria-hidden="true"></i><span> 评论</span></div><div class="vcomment" id="vcomment"></div><script src="https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js"></script><script>var notify = true == true ? true : false;
+var verify = false == true ? true : false;
+var GUEST_INFO = ['nick','mail','link'];
+var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+  return GUEST_INFO.indexOf(item) > -1
+});
+guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+
+window.valine = new Valine({
+  el:'#vcomment',
+  notify:notify,
+  verify:verify,
+  appId:'cwegaTRjEEQDwXSeYv292HAQ-gzGzoHsz',
+  appKey:'RJsydDBLD09ac0qBcRNafS2m',
+  placeholder:'请留下您的足迹吧!',
+  avatar:'monsterid',
+  guest_info:guest_info,
+  pageSize:'10',
+  lang:'zh-cn',
+  recordIP: true
+});</script></div></div></div><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2018 - 2020 By 李财</div><div class="framework-info"><span>强力驱动 </span><a href="http://hexo.io" target="_blank" rel="noopener"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 </span><a href="https://github.com/jerryc127/hexo-theme-butterfly" target="_blank" rel="noopener"><span>Butterfly</span></a></div><div class="footer_custom_text">Hi, welcome to my <a href="http://moneylee.cn/">blog</a>!</div><div class="icp"><a href="http://www.miit.gov.cn/" target="_blank" rel="noopener"><img class="icp-icon" src="/img/icp.png"><span>辽ICP备19008137号-1</span></a></div></div></footer></div><section class="rightside" id="rightside"><div id="rightside-config-hide"><i class="fa fa-book" id="readmode" title="阅读模式"></i><i class="fa fa-plus" id="font_plus" title="放大字体"></i><i class="fa fa-minus" id="font_minus" title="缩小字体"></i><a class="translate_chn_to_cht" id="translateLink" href="javascript:translatePage();" title="简繁转换" target="_self">简</a></div><div id="rightside-config-show"><div id="rightside_config" title="设置"><i class="fa fa-cog" aria-hidden="true"></i></div><a id="to_comment" href="#post-comment" title="直达评论"><i class="scroll_to_comment fa fa-comments">  </i></a><i class="fa fa-list-ul close" id="mobile-toc-button" title="目录" aria-hidden="true"></i><i class="fa fa-arrow-up" id="go-up" title="回到顶部" aria-hidden="true"></i></div></section><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script async src="/js/search/local-search.js"></script><script src="/js/tw_cn.js"></script><script>translateInitilization()
+</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@latest/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/lazysizes@latest/lazysizes.min.js" async=""></script><div class="search-dialog" id="local-search"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章"></div></div></div><hr><div id="local-search-results"><div id="local-hits"></div><div id="local-stats"><div class="local-search-stats__hr" id="hr"><span>由</span> <a href="https://github.com/wzpan/hexo-generator-search" target="_blank" rel="noopener" style="color:#49B1F5;">hexo-generator-search</a>
+ <span>提供支持</span></div></div></div><span class="search-close-button"><i class="fa fa-times"></i></span></div><div class="search-mask"></div></body></html>
