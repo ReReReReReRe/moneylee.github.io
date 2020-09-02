@@ -247,6 +247,81 @@
       </categories>
   </entry>
   <entry>
+    <title>iOS AR和ARKit4</title>
+    <url>/2020/08/19/iOS%20AR%E5%92%8CARKit4/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><h2 id="ARKit-4-简介"><a href="#ARKit-4-简介" class="headerlink" title="ARKit 4 简介"></a>ARKit 4 简介</h2><p>iPadOS 上的 ARKit 4 推出了全新的景深 API，创造了一种新的方式来访问由 iPad Pro 上的激光雷达扫描仪收集的详细深度信息。位置锚定功能利用 Apple 地图中更高分辨率的数据，能在您的 iPhone 和 iPad app 中将增强现实体验放置在世界的特定地方。此外，对面部跟踪的支持扩展到所有配备 Apple 神经网络引擎和前置摄像头的设备，让更多用户能在照片和视频中体验到增强现实的乐趣。</p>
+<p>###创建项目</p>
+<p><img alt="image-20200822085503314" data-src="https://tva1.sinaimg.cn/large/007S8ZIlly1ghzb1hc92mj314k0swn0e.jpg" class="lazyload"></p>
+<p><img alt="image-20200822090411080" data-src="https://tva1.sinaimg.cn/large/007S8ZIlly1ghzbazmojaj313o0rs0wo.jpg" class="lazyload"></p>
+<p>这几种区别</p>
+<p><strong>Metal</strong> 是最基础的 适合熟练使用的开发者  可以个性化定义</p>
+<p><strong>SpriteKit</strong> 2D模型</p>
+<p><strong>SceneKit</strong> 3D模型  支持iOS11.0以上系统，iphone 6s以上手机（即iphone8,1以上）</p>
+<p><strong>RealityKit</strong> 支持人体追踪  支持iOS13.0以上系统，iphone xs以上手机（即iphone11,2以上）</p>
+<p>创建工程获得实例工程</p>
+<p>示例工程内的 ARConfiguration</p>
+<p><code>let configuration = ARWorldTrackingConfiguration()</code></p>
+<p><strong>ARConfiguration</strong>包含多种配置类型:</p>
+<p><strong>ARWorldTrackingConfiguration</strong>: 世界跟踪配置（6DOF），只能使用后置摄像头，需要iOS 11以上。</p>
+<p><strong>AROrientationTrackingConfiguration</strong>: 使用后置摄像头并仅跟踪设备方向的配置</p>
+<p><strong>ARFaceTrackingConfiguration</strong>: 人脸跟踪配置，只能使用前置的TrueDepth摄像头，需要iOS 11以上</p>
+<p><strong>ARImageTrackingConfiguration</strong>: 图像跟踪配置，只能使用后置摄像头，需要iOS 12以上。</p>
+<p>ARObjectScanningConfiguration: 提供使用后置摄像头收集现实空间数据，创建参考对象以便在其他AR体验中进行检测（把现实世界的物体解析成3D模型）</p>
+<p><strong>ARBodyTrackingConfiguration</strong>: 人体跟踪配置，只能使用后置摄像头，需要iOS 13以上和A12芯片</p>
+<p><strong>ARPositionalTrackingConfiguration</strong>:定位跟踪配置，仅跟踪设备在空间中的位置，使用后置摄像头，需要iOS 13以上。</p>
+<p><strong>ARGeoTrackingConfiguration</strong>:地理位置跟踪配置，使用GPS、设备指南针和地图数据跟踪感兴趣的地理位置，需要iOS 14以上。</p>
+<p><strong>注：</strong>可以同时在前置摄像头上使用面部跟踪，在后置摄像头使用世界跟踪。例如，用户可以只使用他们的脸部与后置摄像头画面中的AR内容进行交互。</p>
+<hr>
+<h3 id="判别用户手机是否支持"><a href="#判别用户手机是否支持" class="headerlink" title="判别用户手机是否支持"></a>判别用户手机是否支持</h3><p>因为我们创建项目的时候是个预置AR的项目 所以初始化项目的时候,已经为我们配置到了,在info.plist内 如果用户手机不支持会下载不了此项目 armv7 是对处理器的要求 A9处理器以上</p>
+<p><img alt="image-20200822093353291" data-src="https://tva1.sinaimg.cn/large/007S8ZIlly1ghzc5w1y7nj30zu0e6jti.jpg" class="lazyload"></p>
+<hr>
+<h4 id="模型参数-坐标-旋转-模型渲染材质-贴纸"><a href="#模型参数-坐标-旋转-模型渲染材质-贴纸" class="headerlink" title="模型参数 坐标 旋转 模型渲染材质 贴纸"></a>模型参数 坐标 旋转 模型渲染材质 贴纸</h4><p><img alt="image-20200822100012737" data-src="https://tva1.sinaimg.cn/large/007S8ZIlly1ghzcxbvh9jj31fe0u04qp.jpg" class="lazyload"></p>
+<p>创建一个红色球体 放在屏幕中央 拒摄像头0.5米</p>
+<p><a href="https://www.solarsystemscope.com/textures/" target="_blank" rel="noopener">星球贴纸网站 可以下载贴纸</a></p>
+<p><img alt="image-20200822101554417" data-src="https://tva1.sinaimg.cn/large/007S8ZIlly1ghzddm8kh4j30pu0iatey.jpg" class="lazyload"></p>
+<p>将下载的贴纸图片导入项目 选择4K 还是8K</p>
+<p><img alt="image-20200822101727098" data-src="https://tva1.sinaimg.cn/large/007S8ZIlly1ghzdf831cfj31f80u04i2.jpg" class="lazyload"></p>
+<p><img alt="6501598062963_.pic" data-src="https://tva1.sinaimg.cn/large/007S8ZIlly1ghzdl2dscaj30u01sztbt.jpg" class="lazyload"></p>
+<hr>
+<h4 id="动态创建AR地球-SCNNode-SCNGeometry"><a href="#动态创建AR地球-SCNNode-SCNGeometry" class="headerlink" title="动态创建AR地球+SCNNode+SCNGeometry"></a>动态创建AR地球+SCNNode+SCNGeometry</h4><figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="comment">//实例化一个几何图形 球</span></span><br><span class="line"><span class="keyword">let</span> sphere = <span class="type">SCNSphere</span>(radius: <span class="number">0.2</span>)</span><br><span class="line"><span class="comment">//设置贴纸 全路径</span></span><br><span class="line">sphere.firstMaterial?.diffuse.contents = <span class="type">UIImage</span>(named: <span class="string">"art.scnassets/2k_earth_nightmap.jpg"</span>)</span><br><span class="line"><span class="comment">//模型</span></span><br><span class="line"><span class="keyword">let</span> node = <span class="type">SCNNode</span>(geometry: sphere)</span><br><span class="line"><span class="comment">//设置位置</span></span><br><span class="line">node.position = <span class="type">SCNVector3</span>(<span class="number">0</span>, <span class="number">0</span>, -<span class="number">0.5</span>)</span><br><span class="line"></span><br><span class="line">sceneView.scene.rootNode.addChildNode(node)</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h4 id="用Xcode把3D模型文件转化为-scn文件"><a href="#用Xcode把3D模型文件转化为-scn文件" class="headerlink" title="用Xcode把3D模型文件转化为.scn文件"></a>用Xcode把3D模型文件转化为.scn文件</h4><p><a href="https://www.turbosquid.com/" target="_blank" rel="noopener">3D模型库</a> 需要注册使用, 有收费的和免费的模型</p>
+<p><a href="https://www.blender.org/" target="_blank" rel="noopener">3D模型制作工具Blender</a></p>
+<p>SceneKit支持哪些模型呢 <a href="https://developer.apple.com/documentation/scenekit/scnscenesource" target="_blank" rel="noopener">官方文档</a></p>
+<p><img alt="image-20200822104614540" data-src="https://tva1.sinaimg.cn/large/007S8ZIlly1ghze96mbtzj311k0jg0v6.jpg" class="lazyload"></p>
+<p>只有 .dae是一种比较主流的3D模型格式 但是在主流的模型文件中占比比较少</p>
+<p>所以苹果为了让我们找到更多现成的模型 在ARKit2中加入了 usdz模型, 我们可以通过Xcode将当前最主流的模型转换成usdz,供我们使用. 当前最主流的是 .obj格式的模式. 所以可说成我们只支持两种 .dae和.obj  obj需要转换下</p>
+<p><img alt="image-20200822105512740" data-src="https://tva1.sinaimg.cn/large/007S8ZIlly1ghzeiise8uj31os0sg4qp.jpg" class="lazyload"></p>
+<p>找一个免费的 .dae格式模型下载下来</p>
+<p><img alt="image-20200822110456588" data-src="https://tva1.sinaimg.cn/large/007S8ZIlly1ghzesmy83pj31o80rqgs1.jpg" class="lazyload"></p>
+<p>这里注意有的好的收费的 模型和贴纸是打包好的 这里的需要单独下载</p>
+<p>将dae和贴纸文件导入项目</p>
+<p>即使支持dae文件但是我们依旧需要用xcode将文件格式转换成.scn 因为后续有些操作会执行不了, 代码也会给我们提示 所以为了安全方便还是转换下 也很简单</p>
+<p><img alt="image-20200822111827966" data-src="https://tva1.sinaimg.cn/large/007S8ZIlly1ghzf6q7nuvj31f10u04qp.jpg" class="lazyload"></p>
+<p><img alt="image-20200822112509597" data-src="https://tva1.sinaimg.cn/large/007S8ZIlly1ghzfdo6uqvj31ph0u01kx.jpg" class="lazyload"></p>
+<p>贴纸是多张dds格式的不要慌 iOS支持 然后看图中箭头所指 将对应的贴纸给粘贴上</p>
+<p>注意: 如果在使用转换完的.scn模型后运行报错: <img alt="BF95A0BBD9044A89164A7B71A1217873" data-src="https://tva1.sinaimg.cn/large/007S8ZIlly1ghzjk1wzcpj31fc07ogpd.jpg" class="lazyload"></p>
+<p>不要慌 解决办法</p>
+<p><img alt="image-20200822135025951" data-src="https://tva1.sinaimg.cn/large/007S8ZIlly1ghzjktjhz7j30su0ko7e2.jpg" class="lazyload"></p>
+<p><img alt="image-20200822135055681" data-src="https://tva1.sinaimg.cn/large/007S8ZIlly1ghzjlce3nyj31pt0u0nf7.jpg" class="lazyload"></p>
+<p>选择个版本就好了, 我之前就遇到这个问题, google了一下才找到原因所在</p>
+<p>效果图</p>
+<p><img alt="6551598077912_.pic" data-src="https://tva1.sinaimg.cn/large/007S8ZIlly1ghzkshdj2tj30u01sztde.jpg" class="lazyload"></p>
+<hr>
+<h4 id="将-obj文件转化成-scn文件使用"><a href="#将-obj文件转化成-scn文件使用" class="headerlink" title="将.obj文件转化成.scn文件使用"></a>将.obj文件转化成.scn文件使用</h4><p>我们在转换.obj文件时要多一步 不能直接通过工具Convert</p>
+<p>没有可视化转换界面 需要终端命令行操作</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">xcrun usdz_converter /Users/moneylee/Downloads/ArmyTruck_OBJ/armytruck.obj /Users/moneylee/Downloads/truck.usdz</span><br><span class="line">xcrun: error: sh -c '/Applications/Xcode-beta.app/Contents/Developer/usr/bin/xcodebuild -sdk /Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk -find usdz_converter 2&gt; /dev/null' failed with exit code 17664: (null) (errno=No such file or directory)</span><br><span class="line">xcrun: error: unable to find utility "usdz_converter", not a developer tool or in PATH</span><br></pre></td></tr></table></figure>
+
+<p>OMG  usdz_converter 已经被启用了, 我Xcode10版本应该是可用的, 我的是12 所以需要换种方式</p>
+<p>在这里下载 <code>https://developer.apple.com/download/more/?=USDPython</code></p>
+<p>USDPython 基与python的工具 用于生成,验证和检查usdz文件 包括一个转换器 这个转换器可以从其他3D格式文件以及Pixar和USD库和示例脚本中创建usdz</p>
+]]></content>
+      <categories>
+        <category>iOS</category>
+      </categories>
+  </entry>
+  <entry>
     <title>Docker 部署 SpringBoot 项目</title>
     <url>/2020/08/18/Docker%E9%83%A8%E7%BD%B2SpringBoot%E9%A1%B9%E7%9B%AE/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><h3 id="CentOS-安装-Docker"><a href="#CentOS-安装-Docker" class="headerlink" title="CentOS 安装 Docker"></a>CentOS 安装 Docker</h3><ul>
@@ -359,7 +434,7 @@
 <figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="attribute">user</span> www-data;</span><br><span class="line"><span class="attribute">worker_processes</span> auto;</span><br><span class="line"><span class="attribute">pid</span> /run/nginx.pid;</span><br><span class="line"></span><br><span class="line"><span class="section">events</span> &#123;</span><br><span class="line">        <span class="attribute">worker_connections</span> <span class="number">768</span>;</span><br><span class="line">        <span class="comment"># multi_accept on;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="section">http</span> &#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">##</span></span><br><span class="line">        <span class="comment"># Basic Settings</span></span><br><span class="line">        <span class="comment">##</span></span><br><span class="line"></span><br><span class="line">        <span class="attribute">sendfile</span> <span class="literal">on</span>;</span><br><span class="line">        <span class="attribute">tcp_nopush</span> <span class="literal">on</span>;</span><br><span class="line">        <span class="attribute">tcp_nodelay</span> <span class="literal">on</span>;</span><br><span class="line">        <span class="attribute">keepalive_timeout</span> <span class="number">65</span>;</span><br><span class="line">        <span class="attribute">types_hash_max_size</span> <span class="number">2048</span>;</span><br><span class="line">        <span class="comment"># server_tokens off;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># server_names_hash_bucket_size 64;</span></span><br><span class="line">        <span class="comment"># server_name_in_redirect off;</span></span><br><span class="line"></span><br><span class="line">        <span class="attribute">include</span> /etc/nginx/mime.types;</span><br><span class="line">        <span class="attribute">default_type</span> application/octet-stream;</span><br><span class="line"></span><br><span class="line">        <span class="comment">##</span></span><br><span class="line">        <span class="comment"># SSL Settings</span></span><br><span class="line">        <span class="comment">##</span></span><br><span class="line"></span><br><span class="line">        <span class="attribute">ssl_protocols</span> TLSv1 TLSv1.<span class="number">1</span> TLSv1.<span class="number">2</span>; <span class="comment"># Dropping SSLv3, ref: POODLE</span></span><br><span class="line">        <span class="attribute">ssl_prefer_server_ciphers</span> <span class="literal">on</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">##</span></span><br><span class="line">        <span class="comment"># Logging Settings</span></span><br><span class="line">        <span class="comment">##</span></span><br><span class="line"></span><br><span class="line">        <span class="attribute">access_log</span> /var/log/nginx/access.log;</span><br><span class="line">        <span class="attribute">error_log</span> /var/log/nginx/error.log;</span><br><span class="line"></span><br><span class="line">        <span class="comment">##</span></span><br><span class="line">        <span class="comment"># Gzip Settings</span></span><br><span class="line">        <span class="comment">##</span></span><br><span class="line"></span><br><span class="line">        <span class="attribute">gzip</span> <span class="literal">on</span>;</span><br><span class="line">        <span class="attribute">gzip_disable</span> <span class="string">"msie6"</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment"># gzip_vary on;</span></span><br><span class="line">        <span class="comment"># gzip_proxied any;</span></span><br><span class="line">        <span class="comment"># gzip_comp_level 6;</span></span><br><span class="line">        <span class="comment"># gzip_buffers 16 8k;</span></span><br><span class="line">        <span class="comment"># gzip_http_version 1.1;</span></span><br><span class="line">        <span class="comment"># gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">##</span></span><br><span class="line">        <span class="comment"># Virtual Host Configs</span></span><br><span class="line">        <span class="comment">##</span></span><br><span class="line"></span><br><span class="line">        <span class="attribute">include</span> /etc/nginx/conf.d/<span class="regexp">*.conf</span>;</span><br><span class="line">        <span class="attribute">include</span> /etc/nginx/sites-enabled/*;</span><br><span class="line"></span><br><span class="line">        server&#123;</span><br><span class="line">                <span class="attribute">listen</span> <span class="number">80</span>;</span><br><span class="line">                <span class="attribute">server_name</span> your_server_name;   <span class="comment">#你的serverName</span></span><br><span class="line">                <span class="attribute">root</span> /usr/share/nginx/html;</span><br><span class="line">                <span class="attribute">index</span> index.html;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>启动镜像</p>
-<figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line">docker <span class="keyword">run</span><span class="bash"> \</span></span><br><span class="line"><span class="bash">--name nginx_server \</span></span><br><span class="line"><span class="bash">-d -p 8050:80 \</span></span><br><span class="line"><span class="bash">-v /mnt/docker/nginx/conf/nginx.conf:/etc/nginx/nginx.conf \</span></span><br><span class="line"><span class="bash">-v /mnt/docker/nginx/<span class="built_in">log</span>:/var/<span class="built_in">log</span>/nginx \</span></span><br><span class="line"><span class="bash">-v /mnt/docker/nginx/html:/usr/share/nginx/html \</span></span><br><span class="line"><span class="bash">nginx</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line">docker <span class="keyword">run</span><span class="bash"> \</span></span><br><span class="line"><span class="bash">--name nginx_server \</span></span><br><span class="line"><span class="bash">-d -p 8050:80 \</span></span><br><span class="line"><span class="bash">-v /mnt/docker/nginx/conf/nginx.conf:/etc/nginx/nginx.conf \</span></span><br><span class="line"><span class="bash">-v /mnt/docker/nginx/<span class="built_in">log</span>:/var/<span class="built_in">log</span>/nginx \</span></span><br><span class="line"><span class="bash">-v /mnt/docker/nginx/html/:/usr/share/nginx/html \</span></span><br><span class="line"><span class="bash">nginx</span></span><br><span class="line"><span class="number">1</span></span><br></pre></td></tr></table></figure>
 
 
 
@@ -528,6 +603,64 @@
       </categories>
   </entry>
   <entry>
+    <title>iOS TestFlight(beta版本测试)</title>
+    <url>/2020/08/03/iOS%20TestFlight(beta%E7%89%88%E6%9C%AC%E6%B5%8B%E8%AF%95)/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><h3 id="TestFilght"><a href="#TestFilght" class="headerlink" title="TestFilght"></a>TestFilght</h3><hr>
+<p><strong>概念</strong></p>
+<p>最初是一个独立的测试分发平台, 支持安卓和iOS在</p>
+<p>在2014年2月份被苹果收购, 在iOS8中苹果发布了TestFilght,并集成到了iTunes Connect, 用户将Beta测试流水化</p>
+<p><strong>作用</strong></p>
+<p>对发布之前的应用,做测试分发</p>
+<p><strong>与打包测试的对比</strong></p>
+<p>打包测试:</p>
+<ul>
+<li>测试者提供他们的UUID  测试者不知道怎么获取,你要告诉他</li>
+<li>测试者需要通过软件取出设备识别码<ul>
+<li>测试者把设备识别码发给开发者</li>
+<li>测试者把识别码添加到开发者的账号中  限制100个</li>
+<li>开发者需要重新配置描述文件</li>
+<li>开发者需要重新打包app</li>
+<li>开发者将程序发布给测试者</li>
+<li>测试者需要工具才能安装ipa包</li>
+</ul>
+</li>
+</ul>
+<p>Testfilght测试步骤:</p>
+<ul>
+<li>测试者提供他们的邮箱</li>
+<li>开发者登录 iTunes Connect, 给测试者发送邮件邀请</li>
+<li>测试者接受邀请, 通过TestFilght下载安装程序</li>
+</ul>
+<p><strong>打包测试针对公司内部测试人员 - TestFilght针对真正的用户</strong>  </p>
+<p>TestFilght 内部测试25名(无需审核) 外部测试2000名(需要审核) 不需要配置证书 不需要手动分发ipa包</p>
+<hr>
+<h4 id="TestFight使用方法"><a href="#TestFight使用方法" class="headerlink" title="TestFight使用方法"></a>TestFight使用方法</h4><ul>
+<li>在iTunes Connect 上创建一个 App Recored</li>
+<li>在TestFight上填写基本信息</li>
+<li>上传构建版本</li>
+<li>设置需要测试的构建版本</li>
+<li>创建测试人员</li>
+<li>添加测试人员</li>
+<li>测试人员收到邮件</li>
+<li>下载TestFight APP 并安装测试软件</li>
+</ul>
+<hr>
+<h4 id="这样显然还是比较麻烦"><a href="#这样显然还是比较麻烦" class="headerlink" title="这样显然还是比较麻烦"></a>这样显然还是比较麻烦</h4><p><img alt="592710-7161b6f70ec1fcac" data-src="https://tva1.sinaimg.cn/large/007S8ZIlly1gi2ruyaklij30m40u0gnu.jpg" class="lazyload"></p>
+<p>苹果自己也简化了 TestFlight 的使用流程，支持通过同一公开链接邀请 TestFlight 测试员，无需再收集邮箱和发送邀请码了，如图所示。</p>
+<p><img alt="13388101-489c3d12405f5d83" data-src="https://tva1.sinaimg.cn/large/007S8ZIlly1gi2rvw61g9j30xc0hw41n.jpg" class="lazyload"></p>
+<p>因此我们大致可以使用如下步骤实现开头说的功能：</p>
+<ul>
+<li>上传新的构建版本包到 App Store Connect 后台，并提交 Beta Test 申请，苹果审核通过后，我们可以创建一个 TestFlight Public Link，并把这个公开测试邀请链接保存到我们的服务端，通过某一接口灰度下发给 App；</li>
+<li>App 在启动后特定的时机调用接口查询是否有新的内测邀请链接，如果有就弹窗提醒用户是否要参与内测；</li>
+<li>如果用户点了确认，就通过 UIApplication 的 openURL 方法打开 TestFlight Public Link，此时就会自动跳转到 TestFlight App 中进行内测版的安装，用户无需输入邀请码，如用户未安装 TestFlight 会先提示安装。</li>
+</ul>
+<p>但 TestFlight Public Link 有两个限制：最大测试人数上限为 1 万人，且测试版本仍然需要通过苹果的审核。更多细节可以参考这个 <a href="https://links.jianshu.com/go?to=https%3A%2F%2Fdeveloper.apple.com%2Fvideos%2Fplay%2Fwwdc2018%2F301%2F" target="_blank" rel="noopener">WWDC 视频</a>，大概从 10 分钟左右开始讲。</p>
+]]></content>
+      <categories>
+        <category>iOS</category>
+      </categories>
+  </entry>
+  <entry>
     <title>持续集成与持续交付-CICD</title>
     <url>/2020/07/10/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90%E4%B8%8E%E6%8C%81%E7%BB%AD%E4%BA%A4%E4%BB%98-CICD/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p><img alt="截屏2020-08-20 上午10.41.52" data-src="https://tva1.sinaimg.cn/large/007S8ZIlly1ghx2w2vmavj311i0gsdmy.jpg" class="lazyload"></p>
@@ -619,255 +752,6 @@
 ]]></content>
       <categories>
         <category>运维</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>Java项目开发笔记_05</title>
-    <url>/2020/06/09/Java%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91%E7%AC%94%E8%AE%B0_05/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><h3 id="Spring5-X-⾯面向切⾯面编程-AOP"><a href="#Spring5-X-⾯面向切⾯面编程-AOP" class="headerlink" title="Spring5.X ⾯面向切⾯面编程 AOP"></a><strong>Spring5.X</strong> ⾯面向切⾯面编程 <strong>AOP</strong></h3><ul>
-<li>什么是AOP<ul>
-<li>Aspect Oriented Program ⾯向切面编程</li>
-<li>在不改变原有逻辑上增加额外的功能，比如解决系统层面的问题，或者增加新的功能   </li>
-</ul>
-</li>
-<li>场景<ul>
-<li>权限控制</li>
-<li>缓存</li>
-<li>日志处理</li>
-<li>事务控制</li>
-</ul>
-</li>
-<li>AOP思想把功能分两个部分，分离系统中的各种关注点<ul>
-<li>核心关注点<ul>
-<li>业务的主要功能</li>
-</ul>
-</li>
-<li>横切关注点<ul>
-<li>非核心、额外增加的功能</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>好处<ul>
-<li>减少代码侵入、解耦</li>
-<li>可以统一处理横切逻辑</li>
-<li>方便添加和切除横切逻辑</li>
-</ul>
-</li>
-</ul>
-<hr>
-<h3 id="AOP⾯向切⾯编程核心概念"><a href="#AOP⾯向切⾯编程核心概念" class="headerlink" title="AOP⾯向切⾯编程核心概念"></a><strong>AOP</strong>⾯向切⾯编程核心概念</h3><ul>
-<li><p>横切、通知、连接点、切⼊点、切⾯</p>
-</li>
-<li><p>横切关注点 </p>
-<ul>
-<li>对哪些⽅法进行拦截，拦截后怎么处理，这些就叫横切关注点</li>
-<li>比如 权限认证、⽇志、事物</li>
-</ul>
-</li>
-<li><p>通知 Advice</p>
-<ul>
-<li>在特定的切⼊点上执⾏的增强处理  </li>
-<li>记录日志，控制事务 ，提前编写好通用的模块，需要的地⽅直接调⽤</li>
-</ul>
-</li>
-<li><p>连接点 JointPoint</p>
-<ul>
-<li>要用通知的地方，业务流程在运⾏过程中需要插入切面的具体位置 </li>
-<li>⼀般是方法的调用前后，全部方法都可以是连接点</li>
-<li>只是概念，没啥特殊  </li>
-</ul>
-</li>
-<li><p>切入点 Pointcut </p>
-<ul>
-<li>不能全部⽅法都是连接点，通过特定的规则来筛选连接点, 就是Pointcut，选中那⼏个你想要的方法</li>
-<li>在程序中主要体现为书写切入点表达式(通过通配、正则表达式)过滤出特定的一组 JointPoint连接点</li>
-<li>过滤出相应的 Advice 将要发生的joinpoint地方  </li>
-</ul>
-</li>
-<li><p>切面 Aspect </p>
-<ul>
-<li>通常是⼀个类，⾥面定义 切入点<strong>+</strong>通知 , 定义在什么地方; 什么时间点、做什么事情</li>
-<li>通知 <strong>advice</strong>指明了时间和做的事情(前置、后置等)</li>
-<li>切⼊点 <strong>pointcut</strong> 指定在什么地⽅⼲这个事情</li>
-<li>web接⼝设计中，web层-&gt;网关层-&gt;服务层-&gt;数据层，每⼀层之间也是⼀个切⾯面，对象和对象，⽅法和⽅法之间都是一个切面  </li>
-</ul>
-</li>
-<li><p>目标 target </p>
-<ul>
-<li>⽬标类，真正的业务逻辑，可以在目标类不知情的条件下，增加新的功能到目标类的链路上 </li>
-</ul>
-</li>
-<li><p>织⼊Weaving</p>
-<ul>
-<li>把切面(某个类)应用到目标函数的过程称为织⼊  </li>
-</ul>
-</li>
-<li><p>AOP代理</p>
-<ul>
-<li>AOP框架创建的对象，代理就是目标对象的加强</li>
-<li>Spring中的AOP代理可以使JDK动态代理，也可以是CGLIB代理</li>
-</ul>
-</li>
-</ul>
-<hr>
-<h3 id="AOP⾥⾯的通知Advice类型讲解"><a href="#AOP⾥⾯的通知Advice类型讲解" class="headerlink" title="AOP⾥⾯的通知Advice类型讲解"></a><strong>AOP</strong>⾥⾯的通知<strong>Advice</strong>类型讲解</h3><ul>
-<li>@Before前置通知<ul>
-<li>在执⾏⽬标方法之前运行  </li>
-</ul>
-</li>
-<li>@After后置通知<ul>
-<li>在目标方法运行结束之后  </li>
-</ul>
-</li>
-<li>@AfterReturning返回通知<ul>
-<li>在⽬标方法正常返回值后运行  </li>
-</ul>
-</li>
-<li>@AfterThrowing异常通知<ul>
-<li>在⽬标⽅法出现异常后运行  </li>
-</ul>
-</li>
-<li>@Around环绕通知<ul>
-<li>在目标方法完成前、后做增强处理 ,环绕通知是最重要的通知类型 ,像事务,⽇志等都是环绕通知,注意编程中核心是⼀个ProceedingJoinPoint，需要⼿动执行 joinPoint.procced()  </li>
-</ul>
-</li>
-</ul>
-<hr>
-<h3 id="AOP切入点表达式讲解"><a href="#AOP切入点表达式讲解" class="headerlink" title="AOP切入点表达式讲解"></a><strong>AOP</strong>切入点表达式讲解</h3><ul>
-<li><p>切⼊点表示式</p>
-<ul>
-<li><p>除了返回类型、⽅法名和参数外，其它项都是可选的 (修饰符基本都是省略不写) </p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"> 访问修饰符      返回值类型(必填)   包和类            ⽅法(必填)</span><br><span class="line">execution(modifiers-pattern? ret-type-pattern declaring-type-pattern?name- pattern(param-pattern) throws-pattern?)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>@Pointcut(“execution(public int net.xdclass.sp.service.VideoOrderService.*(..))”) </p>
-</li>
-</ul>
-</li>
-<li><p>常见匹配语法</p>
-<ul>
-<li>*:匹配任何数量字符 单个; </li>
-<li>..:匹配任何数量字符,可以多个，在类型模式中匹配任何数量子包;在方法参数模式中匹配 任何数量参数</li>
-</ul>
-</li>
-<li><pre><code>() 匹配⼀个不接受任何参数的⽅法
-(..) 匹配⼀个接受任意数量参数的⽅法
-(*) 匹配了一个接受⼀个任何类型的参数的方法
-(*,Integer) 匹配了一个接受两个参数的方法，其中第一个参数是任意类型，第二个参数必须 是Integer类型
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">*   常⻅例子</span><br><span class="line"></span><br><span class="line">  * 任意公共方法</span><br></pre></td></tr></table></figure>
-execution(public * *(..))
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">* 任何一个名字以“save”开始的⽅法</span><br></pre></td></tr></table></figure>
-execution(* save*(..))
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">* VideoService接口定义的任意方法(识别)</span><br></pre></td></tr></table></figure>
- execution(* net.xdclass.service.VideoService.*(..))
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">* 在service包中定义的任意⽅方法(识别)</span><br></pre></td></tr></table></figure>
-execution(* net.xdclass.service.*.*(..))
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">* 匹配 service 包,⼦孙包下所有类的所有⽅法(识别)</span><br></pre></td></tr></table></figure>
-execution(* net.xdclass.service..*.*(..))</code></pre></li>
-</ul>
-<hr>
-<h3 id="Spring-AOP⾥面的代理知识"><a href="#Spring-AOP⾥面的代理知识" class="headerlink" title="Spring AOP⾥面的代理知识"></a><strong>Spring AOP</strong>⾥面的代理知识</h3><h4 id="动态代理和静态代理"><a href="#动态代理和静态代理" class="headerlink" title="动态代理和静态代理"></a>动态代理和静态代理</h4><ul>
-<li>什么是代理<ul>
-<li>为某一个对象创建一个代理对象，程序不直接用原本的对象，而是由创建的代理对象来控制原对象，通过代理类这中间一层，能有效控制对委托类对象的直接访问，也可以很好的隐藏和保护委托类对象，同时也为实施不同控制策略预留了控件</li>
-<li>A -&gt; B -&gt;C</li>
-</ul>
-</li>
-<li>什么是静态代理<ul>
-<li>由程序创建或特定工具自动生成源代码，在程序运行前，代理的.class文件已经存在</li>
-</ul>
-</li>
-<li>什么是动态代理<ul>
-<li>在程序运行时，运用反射机制动态创建而成，无需手动编写代码<ul>
-<li>JDK动态代理</li>
-<li>CGLIB动态代理</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<hr>
-<h3 id="代理模式之静态代理"><a href="#代理模式之静态代理" class="headerlink" title="代理模式之静态代理"></a>代理模式之静态代理</h3><ul>
-<li>静态代理的优点<ul>
-<li>代理使客户端不需要知道实现类是什么，怎么做的，而客户端只需要知道代理即可</li>
-<li>方便增加功能，拓展业务逻辑</li>
-</ul>
-</li>
-<li>缺点<ul>
-<li>代理类中出现大量沉余代码，非常不利于拓展和维护</li>
-<li>如果接口增加一个方法，除了所有实现类需要实现这个方法外，所有代理类也需要实现此方法，增加了代码维护的复杂度</li>
-</ul>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>Java</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>Java项目开发笔记_03</title>
-    <url>/2020/06/08/Java%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91%E7%AC%94%E8%AE%B0_03/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><h3 id="SpringBoot2-x定时任务schedule讲解"><a href="#SpringBoot2-x定时任务schedule讲解" class="headerlink" title="SpringBoot2.x定时任务schedule讲解"></a>SpringBoot2.x定时任务schedule讲解</h3><ul>
-<li><p>使用场景：</p>
-<ul>
-<li>某个时间处理某个任务</li>
-<li>发邮件、发短信等</li>
-<li>消息提醒</li>
-<li>订单通知</li>
-<li>统计报表系统</li>
-<li>…</li>
-</ul>
-</li>
-<li><p>常见定时任务</p>
-<ul>
-<li>Java自带的java.util.Timer类配置比较麻烦，时间延后问题</li>
-<li>Quartz框架：配置更简单，xml或直接适合分布式或大型调度作业</li>
-<li>SpringBoot框架自带</li>
-</ul>
-</li>
-<li><p>SpringBoot使用注解方式开启定时任务</p>
-<ul>
-<li>启动类里面 @EnableScheduling开启你定时任务，自动扫描</li>
-<li>定时任务业务类，加注解 @Component被容器扫描</li>
-<li>定时执行的方法加上注解 @Scheduled(fixedRate=2000) 定期执行一次</li>
-</ul>
-</li>
-<li><p>SpringBoot常用定时任务表达式配置和在线生成器</p>
-<ul>
-<li>cron定时任务表达式 @Scheduled(cron=”*/1 * * * * *”)表示每秒</li>
-<li><a href="https://tool.lu/crontab" target="_blank" rel="noopener">Cron在线工具</a></li>
-</ul>
-</li>
-<li><p>SpringBoot2.x异步任务EnableAsync</p>
-<p>使用场景：</p>
-<ul>
-<li>适用于处理log、发送邮件、短信… 等等</li>
-<li>下单接口 -&gt; 查库存 1000</li>
-<li>余额校验 15000</li>
-<li>风控用户 1000</li>
-<li>启动类里面使用@EnableAsync注解开启功能，自动扫描</li>
-<li>定义异步任务类并使用@Component标记组件被容器扫描，异步方法上加上@Async</li>
-</ul>
-</li>
-<li><p>SpringBoot2.x异步任务Future获取结果</p>
-<ul>
-<li>注意点：<ul>
-<li>要把异步任务封装到类里面，不能直接写到Controller</li>
-<li>增加Future<String>返回结果 AsyncResult<String>（”task执行完成”);</li>
-<li>如果需要拿到结果 需要判断全部的 task.isDone()</li>
-</ul>
-</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">package com.moneylee.xdstudy.task;</span><br><span class="line"></span><br><span class="line">import org.springframework.scheduling.annotation.Async;</span><br><span class="line">import org.springframework.scheduling.annotation.AsyncResult;</span><br><span class="line">import org.springframework.stereotype.Component;</span><br><span class="line"></span><br><span class="line">import java.util.concurrent.Future;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * @className: Async</span><br><span class="line"> * @Description: 异步任务</span><br><span class="line"> * @Author moneylee</span><br><span class="line"> * @Date 2020-07-02 18:41</span><br><span class="line"> * @Version 1.0</span><br><span class="line"> **/</span><br><span class="line">@Component</span><br><span class="line">@Async</span><br><span class="line">public class AsyncTask &#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    public void task1() &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            Thread.sleep(4000L);</span><br><span class="line">        &#125; catch (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(&quot;task 1&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void task2() &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            Thread.sleep(4000L);</span><br><span class="line">        &#125; catch (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(&quot;task 2&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void task3() &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            Thread.sleep(4000L);</span><br><span class="line">        &#125; catch (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(&quot;task 3&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public Future&lt;String&gt; task4() &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            Thread.sleep(4000L);</span><br><span class="line">        &#125; catch (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(&quot;task 4&quot;);</span><br><span class="line">        return new AsyncResult&lt;String&gt;(&quot;任务4&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public Future&lt;String&gt; task5() &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            Thread.sleep(4000L);</span><br><span class="line">        &#125; catch (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(&quot;task 5&quot;);</span><br><span class="line">        return new AsyncResult&lt;String&gt;(&quot;任务5&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>Java</category>
       </categories>
   </entry>
   <entry>
@@ -1363,6 +1247,73 @@ execution(* net.xdclass.service..*.*(..))</code></pre></li>
       </categories>
   </entry>
   <entry>
+    <title>Java项目开发笔记_03</title>
+    <url>/2020/06/08/Java%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91%E7%AC%94%E8%AE%B0_03/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><h3 id="SpringBoot2-x定时任务schedule讲解"><a href="#SpringBoot2-x定时任务schedule讲解" class="headerlink" title="SpringBoot2.x定时任务schedule讲解"></a>SpringBoot2.x定时任务schedule讲解</h3><ul>
+<li><p>使用场景：</p>
+<ul>
+<li>某个时间处理某个任务</li>
+<li>发邮件、发短信等</li>
+<li>消息提醒</li>
+<li>订单通知</li>
+<li>统计报表系统</li>
+<li>…</li>
+</ul>
+</li>
+<li><p>常见定时任务</p>
+<ul>
+<li>Java自带的java.util.Timer类配置比较麻烦，时间延后问题</li>
+<li>Quartz框架：配置更简单，xml或直接适合分布式或大型调度作业</li>
+<li>SpringBoot框架自带</li>
+</ul>
+</li>
+<li><p>SpringBoot使用注解方式开启定时任务</p>
+<ul>
+<li>启动类里面 @EnableScheduling开启你定时任务，自动扫描</li>
+<li>定时任务业务类，加注解 @Component被容器扫描</li>
+<li>定时执行的方法加上注解 @Scheduled(fixedRate=2000) 定期执行一次</li>
+</ul>
+</li>
+<li><p>SpringBoot常用定时任务表达式配置和在线生成器</p>
+<ul>
+<li>cron定时任务表达式 @Scheduled(cron=”*/1 * * * * *”)表示每秒</li>
+<li><a href="https://tool.lu/crontab" target="_blank" rel="noopener">Cron在线工具</a></li>
+</ul>
+</li>
+<li><p>SpringBoot2.x异步任务EnableAsync</p>
+<p>使用场景：</p>
+<ul>
+<li>适用于处理log、发送邮件、短信… 等等</li>
+<li>下单接口 -&gt; 查库存 1000</li>
+<li>余额校验 15000</li>
+<li>风控用户 1000</li>
+<li>启动类里面使用@EnableAsync注解开启功能，自动扫描</li>
+<li>定义异步任务类并使用@Component标记组件被容器扫描，异步方法上加上@Async</li>
+</ul>
+</li>
+<li><p>SpringBoot2.x异步任务Future获取结果</p>
+<ul>
+<li>注意点：<ul>
+<li>要把异步任务封装到类里面，不能直接写到Controller</li>
+<li>增加Future<String>返回结果 AsyncResult<String>（”task执行完成”);</li>
+<li>如果需要拿到结果 需要判断全部的 task.isDone()</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">package com.moneylee.xdstudy.task;</span><br><span class="line"></span><br><span class="line">import org.springframework.scheduling.annotation.Async;</span><br><span class="line">import org.springframework.scheduling.annotation.AsyncResult;</span><br><span class="line">import org.springframework.stereotype.Component;</span><br><span class="line"></span><br><span class="line">import java.util.concurrent.Future;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * @className: Async</span><br><span class="line"> * @Description: 异步任务</span><br><span class="line"> * @Author moneylee</span><br><span class="line"> * @Date 2020-07-02 18:41</span><br><span class="line"> * @Version 1.0</span><br><span class="line"> **/</span><br><span class="line">@Component</span><br><span class="line">@Async</span><br><span class="line">public class AsyncTask &#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    public void task1() &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            Thread.sleep(4000L);</span><br><span class="line">        &#125; catch (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(&quot;task 1&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void task2() &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            Thread.sleep(4000L);</span><br><span class="line">        &#125; catch (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(&quot;task 2&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void task3() &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            Thread.sleep(4000L);</span><br><span class="line">        &#125; catch (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(&quot;task 3&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public Future&lt;String&gt; task4() &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            Thread.sleep(4000L);</span><br><span class="line">        &#125; catch (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(&quot;task 4&quot;);</span><br><span class="line">        return new AsyncResult&lt;String&gt;(&quot;任务4&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public Future&lt;String&gt; task5() &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            Thread.sleep(4000L);</span><br><span class="line">        &#125; catch (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(&quot;task 5&quot;);</span><br><span class="line">        return new AsyncResult&lt;String&gt;(&quot;任务5&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+  </entry>
+  <entry>
     <title>Java项目开发笔记_02</title>
     <url>/2020/06/07/Java%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91%E7%AC%94%E8%AE%B0_02/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><hr>
@@ -1535,6 +1486,22 @@ execution(* net.xdclass.service..*.*(..))</code></pre></li>
 </li>
 </ul>
 ]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>Java 基于SpringAOP快速实现日志打印</title>
+    <url>/2020/06/06/Java/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script>]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>Java 基于Spring AOP 快速实现日志打印</title>
+    <url>/2020/06/06/Java%20%E5%9F%BA%E4%BA%8ESpringAOP%E5%BF%AB%E9%80%9F%E5%AE%9E%E7%8E%B0%E6%97%A5%E5%BF%97%E6%89%93%E5%8D%B0/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script>]]></content>
       <categories>
         <category>Java</category>
       </categories>
@@ -2531,26 +2498,6 @@ execution(* net.xdclass.service..*.*(..))</code></pre></li>
       </categories>
   </entry>
   <entry>
-    <title>开篇</title>
-    <url>/2019/11/09/%E5%BC%80%E7%AF%87/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><h3 id="原本想使用-spring-boot-vue-开发一款博客系统-但是平时也没有多少时间-做出来的样式也不是很喜欢。今天无意间发现Hexo这个开源的博客框架-决定拿来试一试-效果还不错-今后会继续完善下去-我也会将-简书、掘金的一些之前写作的文章导入进来-希望通过它能让我养成技术文档整理归纳的好习惯-我也会在此更新一些生活上的故事和心得体悟。"><a href="#原本想使用-spring-boot-vue-开发一款博客系统-但是平时也没有多少时间-做出来的样式也不是很喜欢。今天无意间发现Hexo这个开源的博客框架-决定拿来试一试-效果还不错-今后会继续完善下去-我也会将-简书、掘金的一些之前写作的文章导入进来-希望通过它能让我养成技术文档整理归纳的好习惯-我也会在此更新一些生活上的故事和心得体悟。" class="headerlink" title="原本想使用 spring-boot + vue 开发一款博客系统, 但是平时也没有多少时间, 做出来的样式也不是很喜欢。今天无意间发现Hexo这个开源的博客框架, 决定拿来试一试, 效果还不错, 今后会继续完善下去, 我也会将 简书、掘金的一些之前写作的文章导入进来, 希望通过它能让我养成技术文档整理归纳的好习惯, 我也会在此更新一些生活上的故事和心得体悟。"></a>原本想使用 spring-boot + vue 开发一款博客系统, 但是平时也没有多少时间, 做出来的样式也不是很喜欢。今天无意间发现Hexo这个开源的博客框架, 决定拿来试一试, 效果还不错, 今后会继续完善下去, 我也会将 简书、掘金的一些之前写作的文章导入进来, 希望通过它能让我养成技术文档整理归纳的好习惯, 我也会在此更新一些生活上的故事和心得体悟。</h3>]]></content>
-      <categories>
-        <category>随笔</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>Windows Server 2012 使用记录</title>
-    <url>/2019/11/09/Windows%20Server%202012%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>前段时间接到一个为公司客户开发官网的任务, 框架使用Jeesite, 前后端分离项目, 数据库是Mysql5.7。接下来就记录下遭遇的一切。</p>
-<p>大约三天开发完后台服务及管理界面的配置, 配合前台接口调试用了一天, 然后客户购买的阿里云服务器, 我原以为是Linux服务器, 所以也没多问就按照之前的习惯, 用Mac的ssh直接连接, 提示 22端口访问被拒绝, 什么鬼? 22端口没开, 然后几经辗转要到阿里云账号并登录到管理后台, 重置了实例密码(因为客户也不知道密码是啥), 说实在的, 我连Windows电脑都好些年不用了, 所有的命令行也不怎么会, 这可难到我了,  研究了好一阵子, 我才知道windows有自己的远程连接工具, 并且需要开放的端口是 3389, 然后阿里云后台配置网络安全组, 开放 80, 3389 , 3306 入规则访问权限, 分别是网路请求, 远程控制 和 数据库, 方便我以后的开发调试工作, 等真正交付的时候再关闭掉 3389和3306,  然后用Tomcat开始部署, 其实使用这一个服务就可以了, 但是个人习惯还是兼顾使用了 Nginx服务, 然后 下载Java JDK 配置环境变量这一套常规操作。</p>
-<p>远程访问我用客户的账号配置好后台网络, 然后重置并获取到新的服务器密码后, (这里再插一句, 服务器主机的开机账号密码默认是 administrator  和 服务器密码 我才知道 之前以为是俩密码) 然后安装了Teamviewer工具, 为了双保险又安装了蒲公英, 之前Team不说是有漏洞嘛, 但是我觉得蒲公英免费版的太慢了, 卡的很难受, 还是Team比较快捷高效 然后磕磕绊绊的服务起开了, 根据IP外网也能访问了</p>
-<p>第二天客户说访问不到服务了, 我登录发现密码错误, 难道客户密码改了? 但是客户说没改, 我又远程访问的客户电脑, 再通过他的浏览器访问的服务器, 然后重置了密码, 一顿操作还是没发现问题, localhost访问服务没问题, 那就是网络的问题了, 发现防火墙被用户开启了, 那就是防火墙的问题了, 单独开放了80端口, 搞定, 可以正常外网访问了, 然后防止客户重启服务器 服务中断的问题, 需要配置Tomcat和Nginx自启服务, Tomcat服务自启比较简单</p>
-]]></content>
-      <categories>
-        <category>随笔</category>
-      </categories>
-  </entry>
-  <entry>
     <title>记录一次微信小程序调用Eharts</title>
     <url>/2019/11/09/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E8%B0%83%E7%94%A8Echarts/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><h2 id="记录一次微信小程序调用Eharts-柱状图"><a href="#记录一次微信小程序调用Eharts-柱状图" class="headerlink" title="记录一次微信小程序调用Eharts(柱状图)"></a>记录一次微信小程序调用Eharts(柱状图)</h2><p>Echarts 微信小程序版本地址: <a href="https://github.com/ecomfe/echarts-for-weixin" target="_blank" rel="noopener"></a></p>
@@ -2601,6 +2548,26 @@ execution(* net.xdclass.service..*.*(..))</code></pre></li>
 <pre><code>### 最后的效果图我就不放了, 在上面有!!!</code></pre>]]></content>
       <categories>
         <category>微信小程序</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>开篇</title>
+    <url>/2019/11/09/%E5%BC%80%E7%AF%87/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><h3 id="原本想使用-spring-boot-vue-开发一款博客系统-但是平时也没有多少时间-做出来的样式也不是很喜欢。今天无意间发现Hexo这个开源的博客框架-决定拿来试一试-效果还不错-今后会继续完善下去-我也会将-简书、掘金的一些之前写作的文章导入进来-希望通过它能让我养成技术文档整理归纳的好习惯-我也会在此更新一些生活上的故事和心得体悟。"><a href="#原本想使用-spring-boot-vue-开发一款博客系统-但是平时也没有多少时间-做出来的样式也不是很喜欢。今天无意间发现Hexo这个开源的博客框架-决定拿来试一试-效果还不错-今后会继续完善下去-我也会将-简书、掘金的一些之前写作的文章导入进来-希望通过它能让我养成技术文档整理归纳的好习惯-我也会在此更新一些生活上的故事和心得体悟。" class="headerlink" title="原本想使用 spring-boot + vue 开发一款博客系统, 但是平时也没有多少时间, 做出来的样式也不是很喜欢。今天无意间发现Hexo这个开源的博客框架, 决定拿来试一试, 效果还不错, 今后会继续完善下去, 我也会将 简书、掘金的一些之前写作的文章导入进来, 希望通过它能让我养成技术文档整理归纳的好习惯, 我也会在此更新一些生活上的故事和心得体悟。"></a>原本想使用 spring-boot + vue 开发一款博客系统, 但是平时也没有多少时间, 做出来的样式也不是很喜欢。今天无意间发现Hexo这个开源的博客框架, 决定拿来试一试, 效果还不错, 今后会继续完善下去, 我也会将 简书、掘金的一些之前写作的文章导入进来, 希望通过它能让我养成技术文档整理归纳的好习惯, 我也会在此更新一些生活上的故事和心得体悟。</h3>]]></content>
+      <categories>
+        <category>随笔</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>Windows Server 2012 使用记录</title>
+    <url>/2019/11/09/Windows%20Server%202012%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>前段时间接到一个为公司客户开发官网的任务, 框架使用Jeesite, 前后端分离项目, 数据库是Mysql5.7。接下来就记录下遭遇的一切。</p>
+<p>大约三天开发完后台服务及管理界面的配置, 配合前台接口调试用了一天, 然后客户购买的阿里云服务器, 我原以为是Linux服务器, 所以也没多问就按照之前的习惯, 用Mac的ssh直接连接, 提示 22端口访问被拒绝, 什么鬼? 22端口没开, 然后几经辗转要到阿里云账号并登录到管理后台, 重置了实例密码(因为客户也不知道密码是啥), 说实在的, 我连Windows电脑都好些年不用了, 所有的命令行也不怎么会, 这可难到我了,  研究了好一阵子, 我才知道windows有自己的远程连接工具, 并且需要开放的端口是 3389, 然后阿里云后台配置网络安全组, 开放 80, 3389 , 3306 入规则访问权限, 分别是网路请求, 远程控制 和 数据库, 方便我以后的开发调试工作, 等真正交付的时候再关闭掉 3389和3306,  然后用Tomcat开始部署, 其实使用这一个服务就可以了, 但是个人习惯还是兼顾使用了 Nginx服务, 然后 下载Java JDK 配置环境变量这一套常规操作。</p>
+<p>远程访问我用客户的账号配置好后台网络, 然后重置并获取到新的服务器密码后, (这里再插一句, 服务器主机的开机账号密码默认是 administrator  和 服务器密码 我才知道 之前以为是俩密码) 然后安装了Teamviewer工具, 为了双保险又安装了蒲公英, 之前Team不说是有漏洞嘛, 但是我觉得蒲公英免费版的太慢了, 卡的很难受, 还是Team比较快捷高效 然后磕磕绊绊的服务起开了, 根据IP外网也能访问了</p>
+<p>第二天客户说访问不到服务了, 我登录发现密码错误, 难道客户密码改了? 但是客户说没改, 我又远程访问的客户电脑, 再通过他的浏览器访问的服务器, 然后重置了密码, 一顿操作还是没发现问题, localhost访问服务没问题, 那就是网络的问题了, 发现防火墙被用户开启了, 那就是防火墙的问题了, 单独开放了80端口, 搞定, 可以正常外网访问了, 然后防止客户重启服务器 服务中断的问题, 需要配置Tomcat和Nginx自启服务, Tomcat服务自启比较简单</p>
+]]></content>
+      <categories>
+        <category>随笔</category>
       </categories>
   </entry>
   <entry>
@@ -2995,28 +2962,6 @@ execution(* net.xdclass.service..*.*(..))</code></pre></li>
       </categories>
   </entry>
   <entry>
-    <title>Swift开发的一些小知识点(更新状态)</title>
-    <url>/2016/11/15/Swift%E5%BC%80%E5%8F%91%E4%B8%80%E4%BA%9B%E5%B0%8F%E7%9F%A5%E8%AF%86%E7%82%B9/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><h3 id="Swift项目程序入口main函数在哪"><a href="#Swift项目程序入口main函数在哪" class="headerlink" title="Swift项目程序入口main函数在哪?"></a>Swift项目程序入口main函数在哪?</h3><p>Xcode新建的Swift项目中 发现没有main函数入口, 哪里去了呢, 在Appdelegate.swfit 上发现一个注解</p>
-<p><code>@UIApplicationMain</code></p>
-<p>这个注解会自动生成一个程序的入口, 但是如果在一些特殊情况下, 我们需要自定义 UIApplication该怎么办呢, 新建一个Swift文件, 命名为 main.swift    在其内实现main函数</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> UIKit</span><br><span class="line"><span class="comment">//自定义UIApplication</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyApplication</span>: <span class="title">UIApplication</span> </span>&#123;&#125;</span><br><span class="line"><span class="comment">//使用自定义的UIApplication</span></span><br><span class="line"><span class="type">UIApplicationMain</span>(<span class="type">CommandLine</span>.argc, <span class="type">CommandLine</span>.unsafeArgv, <span class="type">NSStringFromClass</span>(<span class="type">MyApplication</span>.<span class="keyword">self</span>), <span class="type">NSStringFromClass</span>(<span class="type">AppDelegate</span>.<span class="keyword">self</span>))</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="Swift调用OC"><a href="#Swift调用OC" class="headerlink" title="Swift调用OC"></a>Swift调用OC</h3><p>在swift项目新建OC类, 会弹出提示如下图</p>
-<p><img alt="截屏2019-11-12下午10.44.09" data-src="https://tva1.sinaimg.cn/large/006y8mN6ly1g8vn1f9shqj30va07gjx0.jpg" class="lazyload"></p>
-<p>会询问你是否创建桥接文件, 点击创建桥接文件, 在工程目录内会出现产生的桥接文件</p>
-<p><img alt="Snip20191112_1" data-src="https://tva1.sinaimg.cn/large/006y8mN6ly1g8vn39auvvj307903u3yn.jpg" class="lazyload"></p>
-<p>桥接文件的文件名固定格式 <strong>{targetName}-Bridging-Header.h</strong></p>
-<p>这个头文件,引入一些OC的类, 暴露给Swift使用.</p>
-<p><code>#import &quot;Change.h&quot;</code></p>
-]]></content>
-      <categories>
-        <category>iOS</category>
-      </categories>
-  </entry>
-  <entry>
     <title>《如何使用CocoaPods：2016.11.15版》</title>
     <url>/2016/11/15/%E3%80%8A%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8CocoaPods%EF%BC%9A2016.11.15%E7%89%88%E3%80%8B/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>一、CocoaPods的简介：</p>
@@ -3077,6 +3022,28 @@ execution(* net.xdclass.service..*.*(..))</code></pre></li>
 <p>找到 User Header Search Paths  双击后面空白处 点击+号 输入 $(PODS_ROOT) 最有改选 recursive</p>
 <p><img alt="截屏2019-11-12下午3.20.50" data-src="https://tva1.sinaimg.cn/large/006y8mN6ly1g8vapkh4awj311a0g0jwh.jpg" class="lazyload"></p>
 <p>大功告成！</p>
+]]></content>
+      <categories>
+        <category>iOS</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>Swift开发的一些小知识点(更新状态)</title>
+    <url>/2016/11/15/Swift%E5%BC%80%E5%8F%91%E4%B8%80%E4%BA%9B%E5%B0%8F%E7%9F%A5%E8%AF%86%E7%82%B9/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><h3 id="Swift项目程序入口main函数在哪"><a href="#Swift项目程序入口main函数在哪" class="headerlink" title="Swift项目程序入口main函数在哪?"></a>Swift项目程序入口main函数在哪?</h3><p>Xcode新建的Swift项目中 发现没有main函数入口, 哪里去了呢, 在Appdelegate.swfit 上发现一个注解</p>
+<p><code>@UIApplicationMain</code></p>
+<p>这个注解会自动生成一个程序的入口, 但是如果在一些特殊情况下, 我们需要自定义 UIApplication该怎么办呢, 新建一个Swift文件, 命名为 main.swift    在其内实现main函数</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> UIKit</span><br><span class="line"><span class="comment">//自定义UIApplication</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyApplication</span>: <span class="title">UIApplication</span> </span>&#123;&#125;</span><br><span class="line"><span class="comment">//使用自定义的UIApplication</span></span><br><span class="line"><span class="type">UIApplicationMain</span>(<span class="type">CommandLine</span>.argc, <span class="type">CommandLine</span>.unsafeArgv, <span class="type">NSStringFromClass</span>(<span class="type">MyApplication</span>.<span class="keyword">self</span>), <span class="type">NSStringFromClass</span>(<span class="type">AppDelegate</span>.<span class="keyword">self</span>))</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="Swift调用OC"><a href="#Swift调用OC" class="headerlink" title="Swift调用OC"></a>Swift调用OC</h3><p>在swift项目新建OC类, 会弹出提示如下图</p>
+<p><img alt="截屏2019-11-12下午10.44.09" data-src="https://tva1.sinaimg.cn/large/006y8mN6ly1g8vn1f9shqj30va07gjx0.jpg" class="lazyload"></p>
+<p>会询问你是否创建桥接文件, 点击创建桥接文件, 在工程目录内会出现产生的桥接文件</p>
+<p><img alt="Snip20191112_1" data-src="https://tva1.sinaimg.cn/large/006y8mN6ly1g8vn39auvvj307903u3yn.jpg" class="lazyload"></p>
+<p>桥接文件的文件名固定格式 <strong>{targetName}-Bridging-Header.h</strong></p>
+<p>这个头文件,引入一些OC的类, 暴露给Swift使用.</p>
+<p><code>#import &quot;Change.h&quot;</code></p>
 ]]></content>
       <categories>
         <category>iOS</category>
