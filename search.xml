@@ -247,6 +247,25 @@
       </categories>
   </entry>
   <entry>
+    <title>Flutter</title>
+    <url>/2020/08/19/Flutter/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>Flutter是Google的UI工具包</p>
+<p>Flutter是一个UI SDK</p>
+<p><strong>可以进行移动端(iOS, Android), Web(Beta), 桌面(teachnical preview), 跨平台解决方案</strong></p>
+<p>移动端目前很多公司在用 谷歌 阿里 腾讯</p>
+<p>特别是阿里的闲鱼团队 为Flutter做了很多贡献</p>
+<p>Flutter有统一前端的野心, 正在侵蚀iOS和Android</p>
+<p>Flutter的特点: <strong>美观</strong> <strong>快速 高效 开放</strong></p>
+<p>Flutter的UI渲染性能好 在生产环境下 Flutter将代码编译成机器码执行, 充分利用GPU的图形加速能力,因此使用Flutter开发的移动应用即使在低配的手机上也能实现每秒60帧的渲染速度</p>
+<p>Flutter的引擎是C++编写的 包括Skia 2D渲染引擎 Dart运行时和文本渲染库</p>
+<p><strong>Hot Reload(热重载)</strong></p>
+<p><strong>完全开源的项目</strong></p>
+]]></content>
+      <categories>
+        <category>iOS</category>
+      </categories>
+  </entry>
+  <entry>
     <title>iOS AR和ARKit4</title>
     <url>/2020/08/19/iOS%20AR%E5%92%8CARKit4/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><h2 id="ARKit-4-简介"><a href="#ARKit-4-简介" class="headerlink" title="ARKit 4 简介"></a>ARKit 4 简介</h2><p>iPadOS 上的 ARKit 4 推出了全新的景深 API，创造了一种新的方式来访问由 iPad Pro 上的激光雷达扫描仪收集的详细深度信息。位置锚定功能利用 Apple 地图中更高分辨率的数据，能在您的 iPhone 和 iPad app 中将增强现实体验放置在世界的特定地方。此外，对面部跟踪的支持扩展到所有配备 Apple 神经网络引擎和前置摄像头的设备，让更多用户能在照片和视频中体验到增强现实的乐趣。</p>
@@ -755,6 +774,73 @@
       </categories>
   </entry>
   <entry>
+    <title>Java项目开发笔记_03</title>
+    <url>/2020/06/08/Java%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91%E7%AC%94%E8%AE%B0_03/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><h3 id="SpringBoot2-x定时任务schedule讲解"><a href="#SpringBoot2-x定时任务schedule讲解" class="headerlink" title="SpringBoot2.x定时任务schedule讲解"></a>SpringBoot2.x定时任务schedule讲解</h3><ul>
+<li><p>使用场景：</p>
+<ul>
+<li>某个时间处理某个任务</li>
+<li>发邮件、发短信等</li>
+<li>消息提醒</li>
+<li>订单通知</li>
+<li>统计报表系统</li>
+<li>…</li>
+</ul>
+</li>
+<li><p>常见定时任务</p>
+<ul>
+<li>Java自带的java.util.Timer类配置比较麻烦，时间延后问题</li>
+<li>Quartz框架：配置更简单，xml或直接适合分布式或大型调度作业</li>
+<li>SpringBoot框架自带</li>
+</ul>
+</li>
+<li><p>SpringBoot使用注解方式开启定时任务</p>
+<ul>
+<li>启动类里面 @EnableScheduling开启你定时任务，自动扫描</li>
+<li>定时任务业务类，加注解 @Component被容器扫描</li>
+<li>定时执行的方法加上注解 @Scheduled(fixedRate=2000) 定期执行一次</li>
+</ul>
+</li>
+<li><p>SpringBoot常用定时任务表达式配置和在线生成器</p>
+<ul>
+<li>cron定时任务表达式 @Scheduled(cron=”*/1 * * * * *”)表示每秒</li>
+<li><a href="https://tool.lu/crontab" target="_blank" rel="noopener">Cron在线工具</a></li>
+</ul>
+</li>
+<li><p>SpringBoot2.x异步任务EnableAsync</p>
+<p>使用场景：</p>
+<ul>
+<li>适用于处理log、发送邮件、短信… 等等</li>
+<li>下单接口 -&gt; 查库存 1000</li>
+<li>余额校验 15000</li>
+<li>风控用户 1000</li>
+<li>启动类里面使用@EnableAsync注解开启功能，自动扫描</li>
+<li>定义异步任务类并使用@Component标记组件被容器扫描，异步方法上加上@Async</li>
+</ul>
+</li>
+<li><p>SpringBoot2.x异步任务Future获取结果</p>
+<ul>
+<li>注意点：<ul>
+<li>要把异步任务封装到类里面，不能直接写到Controller</li>
+<li>增加Future<String>返回结果 AsyncResult<String>（”task执行完成”);</li>
+<li>如果需要拿到结果 需要判断全部的 task.isDone()</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">package com.moneylee.xdstudy.task;</span><br><span class="line"></span><br><span class="line">import org.springframework.scheduling.annotation.Async;</span><br><span class="line">import org.springframework.scheduling.annotation.AsyncResult;</span><br><span class="line">import org.springframework.stereotype.Component;</span><br><span class="line"></span><br><span class="line">import java.util.concurrent.Future;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * @className: Async</span><br><span class="line"> * @Description: 异步任务</span><br><span class="line"> * @Author moneylee</span><br><span class="line"> * @Date 2020-07-02 18:41</span><br><span class="line"> * @Version 1.0</span><br><span class="line"> **/</span><br><span class="line">@Component</span><br><span class="line">@Async</span><br><span class="line">public class AsyncTask &#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    public void task1() &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            Thread.sleep(4000L);</span><br><span class="line">        &#125; catch (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(&quot;task 1&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void task2() &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            Thread.sleep(4000L);</span><br><span class="line">        &#125; catch (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(&quot;task 2&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void task3() &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            Thread.sleep(4000L);</span><br><span class="line">        &#125; catch (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(&quot;task 3&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public Future&lt;String&gt; task4() &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            Thread.sleep(4000L);</span><br><span class="line">        &#125; catch (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(&quot;task 4&quot;);</span><br><span class="line">        return new AsyncResult&lt;String&gt;(&quot;任务4&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public Future&lt;String&gt; task5() &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            Thread.sleep(4000L);</span><br><span class="line">        &#125; catch (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(&quot;task 5&quot;);</span><br><span class="line">        return new AsyncResult&lt;String&gt;(&quot;任务5&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+  </entry>
+  <entry>
     <title>Java项目开发笔记_04</title>
     <url>/2020/06/08/Java%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91%E7%AC%94%E8%AE%B0_04/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p><strong>Java项目开发笔记04-0x的代码在：</strong><a href="https://gitee.com/moneylee/java_learning__02" target="_blank" rel="noopener">gitee</a></p>
@@ -1247,73 +1333,6 @@
       </categories>
   </entry>
   <entry>
-    <title>Java项目开发笔记_03</title>
-    <url>/2020/06/08/Java%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91%E7%AC%94%E8%AE%B0_03/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><h3 id="SpringBoot2-x定时任务schedule讲解"><a href="#SpringBoot2-x定时任务schedule讲解" class="headerlink" title="SpringBoot2.x定时任务schedule讲解"></a>SpringBoot2.x定时任务schedule讲解</h3><ul>
-<li><p>使用场景：</p>
-<ul>
-<li>某个时间处理某个任务</li>
-<li>发邮件、发短信等</li>
-<li>消息提醒</li>
-<li>订单通知</li>
-<li>统计报表系统</li>
-<li>…</li>
-</ul>
-</li>
-<li><p>常见定时任务</p>
-<ul>
-<li>Java自带的java.util.Timer类配置比较麻烦，时间延后问题</li>
-<li>Quartz框架：配置更简单，xml或直接适合分布式或大型调度作业</li>
-<li>SpringBoot框架自带</li>
-</ul>
-</li>
-<li><p>SpringBoot使用注解方式开启定时任务</p>
-<ul>
-<li>启动类里面 @EnableScheduling开启你定时任务，自动扫描</li>
-<li>定时任务业务类，加注解 @Component被容器扫描</li>
-<li>定时执行的方法加上注解 @Scheduled(fixedRate=2000) 定期执行一次</li>
-</ul>
-</li>
-<li><p>SpringBoot常用定时任务表达式配置和在线生成器</p>
-<ul>
-<li>cron定时任务表达式 @Scheduled(cron=”*/1 * * * * *”)表示每秒</li>
-<li><a href="https://tool.lu/crontab" target="_blank" rel="noopener">Cron在线工具</a></li>
-</ul>
-</li>
-<li><p>SpringBoot2.x异步任务EnableAsync</p>
-<p>使用场景：</p>
-<ul>
-<li>适用于处理log、发送邮件、短信… 等等</li>
-<li>下单接口 -&gt; 查库存 1000</li>
-<li>余额校验 15000</li>
-<li>风控用户 1000</li>
-<li>启动类里面使用@EnableAsync注解开启功能，自动扫描</li>
-<li>定义异步任务类并使用@Component标记组件被容器扫描，异步方法上加上@Async</li>
-</ul>
-</li>
-<li><p>SpringBoot2.x异步任务Future获取结果</p>
-<ul>
-<li>注意点：<ul>
-<li>要把异步任务封装到类里面，不能直接写到Controller</li>
-<li>增加Future<String>返回结果 AsyncResult<String>（”task执行完成”);</li>
-<li>如果需要拿到结果 需要判断全部的 task.isDone()</li>
-</ul>
-</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">package com.moneylee.xdstudy.task;</span><br><span class="line"></span><br><span class="line">import org.springframework.scheduling.annotation.Async;</span><br><span class="line">import org.springframework.scheduling.annotation.AsyncResult;</span><br><span class="line">import org.springframework.stereotype.Component;</span><br><span class="line"></span><br><span class="line">import java.util.concurrent.Future;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * @className: Async</span><br><span class="line"> * @Description: 异步任务</span><br><span class="line"> * @Author moneylee</span><br><span class="line"> * @Date 2020-07-02 18:41</span><br><span class="line"> * @Version 1.0</span><br><span class="line"> **/</span><br><span class="line">@Component</span><br><span class="line">@Async</span><br><span class="line">public class AsyncTask &#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    public void task1() &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            Thread.sleep(4000L);</span><br><span class="line">        &#125; catch (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(&quot;task 1&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void task2() &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            Thread.sleep(4000L);</span><br><span class="line">        &#125; catch (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(&quot;task 2&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void task3() &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            Thread.sleep(4000L);</span><br><span class="line">        &#125; catch (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(&quot;task 3&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public Future&lt;String&gt; task4() &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            Thread.sleep(4000L);</span><br><span class="line">        &#125; catch (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(&quot;task 4&quot;);</span><br><span class="line">        return new AsyncResult&lt;String&gt;(&quot;任务4&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public Future&lt;String&gt; task5() &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            Thread.sleep(4000L);</span><br><span class="line">        &#125; catch (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(&quot;task 5&quot;);</span><br><span class="line">        return new AsyncResult&lt;String&gt;(&quot;任务5&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>Java</category>
-      </categories>
-  </entry>
-  <entry>
     <title>Java项目开发笔记_02</title>
     <url>/2020/06/07/Java%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91%E7%AC%94%E8%AE%B0_02/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><hr>
@@ -1491,16 +1510,16 @@
       </categories>
   </entry>
   <entry>
-    <title>Java 基于SpringAOP快速实现日志打印</title>
-    <url>/2020/06/06/Java/</url>
+    <title>Java 基于Spring AOP 快速实现日志打印</title>
+    <url>/2020/06/06/Java%20%E5%9F%BA%E4%BA%8ESpringAOP%E5%BF%AB%E9%80%9F%E5%AE%9E%E7%8E%B0%E6%97%A5%E5%BF%97%E6%89%93%E5%8D%B0/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script>]]></content>
       <categories>
         <category>Java</category>
       </categories>
   </entry>
   <entry>
-    <title>Java 基于Spring AOP 快速实现日志打印</title>
-    <url>/2020/06/06/Java%20%E5%9F%BA%E4%BA%8ESpringAOP%E5%BF%AB%E9%80%9F%E5%AE%9E%E7%8E%B0%E6%97%A5%E5%BF%97%E6%89%93%E5%8D%B0/</url>
+    <title>Java 基于SpringAOP快速实现日志打印</title>
+    <url>/2020/06/06/Java/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script>]]></content>
       <categories>
         <category>Java</category>
@@ -2290,6 +2309,106 @@
       </categories>
   </entry>
   <entry>
+    <title>Java项目开发笔记_01</title>
+    <url>/2020/02/06/%E4%BA%92%E8%81%94%E2%BD%B9%E9%A1%B9%E2%BD%AC%E4%B8%AD%20%E5%8D%95%E6%9C%BA%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E5%BA%94%E2%BD%A4%E7%9A%84%E7%99%BB%E5%BD%95%E6%A0%A1%E9%AA%8C%E8%A7%A3%E5%86%B3%E2%BD%85%E6%A1%88/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><h2 id="互联⽹项⽬中-单机和分布式应⽤的登录校验解决⽅案"><a href="#互联⽹项⽬中-单机和分布式应⽤的登录校验解决⽅案" class="headerlink" title="互联⽹项⽬中 单机和分布式应⽤的登录校验解决⽅案"></a>互联⽹项⽬中 单机和分布式应⽤的登录校验解决⽅案</h2><h4 id="简介：讲解单机和分布式应⽤下登录校验，session共享，分布式缓存使⽤"><a href="#简介：讲解单机和分布式应⽤下登录校验，session共享，分布式缓存使⽤" class="headerlink" title="简介：讲解单机和分布式应⽤下登录校验，session共享，分布式缓存使⽤"></a>简介：讲解单机和分布式应⽤下登录校验，<strong>session</strong>共享，分布式缓存使⽤</h4><ul>
+<li><p>单机tomcat应⽤登录检验</p>
+<ul>
+<li>sesssion保存在浏览器和应⽤服务器会话之间</li>
+<li>⽤户登录成功，服务端会保存⼀个session，当然客户端有⼀个sessionId</li>
+<li>客户端会把sessionId保存在cookie中，每次请求都会携带这个sessionId</li>
+</ul>
+</li>
+<li><p>分布式应⽤中session共享</p>
+<ul>
+<li><p>真实的应⽤不可能单节点部署，所以就有个多节点登录session共享的问题需要解决</p>
+</li>
+<li><p>tomcat⽀持session共享，但是有⼴播⻛暴；⽤户量⼤的时候，占⽤资源就严重，不推荐</p>
+</li>
+<li><p>使⽤redis存储token:</p>
+<ul>
+<li><p>服务端使⽤UUID⽣成随机64位或者128位token，放⼊redis中，然后返回给客户端并存</p>
+<p>储在cookie中</p>
+</li>
+<li><p>⽤户每次访问都携带此token，服务端去redis中校验是否有此⽤户即</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="分布式应⽤下登录检验解决⽅案-JWT讲解"><a href="#分布式应⽤下登录检验解决⽅案-JWT讲解" class="headerlink" title="分布式应⽤下登录检验解决⽅案 JWT讲解"></a>分布式应⽤下登录检验解决⽅案 <strong>JWT</strong>讲解</h3><h4 id="简介：分布式应⽤的登录检验解决⽅案-JWT讲解-json-wen-token"><a href="#简介：分布式应⽤的登录检验解决⽅案-JWT讲解-json-wen-token" class="headerlink" title="简介：分布式应⽤的登录检验解决⽅案 JWT讲解 json wen token"></a>简介：分布式应⽤的登录检验解决⽅案 <strong>JWT</strong>讲解 <strong>json wen token</strong></h4><ul>
+<li><p>什么是JWT</p>
+<ul>
+<li><p>JWT 是⼀个开放标准，它定义了⼀种⽤于简洁，⾃包含的⽤于通信双⽅之间以 JSON 对象的</p>
+<p>形式安全传递信息的⽅法。 可以使⽤ HMAC 算法或者是 RSA 的公钥密钥对进⾏签名</p>
+</li>
+<li><p>简单来说<strong>:</strong> 就是通过⼀定规范来⽣成<strong>token</strong>，然后可以通过解密算法逆向解密<strong>token</strong>，这样就</p>
+<p>可以获取⽤户信息</p>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	id:<span class="number">888</span>,</span><br><span class="line">	name:<span class="string">'⼩D'</span>,</span><br><span class="line">	expire:<span class="number">10000</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">funtion 加密(object, appsecret)&#123;</span><br><span class="line"> xxxx</span><br><span class="line"> <span class="keyword">return</span> base64( token);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function 解密(token ,appsecret)&#123;</span><br><span class="line"> xxxx</span><br><span class="line"> <span class="comment">//成功返回true,失败返回false</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>优点</p>
+<ul>
+<li>⽣产的token可以包含基本信息，⽐如id、⽤户昵称、头像等信息，避免再次查库</li>
+<li>存储在客户端，不占⽤服务端的内存资源</li>
+</ul>
+</li>
+<li><p>缺点</p>
+<ul>
+<li><p>token是经过base64编码，所以可以解码，因此token加密前的对象不应该包含敏感信</p>
+<p>息，如⽤户权限，密码等</p>
+</li>
+<li><p>如果没有服务端存储，则不能做登录失效处理，除⾮服务端改秘钥</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>JWT格式组成 头部、负载、签名</p>
+<ul>
+<li><p>header+payload+signature</p>
+<ul>
+<li><p>头部：主要是描述签名算法</p>
+</li>
+<li><p>负载：主要描述是加密对象的信息，如⽤户的id等，也可以加些规范⾥⾯的东⻄，如iss</p>
+<p>签发者，exp 过期时间，sub ⾯向的⽤户</p>
+</li>
+<li><p>签名：主要是把前⾯两部分进⾏加密，防⽌别⼈拿到token进⾏base解密后篡改token</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>关于jwt客户端存储</p>
+<ul>
+<li>可以存储在cookie，localstorage和sessionStorage⾥⾯</li>
+</ul>
+</li>
+</ul>
+<h3 id="封装通用方法"><a href="#封装通用方法" class="headerlink" title="封装通用方法"></a>封装通用方法</h3><h4 id="引⼊相关依赖并开发JWT⼯具类-开发⽣产token和校验token的办法"><a href="#引⼊相关依赖并开发JWT⼯具类-开发⽣产token和校验token的办法" class="headerlink" title="引⼊相关依赖并开发JWT⼯具类, 开发⽣产token和校验token的办法"></a>引⼊相关依赖并开发<strong>JWT</strong>⼯具类<strong>,</strong> 开发⽣产<strong>token</strong>和校验<strong>token</strong>的办法</h4><ul>
+<li>加⼊相关依赖</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- JWT相关 --&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>io.jsonwebtoken<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jjwt<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">version</span>&gt;</span>0.7.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>封装⽣产token⽅法</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 根据⽤户信息，⽣成令牌</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> user</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">geneJsonWebToken</span><span class="params">(User user)</span></span>&#123;</span><br><span class="line"> 	String token = Jwts.builder().setSubject(SUBJECT)</span><br><span class="line"> 	.claim(<span class="string">"head_img"</span>,user.getHeadImg())</span><br><span class="line"> 	.claim(<span class="string">"id"</span>,user.getId())</span><br><span class="line"> 	.claim(<span class="string">"name"</span>,user.getName())</span><br><span class="line"> 	.setIssuedAt(<span class="keyword">new</span> Date())</span><br><span class="line"> 	.setExpiration(<span class="keyword">new</span> Date(System.currentTimeMillis() + EXPIRE))</span><br><span class="line"> 	.signWith(SignatureAlgorithm.HS256,SECRET).compact();</span><br><span class="line"> 	token = TOKEN_PREFIX + token;</span><br><span class="line"> 	<span class="keyword">return</span> token;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>封装校验token⽅法</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 校验token的⽅法</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> token</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Claims <span class="title">checkJWT</span><span class="params">(String token)</span></span>&#123;</span><br><span class="line"> 	<span class="keyword">try</span>&#123;</span><br><span class="line"> 	<span class="keyword">final</span> Claims claims = Jwts.parser().setSigningKey(SECRET)</span><br><span class="line"> 	.parseClaimsJws(token.replace(TOKEN_PREFIX,<span class="string">""</span>)).getBody();</span><br><span class="line"> 	<span class="keyword">return</span> claims;</span><br><span class="line"> &#125;<span class="keyword">catch</span> (Exception e)&#123;</span><br><span class="line"> 	<span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+  </entry>
+  <entry>
     <title>iOS13适配深色模式</title>
     <url>/2020/02/03/iOS13%E9%80%82%E9%85%8D%E6%B7%B1%E8%89%B2%E6%A8%A1%E5%BC%8F/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>前段时间收到客户的反应 说试用中的App 有的界面UI有问题,  之前都是真机调试过的, 心里也很诧异, 然后用自己的手机试了下, 果然有的文本输入框的文字不显示, 有的列表背景颜色是黑色, 我就有点迷糊, 怎么会突然出现这种问题, 我首先想到的是修改代码, 给个颜色看看显示不, 然后相继的将有问题的位置都添加了Color, 一切正常, 但是这样显然没有解决隐患啊,  然后我又想到了是不是iOS13系统的原因, 因为我手机也是最近才升级了, 并且我使用了深色模式, 问题应该出现在这里, 果然我在手机设置里设置为浅色模式, 之前出现的问题就没了, 唉… 怎么可以这样,最后的解决办法 在 info.plist文件内添加<code>User Interface Style</code> 并且设置值为 <code>Light</code></p>
@@ -2498,6 +2617,26 @@
       </categories>
   </entry>
   <entry>
+    <title>Windows Server 2012 使用记录</title>
+    <url>/2019/11/09/Windows%20Server%202012%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>前段时间接到一个为公司客户开发官网的任务, 框架使用Jeesite, 前后端分离项目, 数据库是Mysql5.7。接下来就记录下遭遇的一切。</p>
+<p>大约三天开发完后台服务及管理界面的配置, 配合前台接口调试用了一天, 然后客户购买的阿里云服务器, 我原以为是Linux服务器, 所以也没多问就按照之前的习惯, 用Mac的ssh直接连接, 提示 22端口访问被拒绝, 什么鬼? 22端口没开, 然后几经辗转要到阿里云账号并登录到管理后台, 重置了实例密码(因为客户也不知道密码是啥), 说实在的, 我连Windows电脑都好些年不用了, 所有的命令行也不怎么会, 这可难到我了,  研究了好一阵子, 我才知道windows有自己的远程连接工具, 并且需要开放的端口是 3389, 然后阿里云后台配置网络安全组, 开放 80, 3389 , 3306 入规则访问权限, 分别是网路请求, 远程控制 和 数据库, 方便我以后的开发调试工作, 等真正交付的时候再关闭掉 3389和3306,  然后用Tomcat开始部署, 其实使用这一个服务就可以了, 但是个人习惯还是兼顾使用了 Nginx服务, 然后 下载Java JDK 配置环境变量这一套常规操作。</p>
+<p>远程访问我用客户的账号配置好后台网络, 然后重置并获取到新的服务器密码后, (这里再插一句, 服务器主机的开机账号密码默认是 administrator  和 服务器密码 我才知道 之前以为是俩密码) 然后安装了Teamviewer工具, 为了双保险又安装了蒲公英, 之前Team不说是有漏洞嘛, 但是我觉得蒲公英免费版的太慢了, 卡的很难受, 还是Team比较快捷高效 然后磕磕绊绊的服务起开了, 根据IP外网也能访问了</p>
+<p>第二天客户说访问不到服务了, 我登录发现密码错误, 难道客户密码改了? 但是客户说没改, 我又远程访问的客户电脑, 再通过他的浏览器访问的服务器, 然后重置了密码, 一顿操作还是没发现问题, localhost访问服务没问题, 那就是网络的问题了, 发现防火墙被用户开启了, 那就是防火墙的问题了, 单独开放了80端口, 搞定, 可以正常外网访问了, 然后防止客户重启服务器 服务中断的问题, 需要配置Tomcat和Nginx自启服务, Tomcat服务自启比较简单</p>
+]]></content>
+      <categories>
+        <category>随笔</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>开篇</title>
+    <url>/2019/11/09/%E5%BC%80%E7%AF%87/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><h3 id="原本想使用-spring-boot-vue-开发一款博客系统-但是平时也没有多少时间-做出来的样式也不是很喜欢。今天无意间发现Hexo这个开源的博客框架-决定拿来试一试-效果还不错-今后会继续完善下去-我也会将-简书、掘金的一些之前写作的文章导入进来-希望通过它能让我养成技术文档整理归纳的好习惯-我也会在此更新一些生活上的故事和心得体悟。"><a href="#原本想使用-spring-boot-vue-开发一款博客系统-但是平时也没有多少时间-做出来的样式也不是很喜欢。今天无意间发现Hexo这个开源的博客框架-决定拿来试一试-效果还不错-今后会继续完善下去-我也会将-简书、掘金的一些之前写作的文章导入进来-希望通过它能让我养成技术文档整理归纳的好习惯-我也会在此更新一些生活上的故事和心得体悟。" class="headerlink" title="原本想使用 spring-boot + vue 开发一款博客系统, 但是平时也没有多少时间, 做出来的样式也不是很喜欢。今天无意间发现Hexo这个开源的博客框架, 决定拿来试一试, 效果还不错, 今后会继续完善下去, 我也会将 简书、掘金的一些之前写作的文章导入进来, 希望通过它能让我养成技术文档整理归纳的好习惯, 我也会在此更新一些生活上的故事和心得体悟。"></a>原本想使用 spring-boot + vue 开发一款博客系统, 但是平时也没有多少时间, 做出来的样式也不是很喜欢。今天无意间发现Hexo这个开源的博客框架, 决定拿来试一试, 效果还不错, 今后会继续完善下去, 我也会将 简书、掘金的一些之前写作的文章导入进来, 希望通过它能让我养成技术文档整理归纳的好习惯, 我也会在此更新一些生活上的故事和心得体悟。</h3>]]></content>
+      <categories>
+        <category>随笔</category>
+      </categories>
+  </entry>
+  <entry>
     <title>记录一次微信小程序调用Eharts</title>
     <url>/2019/11/09/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E8%B0%83%E7%94%A8Echarts/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><h2 id="记录一次微信小程序调用Eharts-柱状图"><a href="#记录一次微信小程序调用Eharts-柱状图" class="headerlink" title="记录一次微信小程序调用Eharts(柱状图)"></a>记录一次微信小程序调用Eharts(柱状图)</h2><p>Echarts 微信小程序版本地址: <a href="https://github.com/ecomfe/echarts-for-weixin" target="_blank" rel="noopener"></a></p>
@@ -2548,26 +2687,6 @@
 <pre><code>### 最后的效果图我就不放了, 在上面有!!!</code></pre>]]></content>
       <categories>
         <category>微信小程序</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>开篇</title>
-    <url>/2019/11/09/%E5%BC%80%E7%AF%87/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><h3 id="原本想使用-spring-boot-vue-开发一款博客系统-但是平时也没有多少时间-做出来的样式也不是很喜欢。今天无意间发现Hexo这个开源的博客框架-决定拿来试一试-效果还不错-今后会继续完善下去-我也会将-简书、掘金的一些之前写作的文章导入进来-希望通过它能让我养成技术文档整理归纳的好习惯-我也会在此更新一些生活上的故事和心得体悟。"><a href="#原本想使用-spring-boot-vue-开发一款博客系统-但是平时也没有多少时间-做出来的样式也不是很喜欢。今天无意间发现Hexo这个开源的博客框架-决定拿来试一试-效果还不错-今后会继续完善下去-我也会将-简书、掘金的一些之前写作的文章导入进来-希望通过它能让我养成技术文档整理归纳的好习惯-我也会在此更新一些生活上的故事和心得体悟。" class="headerlink" title="原本想使用 spring-boot + vue 开发一款博客系统, 但是平时也没有多少时间, 做出来的样式也不是很喜欢。今天无意间发现Hexo这个开源的博客框架, 决定拿来试一试, 效果还不错, 今后会继续完善下去, 我也会将 简书、掘金的一些之前写作的文章导入进来, 希望通过它能让我养成技术文档整理归纳的好习惯, 我也会在此更新一些生活上的故事和心得体悟。"></a>原本想使用 spring-boot + vue 开发一款博客系统, 但是平时也没有多少时间, 做出来的样式也不是很喜欢。今天无意间发现Hexo这个开源的博客框架, 决定拿来试一试, 效果还不错, 今后会继续完善下去, 我也会将 简书、掘金的一些之前写作的文章导入进来, 希望通过它能让我养成技术文档整理归纳的好习惯, 我也会在此更新一些生活上的故事和心得体悟。</h3>]]></content>
-      <categories>
-        <category>随笔</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>Windows Server 2012 使用记录</title>
-    <url>/2019/11/09/Windows%20Server%202012%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>前段时间接到一个为公司客户开发官网的任务, 框架使用Jeesite, 前后端分离项目, 数据库是Mysql5.7。接下来就记录下遭遇的一切。</p>
-<p>大约三天开发完后台服务及管理界面的配置, 配合前台接口调试用了一天, 然后客户购买的阿里云服务器, 我原以为是Linux服务器, 所以也没多问就按照之前的习惯, 用Mac的ssh直接连接, 提示 22端口访问被拒绝, 什么鬼? 22端口没开, 然后几经辗转要到阿里云账号并登录到管理后台, 重置了实例密码(因为客户也不知道密码是啥), 说实在的, 我连Windows电脑都好些年不用了, 所有的命令行也不怎么会, 这可难到我了,  研究了好一阵子, 我才知道windows有自己的远程连接工具, 并且需要开放的端口是 3389, 然后阿里云后台配置网络安全组, 开放 80, 3389 , 3306 入规则访问权限, 分别是网路请求, 远程控制 和 数据库, 方便我以后的开发调试工作, 等真正交付的时候再关闭掉 3389和3306,  然后用Tomcat开始部署, 其实使用这一个服务就可以了, 但是个人习惯还是兼顾使用了 Nginx服务, 然后 下载Java JDK 配置环境变量这一套常规操作。</p>
-<p>远程访问我用客户的账号配置好后台网络, 然后重置并获取到新的服务器密码后, (这里再插一句, 服务器主机的开机账号密码默认是 administrator  和 服务器密码 我才知道 之前以为是俩密码) 然后安装了Teamviewer工具, 为了双保险又安装了蒲公英, 之前Team不说是有漏洞嘛, 但是我觉得蒲公英免费版的太慢了, 卡的很难受, 还是Team比较快捷高效 然后磕磕绊绊的服务起开了, 根据IP外网也能访问了</p>
-<p>第二天客户说访问不到服务了, 我登录发现密码错误, 难道客户密码改了? 但是客户说没改, 我又远程访问的客户电脑, 再通过他的浏览器访问的服务器, 然后重置了密码, 一顿操作还是没发现问题, localhost访问服务没问题, 那就是网络的问题了, 发现防火墙被用户开启了, 那就是防火墙的问题了, 单独开放了80端口, 搞定, 可以正常外网访问了, 然后防止客户重启服务器 服务中断的问题, 需要配置Tomcat和Nginx自启服务, Tomcat服务自启比较简单</p>
-]]></content>
-      <categories>
-        <category>随笔</category>
       </categories>
   </entry>
   <entry>
@@ -2962,6 +3081,28 @@
       </categories>
   </entry>
   <entry>
+    <title>Swift开发的一些小知识点(更新状态)</title>
+    <url>/2016/11/15/Swift%E5%BC%80%E5%8F%91%E4%B8%80%E4%BA%9B%E5%B0%8F%E7%9F%A5%E8%AF%86%E7%82%B9/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><h3 id="Swift项目程序入口main函数在哪"><a href="#Swift项目程序入口main函数在哪" class="headerlink" title="Swift项目程序入口main函数在哪?"></a>Swift项目程序入口main函数在哪?</h3><p>Xcode新建的Swift项目中 发现没有main函数入口, 哪里去了呢, 在Appdelegate.swfit 上发现一个注解</p>
+<p><code>@UIApplicationMain</code></p>
+<p>这个注解会自动生成一个程序的入口, 但是如果在一些特殊情况下, 我们需要自定义 UIApplication该怎么办呢, 新建一个Swift文件, 命名为 main.swift    在其内实现main函数</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> UIKit</span><br><span class="line"><span class="comment">//自定义UIApplication</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyApplication</span>: <span class="title">UIApplication</span> </span>&#123;&#125;</span><br><span class="line"><span class="comment">//使用自定义的UIApplication</span></span><br><span class="line"><span class="type">UIApplicationMain</span>(<span class="type">CommandLine</span>.argc, <span class="type">CommandLine</span>.unsafeArgv, <span class="type">NSStringFromClass</span>(<span class="type">MyApplication</span>.<span class="keyword">self</span>), <span class="type">NSStringFromClass</span>(<span class="type">AppDelegate</span>.<span class="keyword">self</span>))</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="Swift调用OC"><a href="#Swift调用OC" class="headerlink" title="Swift调用OC"></a>Swift调用OC</h3><p>在swift项目新建OC类, 会弹出提示如下图</p>
+<p><img alt="截屏2019-11-12下午10.44.09" data-src="https://tva1.sinaimg.cn/large/006y8mN6ly1g8vn1f9shqj30va07gjx0.jpg" class="lazyload"></p>
+<p>会询问你是否创建桥接文件, 点击创建桥接文件, 在工程目录内会出现产生的桥接文件</p>
+<p><img alt="Snip20191112_1" data-src="https://tva1.sinaimg.cn/large/006y8mN6ly1g8vn39auvvj307903u3yn.jpg" class="lazyload"></p>
+<p>桥接文件的文件名固定格式 <strong>{targetName}-Bridging-Header.h</strong></p>
+<p>这个头文件,引入一些OC的类, 暴露给Swift使用.</p>
+<p><code>#import &quot;Change.h&quot;</code></p>
+]]></content>
+      <categories>
+        <category>iOS</category>
+      </categories>
+  </entry>
+  <entry>
     <title>《如何使用CocoaPods：2016.11.15版》</title>
     <url>/2016/11/15/%E3%80%8A%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8CocoaPods%EF%BC%9A2016.11.15%E7%89%88%E3%80%8B/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><p>一、CocoaPods的简介：</p>
@@ -3022,28 +3163,6 @@
 <p>找到 User Header Search Paths  双击后面空白处 点击+号 输入 $(PODS_ROOT) 最有改选 recursive</p>
 <p><img alt="截屏2019-11-12下午3.20.50" data-src="https://tva1.sinaimg.cn/large/006y8mN6ly1g8vapkh4awj311a0g0jwh.jpg" class="lazyload"></p>
 <p>大功告成！</p>
-]]></content>
-      <categories>
-        <category>iOS</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>Swift开发的一些小知识点(更新状态)</title>
-    <url>/2016/11/15/Swift%E5%BC%80%E5%8F%91%E4%B8%80%E4%BA%9B%E5%B0%8F%E7%9F%A5%E8%AF%86%E7%82%B9/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><h3 id="Swift项目程序入口main函数在哪"><a href="#Swift项目程序入口main函数在哪" class="headerlink" title="Swift项目程序入口main函数在哪?"></a>Swift项目程序入口main函数在哪?</h3><p>Xcode新建的Swift项目中 发现没有main函数入口, 哪里去了呢, 在Appdelegate.swfit 上发现一个注解</p>
-<p><code>@UIApplicationMain</code></p>
-<p>这个注解会自动生成一个程序的入口, 但是如果在一些特殊情况下, 我们需要自定义 UIApplication该怎么办呢, 新建一个Swift文件, 命名为 main.swift    在其内实现main函数</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> UIKit</span><br><span class="line"><span class="comment">//自定义UIApplication</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyApplication</span>: <span class="title">UIApplication</span> </span>&#123;&#125;</span><br><span class="line"><span class="comment">//使用自定义的UIApplication</span></span><br><span class="line"><span class="type">UIApplicationMain</span>(<span class="type">CommandLine</span>.argc, <span class="type">CommandLine</span>.unsafeArgv, <span class="type">NSStringFromClass</span>(<span class="type">MyApplication</span>.<span class="keyword">self</span>), <span class="type">NSStringFromClass</span>(<span class="type">AppDelegate</span>.<span class="keyword">self</span>))</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="Swift调用OC"><a href="#Swift调用OC" class="headerlink" title="Swift调用OC"></a>Swift调用OC</h3><p>在swift项目新建OC类, 会弹出提示如下图</p>
-<p><img alt="截屏2019-11-12下午10.44.09" data-src="https://tva1.sinaimg.cn/large/006y8mN6ly1g8vn1f9shqj30va07gjx0.jpg" class="lazyload"></p>
-<p>会询问你是否创建桥接文件, 点击创建桥接文件, 在工程目录内会出现产生的桥接文件</p>
-<p><img alt="Snip20191112_1" data-src="https://tva1.sinaimg.cn/large/006y8mN6ly1g8vn39auvvj307903u3yn.jpg" class="lazyload"></p>
-<p>桥接文件的文件名固定格式 <strong>{targetName}-Bridging-Header.h</strong></p>
-<p>这个头文件,引入一些OC的类, 暴露给Swift使用.</p>
-<p><code>#import &quot;Change.h&quot;</code></p>
 ]]></content>
       <categories>
         <category>iOS</category>
